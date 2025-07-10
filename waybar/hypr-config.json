@@ -24,16 +24,23 @@
     "bluetooth",
     "temperature",
     "battery",
+    "custom/battery-degradation",
     "backlight",
     "pulseaudio",
     "pulseaudio#microphone",
     "custom/caffeine",
-    "hyprland/language",
+    "custom/language",
     "custom/wireguard-manager",
     "custom/notifications",
     "idle_inhibitor",
     "custom/hyprshade"
   ],
+  "custom/battery-degradation": {
+    "format": " {}%",
+    "interval": "once",
+    "exec": "~/scripts/battery-degradation.sh",
+    "tooltip": false
+  },
   "custom/hyprshade": {
     "format": "{icon}",
     "format-icons": {
@@ -149,6 +156,15 @@
     "format-ru": "RU",
     "keyboard-name": "at-translated-set-2-keyboard",
     "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+  },
+
+  "custom/language": {
+    "format-en": "EN",
+    "format-ru": "RU",
+    "keyboard-name": "at-translated-set-2-keyboard",
+    "exec": "hyprctl devices -j | jq -r '.keyboards[] | select(.main==true) | .active_keymap' | awk '{print toupper(substr($0,1,2))}' && pkill -SIGRTMIN+4 waybar",
+    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next && pkill -SIGRTMIN+4 waybar",
+    "signal": 4
   },
 
   "hyprland/workspaces": {

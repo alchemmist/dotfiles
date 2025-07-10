@@ -55,6 +55,7 @@ tooltip {
 #custom-weather,
 #window,
 #battery,
+#custom-battery-degradation,
 #pulseaudio,
 #network,
 #custom-google_calendar,
@@ -76,6 +77,7 @@ tooltip {
 #custom-paru_updates,
 #temperature,
 #language,
+#custom-language,
 #backlight {
   background: #1e1e2e;
   opacity: 0.7;
@@ -136,6 +138,7 @@ tooltip {
   border-radius: 10px;
   margin-right: 5px;
 }
+
 
 #custom-wireguard-manager {
   border-radius: 10px;
@@ -203,6 +206,12 @@ tooltip {
 }
 
 #language {
+  border-radius: 10px;
+  margin-right: 5px;
+  min-width: 20px;
+}
+
+#custom-language {
   border-radius: 10px;
   margin-right: 5px;
   min-width: 20px;
@@ -309,11 +318,16 @@ tooltip {
 
 #battery {
   color: #cdd6f4;
-  /* color: #a6e3a1; */
-  border-radius: 10px 10px 10px 10px;
+  padding-right: 10px;
+  border-radius: 10px 0px 0px 10px;
+  min-width: 50px;
+}
+
+#custom-battery-degradation {
+  color: #cdd6f4;
+  border-radius: 0px 10px 10px 0px;
   margin-right: 5px;
-  border-left: 0px;
-  min-width: 60px;
+  min-width: 35px;
 }
 
 #battery.critical {

@@ -12,6 +12,8 @@ export PATH=$HOME/code/CU-lms-wrapper/src-tauri/target/release:$PATH
 export PATH=~/.npm-global/bin:$PATH
 export PATH=$HOME/.elan/bin:$PATH
 export PATH=/home/alchemmist/.local/share/gem/ruby/3.4.0/bin:$PATH
+export PATH=~/applications/eww/target/release:$PATH
+export PATH=/home/alchemmist/applications/codefetch/build:$PATH
 
 
 
@@ -346,3 +348,5 @@ PERL_MM_OPT="INSTALL_BASE=/home/alchemmist/perl5"; export PERL_MM_OPT;
 
 eval "tmux bind-key s choose-tree -ZsN"
 eval "tmux bind-key w choose-tree -ZwN"
+
+source <(eww shell-completions --shell zsh)

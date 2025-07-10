@@ -47,3 +47,8 @@ Host flycloud.ballkit.ru
     HostName flycloud.ballkit.ru
     User root
     IdentityFile ~/.ssh/ballkit-flycloud
+
+Host coffeelibrary.ballkit.ru
+    HostName 147.45.212.234
+    User root
+    IdentityFile ~/.ssh/balkit-coffeelib

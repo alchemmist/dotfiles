@@ -8,6 +8,7 @@ if ! systemctl is-active --quiet docker; then
         exit 1
     fi
     docker stop $(docker ps -a -q)
+    echo "Stoped 🛑 all docker containers"
 fi
 
 exec docker "$@"
