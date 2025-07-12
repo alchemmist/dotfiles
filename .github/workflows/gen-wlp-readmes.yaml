@@ -1,0 +1,30 @@
+name: Generate README previews
+on:
+  push:
+    branches:
+      - main
+jobs:
+  generate-readmes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y imagemagick
+      - name: Make scripts executable
+        run: chmod +x scripts/gen-readme.sh scripts/run-gen-readmes.sh
+      - name: Run script to generate READMEs
+        run: ./scripts/run-gen-readmes.sh
+      - name: Commit and push changes
+        run: |
+          git add .
+          if git diff --cached --quiet; then
+            echo "Нет изменений — пропускаю коммит"
+            exit 0
+          fi
+          git commit -m "ci: auto-regenerate README previews"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
