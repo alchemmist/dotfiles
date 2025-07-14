@@ -1,0 +1,60 @@
+{
+    // Choose the order of the modules
+    "modules-left": ["sway/workspaces"],
+    "modules-center": [],
+    "modules-right": ["pulseaudio", "custom/spliter", "network", "custom/spliter", "cpu", "custom/spliter", "memory", "custom/spliter",  "battery", "custom/spliter", "clock"],
+
+    "custom/spliter": {
+        "format": "|"
+    },
+
+    "clock": {
+        "format": "{:%Y-%m-%d | %H:%M:%S}",
+        "interval": 1
+    },
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "persistent_workspaces": {
+            "1": [], 
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
+            "10": []
+        }
+    },
+
+    "cpu": {
+        "format": "{}% "
+    },
+
+    "memory": {
+        "format": "{}% "
+    },
+
+    "battery": {
+        "format": "{icon}{capacity}%",
+        "format-charging": " {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "network": {
+        // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "Disconnected ⚠"
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": ["", ""]
+    }
+}
+
+

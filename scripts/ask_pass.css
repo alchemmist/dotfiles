@@ -1,0 +1,23 @@
+* {
+  font-size: 15px;
+  font-family: "JetBrainsMono Nerd Font";
+  min-height: 0;
+  background-color: #282a36;
+  color: #f8f8f2;
+}
+
+#window {
+  width: 300px;
+  padding: 15px;
+
+  border-radius: 10px;
+  border: 0px;
+  border-color: #44475a;
+}
+
+#entry {
+  expand: true;
+  width: 200px;
+}
+
+

@@ -1,0 +1,68 @@
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[font]
+size = 13
+
+[font.bold]
+family = "Source Code Pro"
+style = "Bold"
+
+[font.bold_italic]
+family = "Source Code Pro"
+style = "Bold Italic"
+
+[font.italic]
+family = "Source Code Pro"
+style = "Italic"
+
+[font.normal]
+family = "Source Code Pro"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[colors.bright]
+black = "#252525"
+blue = "#839496"
+cyan = "#93a1a1"
+green = "#586e75"
+magenta = "#6c71c4"
+red = "#cb4b16"
+white = "#fdf6e3"
+yellow = "#657b83"
+
+
+[colors.normal]
+black = "#073642"
+blue = "#268bd2"
+cyan = "#2aa198"
+green = "#859900"
+magenta = "#d33682"
+red = "#dc322f"
+white = "#eee8d5"
+yellow = "#b58900"
+
+[colors.primary]
+background = "#252525"
+foreground = "#839496"
+
+[scrolling]
+history = 10000
+
+[window.padding]
+x = 0
+y = 0
+
+[window]
+dynamic_padding = false
+opacity = 1.0
+title = "Alacritty"
+decorations = "Full"
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
+
