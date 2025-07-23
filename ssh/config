@@ -1,0 +1,54 @@
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github-main
+
+Host github-sub
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/github-sub
+
+Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/gitlab
+
+Host romanenko
+    HostName 45.95.235.20
+    User root
+    IdentityFile ~/.ssh/romanenko_vpn_server
+
+Host laba
+    HostName 178.208.79.42
+    User www
+    IdentityFile ~/.ssh/personal_server
+
+Host cu_ctf
+    HostName 10.80.2.2
+    User root
+    IdentityFile ~/.ssh/cu_ctf
+
+Host 84.201.163.192
+    HostName 84.201.163.192
+    User root
+    IdentityFile ~/.ssh/maks_ctf
+
+Host git.culab.ru
+    HostName git.culab.ru
+    User git
+    IdentityFile ~/.ssh/cu-gitlab
+
+Host patchloyalty.com
+    HostName patchloyalty.com
+    User root
+    IdentityFile ~/.ssh/patch-landing-server
+
+Host flycloud.ballkit.ru
+    HostName flycloud.ballkit.ru
+    User root
+    IdentityFile ~/.ssh/ballkit-flycloud
+
+Host coffeelibrary.ballkit.ru
+    HostName 147.45.212.234
+    User root
+    IdentityFile ~/.ssh/balkit-coffeelib

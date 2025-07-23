@@ -1,0 +1,87 @@
+[default]
+depends = [
+    "zsh", 
+    "waybar", 
+    "hyprland",
+    "tmux",
+    "sway",
+    "nvim",
+    "wofi",
+    "kitty",
+    "git",
+    "ssh",
+    "scripts",
+    "alacritty",
+    "wlinitrc",
+    "fastfetch",
+    "zathura",
+    "wallpapers",
+    "mako",
+    "vim",
+    "ghostty",
+    "helix",
+]
+
+
+[zsh.files]
+"zsh/.zshrc" = "~/.zshrc"
+
+[waybar.files]
+"waybar" = "~/.config/waybar"
+
+[hyprland.files]
+"hypr" = "~/.config/hypr"
+
+[tmux.files]
+"tmux/.tmux.conf" = "~/.tmux.conf"
+"tmux/.tmux.conf.local" = "~/.tmux.conf.local"
+"tmux/tmux-sessionx" = "~/.tmux/plugins/tmux-sessionx"
+
+
+[sway.files]
+"sway" = "~/.config/sway"
+
+[nvim.files]
+"nvim" = "~/.config/nvim"
+
+[wofi.files]
+"wofi" = "~/.config/wofi"
+
+[kitty.files]
+"kitty" = "~/.config/kitty"
+
+[git.files]
+"git/.gitconfig" = "~/.gitconfig"
+
+[ssh.files]
+"ssh/config" = "~/.ssh/config"
+
+[scripts.files]
+"scripts" = "~/scripts"
+
+[alacritty.files]
+"alacritty" = "~/.config/alacritty"
+
+[wlinitrc.files]
+"wlinitrc/wlinitrc" = "~/.local/bin/wlinitrc"
+
+[fastfetch.files]
+"fastfetch" = "~/.config/fastfetch"
+
+[zathura.files]
+"zathura" = "~/.config/zathura"
+
+[wallpapers.files]
+"wallpapers" = "~/Pictures/wallpapers"
+
+[mako.files]
+"mako" = "~/.config/mako"
+
+[vim.files]
+"vim/.vimrc" = "~/.vimrc"
+
+[ghostty.files]
+"ghostty" = "~/.config/ghostty"
+
+[helix.files]
+"helix" = "~/.config/helix"

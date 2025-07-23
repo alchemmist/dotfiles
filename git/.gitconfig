@@ -1,0 +1,15 @@
+[init]
+	defaultBranch = main
+[user]
+	email = anton.ingrish@gmail.com
+	name = Alchemmist
+[core]
+	editor = nvim
+	quotePath = false
+[url "git@github.com:"]
+    insteadOf = git@github.com:Alchemmist/
+
+[url "git@github-sub:"]
+    insteadOf = git@github.com:flamelen/
+[http]
+	postBuffer = 524288000

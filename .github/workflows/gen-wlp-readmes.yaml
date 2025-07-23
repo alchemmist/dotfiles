@@ -1,0 +1,43 @@
+name: Generate README previews
+on:
+  push:
+    branches:
+      - main
+jobs:
+  generate-readmes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Install dependencies
+        run: |
+          sudo apt update && sudo apt install -y git imagemagick wget
+          sudo apt remove imagemagick
+          t=$(sudo mktemp) 
+          sudo wget 'https://dist.1-2.dev/imei.sh' -qO "$t" 
+          sudo bash "$t" 
+          sudo rm "$t"
+          convert --version
+      - name: Make scripts executable
+        run: chmod +x ./scripts/gen-readme-for-wlp.sh ./scripts/build-wallpaper-pages.sh
+      - name: Run script to generate READMEs
+        run: ./scripts/build-wallpaper-pages.sh
+      - name: Add changes to Git stage
+        run: |
+          git add .
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit --amend --no-edit
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.head_ref }}
+          force_with_lease: true
+

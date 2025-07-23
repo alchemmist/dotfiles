@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd ~
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+export XCURSOR_SIZE=24
+export QT_QPA_PLATFORM=wayland
+export ELECTRON_OZONE_PLATFORM_HINT=wayland
+export SDL_VIDEODRIVER=wayland
+export CLUTTER_BACKEND=wayland
+export XDG_SESSION_TYPE=wayland
+export GDK_BACKEND=wayland
+
+
+exec /home/alchemmist/scripts/tdm.sh
+

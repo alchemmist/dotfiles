@@ -1,0 +1,13 @@
+repos:
+  - repo: local
+    hooks:
+      - id: save-pacman-packages
+        name: Save pacman package lists
+        entry: >
+          bash -c 'mkdir -p arch &&
+          pacman -Qqen > arch/pkglist.txt &&
+          pacman -Qqem > arch/aurlist.txt &&
+          git add arch/pkglist.txt arch/aurlist.txt'
+        language: system
+        pass_filenames: false
+

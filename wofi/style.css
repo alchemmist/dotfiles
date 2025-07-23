@@ -1,0 +1,79 @@
+window {
+    margin: 0px;
+    border: 5px solid rgba(30, 30, 46, 0.0); /* Полупрозрачный бордер */
+    background-color: rgba(30, 30, 46, 0.3); /* Прозрачный фон */
+    border-radius: 15px;
+    backdrop-filter: blur(14px); /* Размытие фона */
+}
+
+#input {
+    padding: 4px;
+    margin: 4px;
+    padding-left: 20px;
+    border: none;
+    color: #cdd6f4;
+    font-weight: bold;
+    background-color: rgba(30, 30, 46, 0.0); /* Прозрачность для ввода */
+    outline: none;
+    border-radius: 15px;
+    margin: 10px;
+    margin-bottom: 2px;
+}
+#input:focus {
+    border: none;
+    margin-bottom: 0px;
+}
+
+#inner-box {
+    margin: 4px;
+    border: 10px solid rgba(30, 30, 46, 0.0); /* Прозрачный бордер */
+    color: #cdd6f4;
+    font-weight: bold;
+    background-color: rgba(30, 30, 46, 0.0); /* Прозрачный фон */
+    border-radius: 15px;
+}
+
+#outer-box {
+    margin: 0px;
+    border: none;
+    border-radius: 15px;
+    background-color: rgba(30, 30, 46, 0.3); /* Прозрачный фон */
+    backdrop-filter: blur(20px); /* Размытие фона */
+}
+
+#scroll {
+    margin-top: 5px;
+    border: none;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    background-color: rgba(30, 30, 46, 0.0); /* Прозрачный фон */
+}
+
+#img:selected {
+    background-color: rgba(137, 180, 250, 0.4); /* Полупрозрачный выделенный фон */
+    border-radius: 15px;
+}
+
+#text:selected {
+    color: #cdd6f4;
+    margin: 0px 0px;
+    border: none;
+    border-radius: 15px;
+    background-color: rgba(137, 180, 250, 0.0); /* Полупрозрачный выделенный фон */
+}
+
+#entry {
+    margin-top: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: transparent;
+}
+
+#entry:selected {
+    margin: 0px 0px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: rgba(137, 180, 250, 0.4); /* Полупрозрачный выделенный фон */
+}
+
