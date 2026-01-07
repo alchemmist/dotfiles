@@ -162,30 +162,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.keymap.set("i", "<C-_>", "<C-w>", { noremap = true })
 
 vim.o.background = "dark" -- or "light" for light mode
-require("gruvbox").setup({
-	terminal_colors = true,
-	undercurl = true,
-	underline = true,
-	bold = true,
-	italic = {
-		strings = true,
-		emphasis = true,
-		comments = true,
-		operators = false,
-		folds = true,
-	},
-	strikethrough = true,
-	invert_selection = false,
-	invert_signs = false,
-	invert_tabline = false,
-	inverse = true, -- invert background for search, diffs, statuslines and errors
-	contrast = "", -- can be "hard", "soft" or empty string
-	palette_overrides = {},
-	overrides = {},
-	dim_inactive = false,
-	transparent_mode = true,
-})
--- vim.cmd("colorscheme gruvbox")
 vim.o.cursorline = false
 
 -- Горячая клавиша для текущего символа
@@ -193,7 +169,6 @@ vim.keymap.set("n", "<leader>lr", function()
 	vim.cmd("LeanAbbreviationsReverseLookup")
 end, { noremap = true, silent = true, desc = "Lean: Reverse Abbreviation Lookup" })
 
-require("plugins.configs.dap")
 
 require("snippets")
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
@@ -204,4 +179,3 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 require("git-conflict")
-
