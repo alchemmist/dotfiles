@@ -12,7 +12,7 @@ local overrides = {
 			"prettier",
 			"clangd",
 			"pyright",
-			"black",
+			"ruff",
 			"latexindent",
 			"rust-analyzer",
 			"gopls",
@@ -86,11 +86,7 @@ local plugins = {
 		init = function()
 			require("core.utils").lazy_load("nvim-treesitter")
 		end,
-		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 		build = ":TSUpdate",
-		opts = function()
-			return require("plugins.configs.treesitter")
-		end,
 	},
 
 	-- git stuff
@@ -699,7 +695,35 @@ local plugins = {
 	{
 		"stevearc/conform.nvim",
 		config = function()
-			require("conform").setup()
+			require("conform").setup({
+				formatters = {
+					ruff = {
+						command = "ruff",
+						args = { "format", "--stdin-filename", "$FILENAME", "-" },
+						stdin = true,
+					},
+				},
+				formatters_by_ft = {
+					lua = { "stylua" },
+					python = { "ruff" },
+					javascript = { "prettier" },
+					typescript = { "prettier" },
+					javascriptreact = { "prettier" },
+					typescriptreact = { "prettier" },
+					json = { "prettier" },
+					yaml = { "prettier" },
+					html = { "prettier" },
+					css = { "prettier" },
+					scss = { "prettier" },
+					sh = { "shfmt" },
+					rust = { "rustfmt" },
+					go = { "gofmt" },
+					markdown = { "prettier" },
+					toml = { "taplo" },
+					tex = { "tex-fmt" },
+					java = { "clang-format" },
+				},
+			})
 			vim.api.nvim_create_autocmd("BufReadPost", {
 				pattern = "*",
 				callback = function()
@@ -751,7 +775,7 @@ local plugins = {
 					return { "treesitter", "indent" }
 				end,
 			})
-			
+
 			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
 			vim.keymap.set("n", "<leader>h", function()

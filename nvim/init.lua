@@ -10,6 +10,7 @@ end
 dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
 require("plugins")
+require("plugins.configs.treesitter")
 
 vim.cmd([[
 function OpenMarkdownPreview (url)
@@ -17,7 +18,6 @@ function OpenMarkdownPreview (url)
 endfunction
 ]])
 vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
-
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "java",
@@ -168,7 +168,6 @@ vim.o.cursorline = false
 vim.keymap.set("n", "<leader>lr", function()
 	vim.cmd("LeanAbbreviationsReverseLookup")
 end, { noremap = true, silent = true, desc = "Lean: Reverse Abbreviation Lookup" })
-
 
 require("snippets")
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
