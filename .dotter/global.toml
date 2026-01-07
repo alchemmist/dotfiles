@@ -1,103 +1,35 @@
-# Пустая секция symlinks в корне (обязательно!)
-[symlinks]
+[helpers]
 
-# Профиль по умолчанию
 [default]
-depends = [
-    "zsh", "waybar", "hyprland", "tmux", "sway", "nvim", "wofi",
-    "kitty", "git", "ssh", "scripts", "alacritty", "wlinitrc",
-    "fastfetch", "zathura", "wallpapers", "mako", "vim", "ghostty",
-    "helix", "wlogout", "swaync"
-]
+depends = []
 
-# Теперь для каждого модуля используем [module] вместо [module.files]
-
-[zsh]
-[zsh.symlinks]
+[default.files]
 "zsh/.zshrc" = "~/.zshrc"
-
-[waybar]
-[waybar.symlinks]
 "waybar" = "~/.config/waybar"
-
-[hyprland]
-[hyprland.symlinks]
 "hypr" = "~/.config/hypr"
-
-[tmux]
-[tmux.symlinks]
 "tmux/.tmux.conf" = "~/.tmux.conf"
 "tmux/.tmux.conf.local" = "~/.tmux.conf.local"
 "tmux/tmux-sessionx" = "~/.tmux/plugins/tmux-sessionx"
-
-[sway]
-[sway.symlinks]
 "sway" = "~/.config/sway"
-
-[nvim]
-[nvim.symlinks]
 "nvim" = "~/.config/nvim"
-
-[wofi]
-[wofi.symlinks]
 "wofi" = "~/.config/wofi"
-
-[kitty]
-[kitty.symlinks]
 "kitty" = "~/.config/kitty"
-
-[git]
-[git.symlinks]
 "git/.gitconfig" = "~/.gitconfig"
-
-[ssh]
-[ssh.symlinks]
 "ssh/config" = "~/.ssh/config"
-
-[scripts]
-[scripts.symlinks]
 "scripts" = "~/scripts"
-
-[alacritty]
-[alacritty.symlinks]
 "alacritty" = "~/.config/alacritty"
-
-[wlinitrc]
-[wlinitrc.symlinks]
 "wlinitrc/wlinitrc" = "~/.local/bin/wlinitrc"
-
-[fastfetch]
-[fastfetch.symlinks]
 "fastfetch" = "~/.config/fastfetch"
-
-[zathura]
-[zathura.symlinks]
 "zathura" = "~/.config/zathura"
-
-[wallpapers]
-[wallpapers.symlinks]
 "wallpapers" = "~/Pictures/wallpapers"
-
-[mako]
-[mako.symlinks]
 "mako" = "~/.config/mako"
-
-[vim]
-[vim.symlinks]
 "vim/.vimrc" = "~/.vimrc"
-
-[ghostty]
-[ghostty.symlinks]
 "ghostty" = "~/.config/ghostty"
-
-[helix]
-[helix.symlinks]
 "helix" = "~/.config/helix"
-
-[wlogout]
-[wlogout.symlinks]
 "wlogout" = "~/.config/wlogout"
-
-[swaync]
-[swaync.symlinks]
 "swaync" = "~/.config/swaync"
+
+[default.variables]
+
+[settings]
+default_target_type = "automatic"
