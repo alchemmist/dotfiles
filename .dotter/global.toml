@@ -28,6 +28,7 @@ depends = []
 "helix" = "~/.config/helix"
 "wlogout" = "~/.config/wlogout"
 "swaync" = "~/.config/swaync"
+"starship" = "~/.config/starship"
 
 [default.variables]
 

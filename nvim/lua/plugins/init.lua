@@ -66,8 +66,18 @@ local plugins = {
 	},
 
 	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		opts = {
+			ensure_installed = { "lua", "vim", "python", "go", "javascript", "typescript", "c", "cpp", "html", "css" },
+			highlight = { enable = true },
+			indent = { enable = true },
+		},
+	},
+
+	{
 		"lukas-reineke/indent-blankline.nvim",
-		version = "2.20.7",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		init = function()
 			require("core.utils").lazy_load("indent-blankline.nvim")
 		end,
@@ -80,15 +90,6 @@ local plugins = {
 			require("indent_blankline").setup(opts)
 		end,
 	},
-
-	{
-		"nvim-treesitter/nvim-treesitter",
-		init = function()
-			require("core.utils").lazy_load("nvim-treesitter")
-		end,
-		build = ":TSUpdate",
-	},
-
 	-- git stuff
 	{
 		"kdheepak/lazygit.nvim",
@@ -284,11 +285,6 @@ local plugins = {
 	{
 		"williamboman/mason.nvim",
 		opts = overrides.mason,
-	},
-
-	{
-		"nvim-treesitter/nvim-treesitter",
-		opts = overrides.treesitter,
 	},
 
 	-- Install a plugin
@@ -718,7 +714,6 @@ local plugins = {
 					sh = { "shfmt" },
 					rust = { "rustfmt" },
 					go = { "gofmt" },
-					markdown = { "prettier" },
 					toml = { "taplo" },
 					tex = { "tex-fmt" },
 					java = { "clang-format" },
@@ -795,7 +790,7 @@ local plugins = {
 		end,
 	},
 	{
-		"Alchemmist/nothing.nvim",
+		"alchemmist/nothing.nvim",
 		version = "*",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()

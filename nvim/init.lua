@@ -10,6 +10,7 @@ end
 dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
 require("plugins")
+
 require("plugins.configs.treesitter")
 
 vim.cmd([[
