@@ -1,0 +1,183 @@
+:root {
+  --cc-bg: rgba(30, 30, 46, 0.7);
+  --noti-bg: rgba(30, 30, 46, 0.4);
+  --noti-bg-focus: rgba(30, 30, 46, 0.5);
+  --noti-close-bg: rgba(255, 255, 255, 0.1);
+  --noti-close-bg-hover: rgba(255, 255, 255, 0.2);
+  --text-color: rgb(255, 255, 255);
+  --text-color-disabled: rgb(100, 100, 100);
+  --border-radius: 8px;
+  --font-size-summary: 15px;
+  --font-size-body: 14px;
+  --font-size-time: 13px;
+  --transition: all 0.15s ease-in-out;
+}
+
+* {
+  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  color: var(--text-color);
+  box-shadow: none;
+  border: none;
+}
+
+/* Основные окна */
+.notification-row,
+.blank-window,
+.floating-notifications,
+.control-center {
+  background: transparent;
+}
+
+/* Каждое уведомление */
+.notification {
+  background: var(--noti-bg);
+  border-radius: var(--border-radius);
+  padding: 8px 12px;
+  margin: 6px;
+  transition: var(--transition);
+}
+
+/* Иконка и контент */
+.notification .notification-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notification .image {
+  -gtk-icon-size: 48px;
+  border-radius: var(--border-radius);
+}
+
+.notification .text-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification .summary {
+  font-size: var(--font-size-summary);
+  font-weight: 600;
+}
+
+.notification .body {
+  font-size: var(--font-size-body);
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.notification .time {
+  font-size: var(--font-size-time);
+  color: var(--text-color-disabled);
+}
+
+/* Кнопка закрытия */
+.close-button {
+  background: var(--noti-close-bg);
+  border-radius: 50%;
+  min-width: 22px;
+  min-height: 22px;
+  margin: 4px;
+  transition: var(--transition);
+}
+
+.close-button:hover {
+  background: var(--noti-close-bg-hover);
+}
+
+/* Контрольный центр */
+.control-center {
+  background: var(--cc-bg);
+  border-radius: var(--border-radius);
+  margin: 10px;
+  padding: 8px;
+}
+
+.control-center .control-center-list {
+  background: transparent;
+}
+
+/* Placeholder */
+.control-center .control-center-list-placeholder {
+  opacity: 0.5;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Минималистичные виджеты */
+.widget {
+  padding: 6px;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.widget-dnd label,
+.widget-volume label,
+.widget-backlight label {
+  font-size: 14px;
+}
+
+.widget-volume slider,
+.widget-backlight slider {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  opacity: 0.7;
+}
+
+/* Без теней и лишних рамок */
+.notification,
+.widget,
+.control-center {
+  box-shadow: none;
+  border: none;
+}
+
+/* Убираем визуальный шум при фокусе */
+.notification-row:focus,
+.notification-group:focus {
+  outline: none;
+  background: transparent;
+}
+
+/* Фон только у корня уведомления */
+.notification-row .notification {
+  background: var(--noti-bg); /* только один слой фона */
+  border-radius: var(--border-radius);
+  padding: 8px 12px;
+  margin: 6px;
+  transition: var(--transition);
+}
+
+/* Убираем фон внутри */
+.notification-row .notification .notification-default-action,
+.notification-row .notification .notification-content {
+  background: transparent; /* убираем внутренние фоны */
+  box-shadow: none; /* убираем внутренние тени */
+}
+
+/* Hover не меняет фон */
+.notification-row .notification:hover {
+  background: var(--noti-bg);
+  color: var(--text-color);
+}
+
+/* Крестик */
+.close-button {
+  background: var(--noti-close-bg);
+}
+
+.close-button:hover {
+  background: var(--noti-close-bg-hover);
+}
+
+.control-center .control-center-list .notification-row,
+.control-center .control-center-list .notification-background,
+.control-center .control-center-list .notification,
+.control-center .control-center-list .notification-default-action {
+  margin: 0;
+  width: 100%;
+}
+
+.control-center .control-center-list .notification {
+  margin: 4px 0; /* только вертикальные промежутки между уведомлениями */
+}

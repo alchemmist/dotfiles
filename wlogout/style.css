@@ -1,0 +1,168 @@
+* {
+  background-image: none;
+  font-size: 20px;
+  font-family: "JetBrains Mono NFM";
+}
+
+/*
+* Css Colors
+* Generated with Matugen
+*/
+
+@define-color background #121318;
+
+@define-color error #ffb4ab;
+
+@define-color error_container #93000a;
+
+@define-color inverse_on_surface #2f3036;
+
+@define-color inverse_primary #475d91;
+
+@define-color inverse_surface #e2e2e9;
+
+@define-color on_background #e2e2e9;
+
+@define-color on_error #690005;
+
+@define-color on_error_container #ffdad6;
+
+@define-color on_primary #152e60;
+
+@define-color on_primary_container #d9e2ff;
+
+@define-color on_primary_fixed #001945;
+
+@define-color on_primary_fixed_variant #2e4578;
+
+@define-color on_secondary #293042;
+
+@define-color on_secondary_container #dce2f9;
+
+@define-color on_secondary_fixed #141b2c;
+
+@define-color on_secondary_fixed_variant #404659;
+
+@define-color on_surface #e2e2e9;
+
+@define-color on_surface_variant #c5c6d0;
+
+@define-color on_tertiary #412742;
+
+@define-color on_tertiary_container #fdd7fa;
+
+@define-color on_tertiary_fixed #2a132c;
+
+@define-color on_tertiary_fixed_variant #593d5a;
+
+@define-color outline #8f9099;
+
+@define-color outline_variant #44464f;
+
+@define-color primary #b0c6ff;
+
+@define-color primary_container #2e4578;
+
+@define-color primary_fixed #d9e2ff;
+
+@define-color primary_fixed_dim #b0c6ff;
+
+@define-color scrim #000000;
+
+@define-color secondary #c0c6dc;
+
+@define-color secondary_container #404659;
+
+@define-color secondary_fixed #dce2f9;
+
+@define-color secondary_fixed_dim #c0c6dc;
+
+@define-color shadow #000000;
+
+@define-color source_color #c9d5f9;
+
+@define-color surface #121318;
+
+@define-color surface_bright #38393f;
+
+@define-color surface_container #1e1f25;
+
+@define-color surface_container_high #282a2f;
+
+@define-color surface_container_highest #33353a;
+
+@define-color surface_container_low #1a1b20;
+
+@define-color surface_container_lowest #0c0e13;
+
+@define-color surface_dim #121318;
+
+@define-color surface_tint #b0c6ff;
+
+@define-color surface_variant #44464f;
+
+@define-color tertiary #e0bbde;
+
+@define-color tertiary_container #593d5a;
+
+@define-color tertiary_fixed #fdd7fa;
+
+@define-color tertiary_fixed_dim #e0bbde;
+
+window {
+  background-color: rgba(17, 17, 17, 0.15);
+}
+
+button {
+  border-radius: 20px;
+  margin: 10px;
+  color: @inverse_surface;
+  border-color: @inverse_surface;
+  background-color: rgba(0, 0, 0, 0.5);
+  outline-style: none;
+  border-style: solid;
+  border-width: 0px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20%;
+  box-shadow: none;
+  text-shadow: none;
+  animation: gradient_f 20s ease-in infinite;
+}
+
+button:hover,
+button:focus {
+  background-color: @on_secondary_fixed_variant;
+  background-size: 30%;
+  animation: gradient_f 20s ease-in infinite;
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.28, 1.682);
+}
+
+/* Adjust the size of the icon or content inside the button */
+button span {
+  font-size: 1.2em; /* Increase the font size */
+}
+
+#lock {
+  background-image: image(url("./icons/lock.png"));
+}
+
+#logout {
+  background-image: image(url("./icons/logout.png"));
+}
+
+#suspend {
+  background-image: image(url("./icons/sleep.png"));
+}
+
+#shutdown {
+  background-image: image(url("./icons/power.png"));
+}
+
+#reboot {
+  background-image: image(url("./icons/restart.png"));
+}
+
+#hibernate {
+  background-image: image(url("./icons/hibernate.png"));
+}

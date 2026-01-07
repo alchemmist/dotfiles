@@ -1,0 +1,28 @@
+theme = "nothing"
+
+[editor]
+line-number = "absolute"
+mouse = true
+scrolloff = 0
+bufferline = "multiple"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.statusline]
+left = []
+center = [ ]
+right = [ ]
+
+
+[keys.normal]
+C-r = ":config-reload"
+L = ":buffer-next"
+H = ":buffer-previous"
+T = ":tree-sitter-highlight-name"
+

@@ -1,0 +1,70 @@
+window {
+    margin: 0;
+    border: 5px solid transparent; /* прозрачный бордер */
+    background-color: rgba(30, 30, 46, 0.6);
+    border-radius: 15px;
+    backdrop-filter: blur(14px);
+}
+
+#input {
+    padding: 4px 4px 4px 20px;
+    margin: 10px 4px 2px 4px; /* объединяем повторяющиеся margin */
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    background-color: transparent;
+    color: #cdd6f4;
+    font-weight: bold;
+}
+
+#input:focus {
+    margin-bottom: 0;
+}
+
+#inner-box {
+    margin: 4px;
+    border: 10px solid transparent;
+    border-radius: 15px;
+    background-color: transparent;
+    color: #cdd6f4;
+    font-weight: bold;
+}
+
+#outer-box {
+    margin: 0;
+    border: none;
+    border-radius: 15px;
+    background-color: rgba(30, 30, 46, 0.1);
+    backdrop-filter: blur(20px);
+}
+
+#scroll {
+    margin: 5px 0;
+    border: none;
+    border-radius: 15px;
+    background-color: transparent;
+}
+
+
+#text:selected {
+    margin: 0;
+    border: none;
+    border-radius: 15px;
+    background-color: transparent;
+    color: #cdd6f4;
+}
+
+#entry {
+    margin-top: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: transparent;
+}
+
+#entry:selected {
+    margin: 10px 0 0 0;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(137, 180, 250, 0.2);
+}
+

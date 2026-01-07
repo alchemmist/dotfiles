@@ -1,0 +1,35 @@
+* {
+    font-family: "CascadiaMonoNerdFont";
+    font-size: 15px;
+    border: none;
+    color: #839496;
+    background: #252525;
+    border-radius: 0;
+}
+
+#workspaces button {
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background: transparent;
+    color: white;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.focused {
+    border-bottom: 3px solid white;
+}
+
+#clock, 
+#cpu, 
+#memory, 
+#network, 
+#battery, 
+#pulseaudio, 
+#custom-wifi {
+    padding: 0 10px;
+    background: transparent;
+}
+
+

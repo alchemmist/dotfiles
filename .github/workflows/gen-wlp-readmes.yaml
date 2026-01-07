@@ -1,0 +1,48 @@
+name: Generate README previews
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-readmes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bc wget pngcrush optipng git build-essential \
+            libpng-dev libjpeg-dev libtiff-dev libwebp-dev libltdl-dev \
+            libbz2-dev libfreetype6-dev libx11-dev libxext-dev libxml2-dev \
+            libopenexr-dev libopenjp2-7-dev libwmf-dev libdjvulibre-dev \
+            libfftw3-dev liblqr-1-0-dev libgvc6
+
+          # Создаем временную директорию для сборки ImageMagick
+          TEMP_DIR=$(mktemp -d)
+          cd $TEMP_DIR
+          git clone https://github.com/ImageMagick/ImageMagick.git
+          cd ImageMagick
+          ./configure --with-modules
+          make -j$(nproc)
+          sudo make install
+          sudo ldconfig /usr/local/lib
+          convert --version
+          # Очищаем временную директорию
+          cd ~
+          rm -rf "$TEMP_DIR"
+
+      - name: Run scripts
+        run: |
+          chmod +x ./scripts/*.sh
+          REPO_ROOT="$GITHUB_WORKSPACE" ./scripts/build-wallpaper-pages.sh
+
+      - name: Commit and push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit --amend --no-edit
+          git push --force-with-lease

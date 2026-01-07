@@ -1,0 +1,5 @@
+.dotter/local.toml
+.dotter/cache.toml
+.dotter/cache
+venv
+token.json
