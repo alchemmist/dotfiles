@@ -29,6 +29,7 @@ depends = []
 "wlogout" = "~/.config/wlogout"
 "swaync" = "~/.config/swaync"
 "starship" = "~/.config/starship"
+"yazi" = "~/.config/yazi"
 
 [default.variables]
 

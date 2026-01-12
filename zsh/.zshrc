@@ -262,7 +262,7 @@ rm() {
 
 
 source <(fzf --zsh)
-eval "fastfetch"
+# eval "fastfetch"
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh

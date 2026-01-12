@@ -1,13 +1,18 @@
-# Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Inserts a blank line between shell prompts
+format = "$directory\n$character"
+
+
 add_newline = true
 
-# Replace the '❯' symbol in the prompt with '➜'
-[character] # The name of the module we are configuring is 'character'
-success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+[character]
+success_symbol = '[➜](#fff)'
 
-# Disable the package module, hiding it from the prompt completely
+[directory]
+style = "#ffffff"
+format = "[$path]($style) "
+truncation_length = 3
+truncate_to_repo = false
+
 [package]
 disabled = true

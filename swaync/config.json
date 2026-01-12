@@ -47,14 +47,14 @@
       "state": "muted",
       "urgency": "Low",
       "app-name": "Spotify"
+    },
+    "flameshot": {
+      "state": "muted",
+      "urgency": "Low",
+      "app-name": "flameshot"
     }
   },
-  "widgets": [
-    "inhibitors",
-    "title",
-    "dnd",
-    "notifications"
-  ],
+  "widgets": ["inhibitors", "title", "dnd", "notifications"],
   "widget-config": {
     "notifications": {
       "vexpand": true
@@ -96,4 +96,3 @@
     }
   }
 }
-
