@@ -22,6 +22,8 @@ local overrides = {
 			"coq-lsp",
 			"tex-fmt",
 			"shfmt",
+			"texlab",
+			"mbake",
 		},
 	},
 }
@@ -77,17 +79,18 @@ local plugins = {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		init = function()
-			require("core.utils").lazy_load("indent-blankline.nvim")
-		end,
-		opts = function()
-			return require("plugins.configs.others").blankline
-		end,
+		main = "ibl",
+		---@module "ibl"
+		---@type ibl.config
+		opts = {
+			indent = {
+				char = "▏",
+				highlight = "Indent",
+			},
+		},
 		config = function(_, opts)
-			require("core.utils").load_mappings("blankline")
-			dofile(vim.g.base46_cache .. "blankline")
-			require("indent_blankline").setup(opts)
+			require("nothing").ibl_setup() -- Optional built-in integration
+			require("ibl").setup(opts)
 		end,
 	},
 	-- git stuff
@@ -698,6 +701,11 @@ local plugins = {
 						args = { "format", "--stdin-filename", "$FILENAME", "-" },
 						stdin = true,
 					},
+					mbake = {
+						command = "mbake",
+						args = { "format", "$FILENAME" },
+						stdin = false,
+					},
 				},
 				formatters_by_ft = {
 					lua = { "stylua" },
@@ -717,6 +725,8 @@ local plugins = {
 					toml = { "taplo" },
 					tex = { "tex-fmt" },
 					java = { "clang-format" },
+					make = { "mbake" },
+					markdown = { "prettier" },
 				},
 			})
 			vim.api.nvim_create_autocmd("BufReadPost", {

@@ -12,6 +12,15 @@ vim.opt.rtp:prepend(lazypath)
 require("plugins")
 
 require("plugins.configs.treesitter")
+require("ibl").setup({
+    enabled = false,
+	scope = {
+		enabled = false,
+		show_start = false,
+		show_end = false,
+		highlight = nil,
+	},
+})
 
 vim.cmd([[
 function OpenMarkdownPreview (url)

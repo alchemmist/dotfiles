@@ -46,13 +46,17 @@ M.general = {
 		["<leader>rr"] = { "<cmd> RustRun <CR>", "Fust run rust file" },
 		["<leader>rl"] = { "<cmd> !lua % <CR>", "Fust run lua file" },
 		["<leader>rg"] = { "<cmd> !go run % <CR>", "Fust run go file" },
-		["<leader>rc"] = { "<cmd> !gcc -Wall -Werror -O2 -g -std=gnu17 -fsanitize=undefined,address % -o %:r && ./%:r <CR>", "Fast run C file" },
+		["<leader>rc"] = {
+			"<cmd> !gcc -Wall -Werror -O2 -g -std=gnu17 -fsanitize=undefined,address % -o %:r && ./%:r <CR>",
+			"Fast run C file",
+		},
 
 		-- Copy all
 		["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
 
 		-- line numbers
 		["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },
+		["<leader>i"] = { "<cmd> IBLToggle <CR>", "Toggle line number" },
 		["<leader>rn"] = { "<cmd> set rnu! <CR>", "Toggle relative number" },
 
 		-- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
