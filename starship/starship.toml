@@ -1,6 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$directory\n$character"
+format = "$directory$git_branch$git_status\n$character"
 
 
 add_newline = true
@@ -16,3 +16,11 @@ truncate_to_repo = false
 
 [package]
 disabled = true
+
+[git_branch]
+symbol = ""
+format = "[$symbol $branch]($style) "
+style = "green"
+
+[git_status]
+style = "green"
