@@ -2,15 +2,23 @@
 
 SERVICE="hypridle"
 
-STATUS_ON='{"text":"Caffeine","class":"activated","alt":"activated","tooltip":"Sleep inhibited"}'
-STATUS_OFF='{"text":"Idle","class":"deactivated","alt":"deactivated","tooltip":"Sleep allowed"}'
+STATUS_CAFFEINE='{"text":"Caffeine","class":"activated","alt":"activated","tooltip":"Sleep inhibited"}'
+STATUS_IDLE='{"text":"Idle","class":"deactivated","alt":"deactivated","tooltip":"Sleep allowed"}'
 
-is_active() {
+is_idle_active() {
   systemctl --user is-active --quiet "$SERVICE"
 }
 
+print_status() {
+  if is_idle_active; then
+    echo "$STATUS_IDLE"
+  else
+    echo "$STATUS_CAFFEINE"
+  fi
+}
+
 toggle() {
-  if is_active; then
+  if is_idle_active; then
     systemctl --user stop "$SERVICE"
   else
     systemctl --user start "$SERVICE"
@@ -18,15 +26,13 @@ toggle() {
 }
 
 case "$1" in
-  -s|--status)
-    if is_active; then
-      echo "$STATUS_ON"
-    else
-      echo "$STATUS_OFF"
-    fi
-    ;;
   -t|--toggle)
     toggle
+    sleep 0.1
+    print_status
+    ;;
+  -s|--status|"")
+    print_status
     ;;
 esac
 

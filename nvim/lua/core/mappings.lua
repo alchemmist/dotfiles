@@ -540,7 +540,7 @@ M.lspconfig = {
 			end,
 			"List workspace folders",
 		},
-		["<leader>rn"] = {
+		["<leader>rN"] = {
 			function()
 				vim.lsp.buf.rename()
 			end,

@@ -706,6 +706,11 @@ local plugins = {
 						args = { "format", "$FILENAME" },
 						stdin = false,
 					},
+					clang_format = {
+						command = "clang-format",
+						args = { "--style={BasedOnStyle: LLVM, IndentWidth: 4}", "$FILENAME" },
+						stdin = true,
+					},
 				},
 				formatters_by_ft = {
 					lua = { "stylua" },
@@ -725,6 +730,8 @@ local plugins = {
 					toml = { "taplo" },
 					tex = { "tex-fmt" },
 					java = { "clang-format" },
+					c = { "clang_format" },
+					cpp = { "clang_format" },
 					make = { "mbake" },
 					markdown = { "prettier" },
 				},
