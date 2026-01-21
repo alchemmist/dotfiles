@@ -16,9 +16,7 @@
 # on Ghostty's website, at https://ghostty.org/docs/config.
 
 
-# theme = Homebrew
 theme = Dark Pastel
-# theme = GruvboxDarkHard
 font-family = "JetBrainsMono Nerd Font Mono"
 confirm-close-surface = false
 font-size = 12
@@ -27,8 +25,32 @@ adjust-cursor-height = 1
 adjust-cursor-thickness = 1
 cursor-style = block_hollow
 mouse-hide-while-typing = true
-# window-padding-x = 20
 
+
+palette = 0=#000000
+palette = 1=#ff5555
+palette = 2=#6aa84f
+palette = 3=#ffff55
+palette = 4=#5555ff
+palette = 5=#ff55ff
+palette = 6=#59C2FF
+palette = 7=#bbbbbb
+palette = 8=#555555
+palette = 9=#ff5555
+palette = 10=#6aa84f
+palette = 11=#ffff55
+palette = 12=#5555ff
+palette = 13=#ff55ff
+palette = 14=#59C2FF
+palette = 15=#ffffff
+background = #000000
+foreground = #ffffff
+cursor-color = #bbbbbb
+cursor-text = #ffffff
+selection-background = #b5d5ff
+selection-foreground = #000000
+
+# window-padding-x = 20
 
 
 

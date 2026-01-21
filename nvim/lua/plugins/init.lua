@@ -708,7 +708,10 @@ local plugins = {
 					},
 					clang_format = {
 						command = "clang-format",
-						args = { "--style={BasedOnStyle: LLVM, IndentWidth: 4}", "$FILENAME" },
+						args = {
+							"--style={BasedOnStyle: LLVM, IndentWidth: 4, AllowShortFunctionsOnASingleLine: None, MaxEmptyLinesToKeep: 1}",
+							"$FILENAME",
+						},
 						stdin = true,
 					},
 				},
@@ -734,6 +737,7 @@ local plugins = {
 					cpp = { "clang_format" },
 					make = { "mbake" },
 					markdown = { "prettier" },
+					vue = { "prettier" },
 				},
 			})
 			vim.api.nvim_create_autocmd("BufReadPost", {
