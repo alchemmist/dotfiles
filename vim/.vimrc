@@ -36,6 +36,9 @@ syntax off
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey15
 hi CursorLineNr guifg=#6aa84f
+hi EndOfBuffer guifg=Grey30 ctermfg=Grey
+hi MatchParen guibg=Grey40 ctermbg=Grey 
+
 
 set autoindent
 set smartindent
@@ -50,11 +53,14 @@ function! CopyYankToSystemClipboard(type)
   endif
 endfunction
 
-nnoremap y :call CopyYankToSystemClipboard('n')<CR>
-nnoremap Y :call CopyYankToSystemClipboard('line')<CR>
+nnoremap yy :call CopyYankToSystemClipboard('line')<CR>
 
 xnoremap y :<C-u>call CopyYankToSystemClipboard('v')<CR>
 
 inoremap <Esc><BS> <C-W>
 
 nnoremap <Esc> :nohlsearch<CR>
+
+set noshowcmd
+set wildmenu
+set wildmode=longest:full,full

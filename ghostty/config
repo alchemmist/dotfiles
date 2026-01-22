@@ -50,16 +50,12 @@ cursor-text = #ffffff
 selection-background = #b5d5ff
 selection-foreground = #000000
 
-# window-padding-x = 20
-
-
 
 # Config syntax crash course
 # ==========================
 # # The config file consists of simple key-value pairs,
 # # separated by equals signs.
 # font-family = Iosevka
-# window-padding-x = 2
 #
 # # Spacing around the equals sign does not matter.
 # # All of these are identical:
