@@ -53,6 +53,9 @@ M.general = {
 
 		-- Copy all
 		["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
+		-- ["<leader>pr"] = { "<cmd>let @+=expand('%')<CR>", "Copy relative path of current file" },
+		-- ["<leader>pa"] = { "<cmd>let @+=expand('%:p')<CR>", "Copy absolute path of current file" },
+		["<C-p>"] = { "<cmd>let @+=expand('%:p')<CR>", "Copy absolute path of current file" },
 
 		-- line numbers
 		["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },
