@@ -80,18 +80,11 @@ local plugins = {
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		---@module "ibl"
-		---@type ibl.config
 		opts = {
 			indent = {
 				char = "▏",
-				highlight = "Indent",
 			},
 		},
-		config = function(_, opts)
-			require("nothing").ibl_setup() -- Optional built-in integration
-			require("ibl").setup(opts)
-		end,
 	},
 	-- git stuff
 	{
@@ -811,11 +804,11 @@ local plugins = {
 		end,
 	},
 	{
-		"alchemmist/nothing.nvim",
+		"moss-theme/moss.nvim",
 		version = "*",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
-			vim.cmd("colorscheme nothing")
+			vim.cmd("colorscheme moss")
 		end,
 	},
 	{

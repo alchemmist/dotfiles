@@ -9,7 +9,7 @@ M.load_config = function()
 			hl_override = {
 				Comment = {
 					italic = true,
-                    fg = "red"
+					fg = "red",
 				},
 				NvDashAscii = { bg = "NONE", fg = "green" },
 				NvDashButtons = { bg = "NONE" },

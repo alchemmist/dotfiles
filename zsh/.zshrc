@@ -123,7 +123,6 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-source $ZSH/oh-my-zsh.sh
 
 plugins=(
     git
@@ -136,6 +135,8 @@ plugins=(
     docker-compose
     vi-mode
 )
+
+source $ZSH/oh-my-zsh.sh
 
 
 # User configuration
@@ -338,6 +339,11 @@ bindkey '^G' fzf-widget
 bindkey '^J' zi-widget
 bindkey '^Y' y-widget
 
+bindkey -M viins '^[^?' backward-kill-word
+bindkey -M viins '^[' backward-kill-word
+bindkey -M viins '^H' backward-kill-word
+
+
 
 mycat() {
     if file --mime-type "$1" | grep -q 'image/'; then
@@ -365,3 +371,13 @@ docker() {
 }
 
 
+
+# pnpm
+export PNPM_HOME="/home/alchemmist/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+fpath=(~/.zsh/completions $fpath)

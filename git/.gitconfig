@@ -2,7 +2,7 @@
 	defaultBranch = main
 [user]
 	email = anton.ingrish@gmail.com
-	name = Alchemmist
+	name = alchemmist
 [core]
 	editor = nvim
 	quotePath = false

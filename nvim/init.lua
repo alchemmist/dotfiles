@@ -93,7 +93,7 @@ vim.keymap.set("n", "<leader>h", function()
 	end
 end, { desc = "Toggle fold under cursor" })
 
-vim.cmd("colorscheme nothing")
+vim.cmd("colorscheme moss")
 
 require("colorizer").setup()
 

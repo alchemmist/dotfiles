@@ -14,11 +14,11 @@ opt.showmode = false
 
 
 
--- opt.clipboard = "unnamedplus"
+opt.clipboard = "unnamedplus"
 
-vim.keymap.set({ "n", "v" }, "y", '"+y')
-vim.keymap.set("n", "P", '"+p')
-vim.keymap.set("v", "P", '"+p')
+-- vim.keymap.set({ "n", "v" }, "y", '"+y')
+-- vim.keymap.set("n", "P", '"+p')
+-- vim.keymap.set("v", "P", '"+p')
 
 opt.cursorline = true
 

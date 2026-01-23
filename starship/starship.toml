@@ -6,6 +6,12 @@ add_newline = true
 
 [character]
 success_symbol = '[➜](#fff)'
+error_symbol = "[➜](red)"
+
+vicmd_symbol = "[➜](green)"
+vimcmd_replace_one_symbol = "[➜](green)"
+vimcmd_replace_symbol = "[➜](green)"
+vimcmd_visual_symbol = "[➜](green)"
 
 [directory]
 style = "#ffffff"
