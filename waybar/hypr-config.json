@@ -22,7 +22,6 @@
     "cpu",
     "network",
     "bluetooth",
-    "temperature",
     "battery",
     "custom/battery-degradation",
     "backlight",
@@ -30,7 +29,6 @@
     "pulseaudio#microphone",
     "custom/language",
     "custom/wireguard-manager",
-    // "custom/notifications",
     "custom/caffeine",
     "custom/hyprshade",
     "custom/noscreenshare",
@@ -41,7 +39,7 @@
     "tooltip": false,
     "exec": "swaync-client -c",
     "on-click": "swaync-client -t",
-    "interval": 1
+    "interval": "once"
   },
   "custom/noscreenshare": {
     "format": "{icon}",
@@ -129,21 +127,21 @@
   },
 
   "custom/caffeine": {
-  "exec": "~/scripts/caffeine-manager.sh -s",
-  "format": "{icon}",
-  "format-icons": {
-    "activated": "󱐋",
-    "deactivated": "⏾"
+    "exec": "~/scripts/caffeine-manager.sh -s",
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󱐋",
+      "deactivated": "⏾"
+    },
+    "return-type": "json",
+    "interval": "once",
+    "signal": 7,
+    "on-click": "~/scripts/caffeine-manager.sh -t && pkill -SIGRTMIN+7 waybar"
   },
-  "return-type": "json",
-  "interval": "once",
-  "signal": 2,
-  "on-click": "~/scripts/caffeine-manager.sh -t && pkill -SIGRTMIN+2 waybar"
-},
 
   "custom/pacman_updates": {
     "exec": "~/scripts/pacman_updates.sh",
-    "interval": null,
+    "interval": "none",
     "return-type": "text",
     "format": " {text}"
   },
@@ -179,20 +177,14 @@
     "on-click": "kitty --title wallpaper_pack_selector /home/alchemmist/scripts/select_wallpaper_pack.sh"
   },
 
-  "hyprland/language": {
-    "format-en": "EN",
-    "format-ru": "RU",
-    "keyboard-name": "at-translated-set-2-keyboard",
-    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
-  },
-
   "custom/language": {
     "format-en": "EN",
     "format-ru": "RU",
     "keyboard-name": "at-translated-set-2-keyboard",
-    "exec": "hyprctl devices -j | jq -r '.keyboards[] | select(.main==true) | .active_keymap' | awk '{print toupper(substr($0,1,2))}' && pkill -SIGRTMIN+4 waybar",
-    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next && pkill -SIGRTMIN+4 waybar",
-    "signal": 4
+    "exec": "hyprctl devices -j | jq -r '.keyboards[] | select(.main==true) | .active_keymap' | awk '{print toupper(substr($0,1,2))}'",
+    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next && pkill -SIGRTMIN+5 waybar",
+    "interval": "once",
+    "signal": 5
   },
 
   "hyprland/workspaces": {
