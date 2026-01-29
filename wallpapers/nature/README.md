@@ -17,9 +17,6 @@
 [images/cristina-gottardi-CSpjU6hYo_0-unsplash.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/cristina-gottardi-CSpjU6hYo_0-unsplash.jpg)<br>
 <img src="/media/wlp-preview/nature/cristina-gottardi-CSpjU6hYo_0-unsplash.png" width="500">
 
-[images/derevia-les-doroga-luchi-sveta.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/derevia-les-doroga-luchi-sveta.jpg)<br>
-<img src="/media/wlp-preview/nature/derevia-les-doroga-luchi-sveta.png" width="500">
-
 [images/dolina-tuman-priroda-1.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/dolina-tuman-priroda-1.jpg)<br>
 <img src="/media/wlp-preview/nature/dolina-tuman-priroda-1.png" width="500">
 
@@ -31,9 +28,6 @@
 
 [images/galshtat-hallstatt.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/galshtat-hallstatt.jpg)<br>
 <img src="/media/wlp-preview/nature/galshtat-hallstatt.png" width="500">
-
-[images/gory-kholmy-pasmurno-khmuroe-nebo-tuman-les-lesa-dolina-reka.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/gory-kholmy-pasmurno-khmuroe-nebo-tuman-les-lesa-dolina-reka.jpg)<br>
-<img src="/media/wlp-preview/nature/gory-kholmy-pasmurno-khmuroe-nebo-tuman-les-lesa-dolina-reka.png" width="500">
 
 [images/gory-ozero-otrazhenie-ostrov.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/gory-ozero-otrazhenie-ostrov.jpg)<br>
 <img src="/media/wlp-preview/nature/gory-ozero-otrazhenie-ostrov.png" width="500">
@@ -53,14 +47,11 @@
 [images/les-luchi-derevia-vetki-listva-sosny-bor-sosnovyi-bor-sosnov.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/les-luchi-derevia-vetki-listva-sosny-bor-sosnovyi-bor-sosnov.jpg)<br>
 <img src="/media/wlp-preview/nature/les-luchi-derevia-vetki-listva-sosny-bor-sosnovyi-bor-sosnov.png" width="500">
 
-[images/les-osen-stvoly-listva-derevia-vetki-polumrak-svet-luchi-sol.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/les-osen-stvoly-listva-derevia-vetki-polumrak-svet-luchi-sol.jpg)<br>
-<img src="/media/wlp-preview/nature/les-osen-stvoly-listva-derevia-vetki-polumrak-svet-luchi-sol.png" width="500">
-
 [images/les-svet-otrazhenie-vodoem-bereg.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/les-svet-otrazhenie-vodoem-bereg.jpg)<br>
 <img src="/media/wlp-preview/nature/les-svet-otrazhenie-vodoem-bereg.png" width="500">
 
-[images/les-tuman-derevia-4.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/les-tuman-derevia-4.jpg)<br>
-<img src="/media/wlp-preview/nature/les-tuman-derevia-4.png" width="500">
+[images/les-zelen-svet-zarosli-derevia-leto-tuman.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/les-zelen-svet-zarosli-derevia-leto-tuman.jpg)<br>
+<img src="/media/wlp-preview/nature/les-zelen-svet-zarosli-derevia-leto-tuman.png" width="500">
 
 [images/lofoten-air-norway-88.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/lofoten-air-norway-88.jpg)<br>
 <img src="/media/wlp-preview/nature/lofoten-air-norway-88.png" width="500">
@@ -77,9 +68,6 @@
 [images/peizazh-ozero-prichal-noch.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/peizazh-ozero-prichal-noch.jpg)<br>
 <img src="/media/wlp-preview/nature/peizazh-ozero-prichal-noch.png" width="500">
 
-[images/priroda-les-luchi-derevia-solntse-svet-vetki-tumannyi-tuma-4.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/priroda-les-luchi-derevia-solntse-svet-vetki-tumannyi-tuma-4.jpg)<br>
-<img src="/media/wlp-preview/nature/priroda-les-luchi-derevia-solntse-svet-vetki-tumannyi-tuma-4.png" width="500">
-
 [images/priroda-skaly-gory-sneg-zima-tuman.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/priroda-skaly-gory-sneg-zima-tuman.jpg)<br>
 <img src="/media/wlp-preview/nature/priroda-skaly-gory-sneg-zima-tuman.png" width="500">
 
@@ -89,20 +77,8 @@
 [images/ssha-aliaska-dzhuno-juneau-alaska-gorod-reka-most-doma-ogni.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/ssha-aliaska-dzhuno-juneau-alaska-gorod-reka-most-doma-ogni.jpg)<br>
 <img src="/media/wlp-preview/nature/ssha-aliaska-dzhuno-juneau-alaska-gorod-reka-most-doma-ogni.png" width="500">
 
-[images/ssha-gettysburg-national-military-park-pennsylvania-zima-les.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/ssha-gettysburg-national-military-park-pennsylvania-zima-les.jpg)<br>
-<img src="/media/wlp-preview/nature/ssha-gettysburg-national-military-park-pennsylvania-zima-les.png" width="500">
-
 [images/staffal-aosta-valley-italy.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/staffal-aosta-valley-italy.jpg)<br>
 <img src="/media/wlp-preview/nature/staffal-aosta-valley-italy.png" width="500">
-
-[images/sunset-clouds-mountains-snow-fremont-peak-washington-state-m.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/sunset-clouds-mountains-snow-fremont-peak-washington-state-m.jpg)<br>
-<img src="/media/wlp-preview/nature/sunset-clouds-mountains-snow-fremont-peak-washington-state-m.png" width="500">
-
-[images/tserkov-rassvet-gory-sergei-serushkin-kholm-peizazh.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/tserkov-rassvet-gory-sergei-serushkin-kholm-peizazh.jpg)<br>
-<img src="/media/wlp-preview/nature/tserkov-rassvet-gory-sergei-serushkin-kholm-peizazh.png" width="500">
-
-[images/tuman-utro-derevia-svet-luchi-priroda.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/tuman-utro-derevia-svet-luchi-priroda.jpg)<br>
-<img src="/media/wlp-preview/nature/tuman-utro-derevia-svet-luchi-priroda.png" width="500">
 
 [images/tuman-utro-niderlandy-vetrianaia-melnitsa-zanse-skhans.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/tuman-utro-niderlandy-vetrianaia-melnitsa-zanse-skhans.jpg)<br>
 <img src="/media/wlp-preview/nature/tuman-utro-niderlandy-vetrianaia-melnitsa-zanse-skhans.png" width="500">
@@ -112,4 +88,7 @@
 
 [images/wallhaven-je8725.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/wallhaven-je8725.jpg)<br>
 <img src="/media/wlp-preview/nature/wallhaven-je8725.png" width="500">
+
+[images/wp3057966-forest-moss-wallpapers.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/wp3057966-forest-moss-wallpapers.jpg)<br>
+<img src="/media/wlp-preview/nature/wp3057966-forest-moss-wallpapers.png" width="500">
 
