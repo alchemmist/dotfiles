@@ -13,6 +13,7 @@
     insteadOf = git@github.com:flamelen/
 [http]
 	postBuffer = 524288000
+	maxRequests = 100
 [fetch]
 	prune = true
 [filter "lfs"]
