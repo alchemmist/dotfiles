@@ -31,38 +31,9 @@ local overrides = {
 local plugins = {
 	"nvim-lua/plenary.nvim",
 	{
-		"NvChad/base46",
-		branch = "v2.0",
-		build = function()
-			require("base46").load_all_highlights()
-		end,
-	},
-
-	{
-		"NvChad/ui",
-		branch = "v2.0",
-		lazy = false,
-	},
-
-	{
-		"NvChad/nvterm",
-		lazy = true,
-		init = function()
-			require("core.utils").load_mappings("nvterm")
-		end,
-		config = function(_, opts)
-			require("base46.term")
-			require("nvterm").setup(opts)
-		end,
-	},
-
-	{
 		"nvim-tree/nvim-web-devicons",
-		opts = function()
-			return { override = require("nvchad.icons.devicons") }
-		end,
+		opts = function() end,
 		config = function(_, opts)
-			dofile(vim.g.base46_cache .. "devicons")
 			require("nvim-web-devicons").setup(opts)
 		end,
 	},
@@ -116,10 +87,9 @@ local plugins = {
 			return require("plugins.configs.mason")
 		end,
 		config = function(_, opts)
-			dofile(vim.g.base46_cache .. "mason")
 			require("mason").setup(opts)
 
-			-- custom nvchad cmd to install all mason binaries listed
+			-- custom nvim cmd to install all mason binaries listed
 			vim.api.nvim_create_user_command("MasonInstallAll", function()
 				vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
 			end, {})
@@ -189,9 +159,7 @@ local plugins = {
 			{ "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
 			{ "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
 		},
-		init = function()
-			require("core.utils").load_mappings("comment")
-		end,
+		init = function() end,
 		config = function(_, opts)
 			require("Comment").setup(opts)
 		end,
@@ -201,14 +169,11 @@ local plugins = {
 	{
 		"nvim-tree/nvim-tree.lua",
 		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-		init = function()
-			require("core.utils").load_mappings("nvimtree")
-		end,
+		init = function() end,
 		opts = function()
 			return require("plugins.configs.nvimtree")
 		end,
 		config = function(_, opts)
-			dofile(vim.g.base46_cache .. "nvimtree")
 			require("nvim-tree").setup(opts)
 		end,
 	},
@@ -219,14 +184,11 @@ local plugins = {
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 		cmd = "Telescope",
-		init = function()
-			require("core.utils").load_mappings("telescope")
-		end,
+		init = function() end,
 		opts = function()
 			return require("plugins.configs.telescope")
 		end,
 		config = function(_, opts)
-			dofile(vim.g.base46_cache .. "telescope")
 			local telescope = require("telescope")
 			telescope.setup(opts)
 
@@ -241,12 +203,9 @@ local plugins = {
 	{
 		"folke/which-key.nvim",
 		keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
-		init = function()
-			require("core.utils").load_mappings("whichkey")
-		end,
+		init = function() end,
 		cmd = "WhichKey",
 		config = function(_, opts)
-			dofile(vim.g.base46_cache .. "whichkey")
 			require("which-key").setup(opts)
 		end,
 	},
@@ -866,6 +825,4 @@ local plugins = {
 	},
 }
 
-local config = require("core.utils").load_config()
-
-require("lazy").setup(plugins, config.lazy_nvim)
+require("lazy").setup(plugins)

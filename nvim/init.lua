@@ -1,15 +1,15 @@
 require("core")
 
-require("core.utils").load_mappings()
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	require("core.bootstrap").lazy(lazypath)
 end
 
-dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
 require("plugins")
+
+require("core.mappings")
 
 require("plugins.configs.treesitter")
 require("ibl").setup({
@@ -172,7 +172,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.keymap.set("i", "<C-_>", "<C-w>", { noremap = true })
 
 vim.o.background = "dark" -- or "light" for light mode
-vim.o.cursorline = false
+vim.o.cursorline = true
 
 -- Горячая клавиша для текущего символа
 vim.keymap.set("n", "<leader>lr", function()

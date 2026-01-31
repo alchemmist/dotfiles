@@ -101,7 +101,7 @@ local options = {
 		},
 	},
 
-	extensions_list = { "themes", "terms", "fzf" },
+	extensions_list = { "fzf" },
 	extensions = {
 		fzf = {
 			fuzzy = true,
