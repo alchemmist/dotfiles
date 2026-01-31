@@ -39,7 +39,7 @@
     "tooltip": false,
     "exec": "swaync-client -c",
     "on-click": "swaync-client -t",
-    "interval": "once"
+    "interval": 1 
   },
   "custom/noscreenshare": {
     "format": "{icon}",
