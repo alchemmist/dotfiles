@@ -39,7 +39,7 @@ map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true, des
 map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true, desc = "Move up" })
 map("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true, desc = "Move up" })
 map("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true, desc = "Move down" })
-map("n", "<leader>z", "<cmd>bufdo bd<CR><cmd>Nvdash<CR>", { desc = "Dashboard" })
+map("n", "<leader>z", "<cmd>bufdo bd<CR>", { desc = "Dashboard" })
 map("n", "<leader>l", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
 map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "Mapping cheatsheet" })
 map("n", "<leader>fm", function()
