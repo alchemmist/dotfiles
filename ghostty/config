@@ -27,28 +27,32 @@ cursor-style = block_hollow
 mouse-hide-while-typing = true
 
 
+
 palette = 0=#000000
-palette = 1=#ff5555
-palette = 2=#6aa84f
-palette = 3=#ffff55
-palette = 4=#5555ff
-palette = 5=#ff55ff
-palette = 6=#59C2FF
-palette = 7=#bbbbbb
-palette = 8=#555555
-palette = 9=#ff5555
-palette = 10=#6aa84f
-palette = 11=#ffff55
-palette = 12=#5555ff
-palette = 13=#ff55ff
-palette = 14=#59C2FF
-palette = 15=#ffffff
+palette = 1=#d75f5f
+palette = 2=#87af87
+palette = 3=#d7875f
+palette = 4=#5f87af
+palette = 5=#d787af
+palette = 6=#8787af
+palette = 7=#bcbcbc
+palette = 8=#444444
+palette = 9=#d75f5f
+palette = 10=#87af87
+palette = 11=#d7875f
+palette = 12=#5f87af
+palette = 13=#d787af
+palette = 14=#8787af
+palette = 15=#bcbcbc
+
 background = #000000
-foreground = #ffffff
-cursor-color = #bbbbbb
-cursor-text = #ffffff
-selection-background = #b5d5ff
+foreground = #bcbcbc
+cursor-color = #bcbcbc
+cursor-text = #000000
+selection-background = #5f87af
 selection-foreground = #000000
+
+
 
 
 # Config syntax crash course
