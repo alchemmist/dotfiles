@@ -189,3 +189,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
 require("git-conflict")
 
+
+vim.keymap.set("n", "'", "`", { noremap = true })
+vim.keymap.set("n", "`", "'", { noremap = true })
+
