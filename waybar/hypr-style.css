@@ -8,8 +8,8 @@
 }
 
 window#waybar {
-  background: rgba(21, 18, 27, 0);
-  color: #cdd6f4;
+  background: transparent;
+  color: #bfbfbf;
 }
 
 tooltip {
@@ -21,31 +21,29 @@ tooltip {
 }
 
 #workspaces button {
+  color: #616161;
   padding: 5px;
-  color: #313244;
   margin-right: 5px;
 }
 
 #workspaces button.active {
-  color: #a6adc8;
+  color: #d4d4d4;
 }
 
 #workspaces button.focused {
-  color: #a6adc8;
-  background: #eba0ac;
   border-radius: 10px;
 }
 
 #workspaces button.urgent {
-  color: #11111b;
-  background: #a6e3a1;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(166, 227, 161, 0.5);
   border-radius: 10px;
 }
 
 #workspaces button:hover {
   background: #11111b;
-  color: #cdd6f4;
-  border-radius: 10px;
+  color: #fff;
+  border-radius: 8px;
 }
 
 #custom-wallpaper,
@@ -81,8 +79,7 @@ tooltip {
 #custom-language,
 #custom-notifications-manager,
 #backlight {
-  background: #1e1e2e;
-  opacity: 0.7;
+  background: rgba(0, 0, 0, 0.6);
   padding: 0px 10px;
   margin: 3px 0px;
   margin-top: 5px;
@@ -242,14 +239,12 @@ tooltip {
 }
 
 #custom-localtime {
-  color: #cdd6f4;
   border-radius: 10px;
   padding: 0px 10px;
   margin-left: 5px;
 }
 
 #clock.date {
-  color: #cdd6f4;
   border-radius: 10px;
   margin-left: 5px;
   padding: 0px 10px;
@@ -275,17 +270,10 @@ tooltip {
 }
 
 #workspaces {
-  background: #1e1e2e;
   border-radius: 10px;
   margin-left: 5px;
   padding-right: 0px;
   padding-left: 5px;
-}
-
-#custom-power_profile {
-  color: #a6e3a1;
-  border-left: 0px;
-  border-right: 0px;
 }
 
 #window {
@@ -295,43 +283,33 @@ tooltip {
 }
 
 #clock {
-  color: #fab387;
   border-radius: 10px 0px 0px 10px;
   border-right: 0px;
 }
 
 #network {
-  color: #cdd6f4;
   padding-right: 0px;
-  /* color: #f9e2af; */
   border-radius: 10px 0px 0px 10px;
-  /* min-width: 210px; */
   border-left: 0px;
   border-right: 0px;
   margin-left: 5px;
 }
 
 #bluetooth {
-  color: #cdd6f4;
-  /* color: #89b4fa; */
   border-radius: 0px 10px 10px 0px;
   margin-right: 5px;
 }
 
 #pulseaudio {
-  color: #cdd6f4;
   padding-right: 0px;
   padding-right: 0px;
   margin-right: 0px;
-  /* color: #89b4fa; */
   border-left: 0px;
   border-right: 0px;
   min-width: 70px;
 }
 
 #pulseaudio.microphone {
-  color: #cdd6f4;
-  /* color: #cba6f7; */
   border-left: 0px;
   margin-left: 0px;
   border-right: 0px;
