@@ -13,6 +13,7 @@ require("core.mappings")
 
 require("plugins.configs.treesitter")
 require("ibl").setup({
+    indent = { char = "▏" },
     enabled = false,
 	scope = {
 		enabled = false,

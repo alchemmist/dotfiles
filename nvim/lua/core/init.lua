@@ -47,7 +47,7 @@ opt.undofile = true
 opt.updatetime = 250
 
 vim.opt.fillchars:append { eob = "~" }
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.shortmess:remove("I")
 
 

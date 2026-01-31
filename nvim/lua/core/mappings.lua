@@ -266,8 +266,7 @@ end, { desc = "LSP code action" })
 -- ===========================
 -- NVIM-TREE / NEO-TREE
 -- ===========================
-map("n", "<leader>e", "<cmd>Neotree float<CR>", { desc = "Focus nvimtree" })
-map("n", "<leader>у", "<cmd>Neotree float<CR>", { desc = "Focus nvimtree" })
+map("n", "<leader>e", "<cmd>Oil<CR>", { desc = "Open oil file manager" })
 
 -- ===========================
 -- TELESCOPE
