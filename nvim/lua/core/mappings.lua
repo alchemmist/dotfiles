@@ -12,7 +12,7 @@ map("i", "<C-.>", "\\Rightarrow", { desc = "Latex right arrow" })
 map("i", "<C-,>", "\\Leftarrow", { desc = "Latex left arrow" })
 map("i", "<A-BS>", "<ESC>dbi<DEL>", { desc = "Delete previous word" })
 map("i", "<C-l>", function()
-  vim.lsp.buf.signature_help()
+	vim.lsp.buf.signature_help()
 end, { desc = "LSP signature help" })
 
 -- Normal mode
@@ -28,8 +28,12 @@ map("n", "<leader>rp", "<cmd>!python %<CR>", { desc = "Fast run python file" })
 map("n", "<leader>rr", "<cmd>RustRun<CR>", { desc = "Fast run rust file" })
 map("n", "<leader>rl", "<cmd>!lua %<CR>", { desc = "Fast run lua file" })
 map("n", "<leader>rg", "<cmd>!go run %<CR>", { desc = "Fast run go file" })
-map("n", "<leader>rc", "<cmd>!gcc -Wall -Werror -O2 -g -std=gnu17 -fsanitize=undefined,address % -o %:r && ./%:r<CR>",
-  { desc = "Fast run C file" })
+map(
+	"n",
+	"<leader>rc",
+	"<cmd>!gcc -Wall -Werror -O2 -g -std=gnu17 -fsanitize=undefined,address % -o %:r && ./%:r<CR>",
+	{ desc = "Fast run C file" }
+)
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "Copy whole file" })
 map("n", "<C-p>", "<cmd>let @+=expand('%:p')<CR>", { desc = "Copy absolute path of current file" })
 map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "Toggle line number" })
@@ -42,8 +46,8 @@ map("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true
 map("n", "<leader>z", "<cmd>bufdo bd<CR>", { desc = "Dashboard" })
 map("n", "<leader>l", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
 map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "Mapping cheatsheet" })
-map("n", "<leader>fm", function()
-  require("conform").format({ async = true, lsp_fallback = true })
+map("n", "gq", function()
+	require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "Format code with Conform" })
 map("n", "<leader>b", "<cmd>VimtexCompile<CR>", { desc = "Build latex doc" })
 map("n", "<leader>m", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Preview markdown document in Github style" })
@@ -54,7 +58,7 @@ map("n", "<M-_", "<cmd>split<CR>", { desc = "Horizontal split", noremap = true, 
 map("n", "<TAB>", "<cmd>tabNext<CR>", { desc = "Go to next tab" })
 map("n", ".", ".")
 map("n", "<S-E>", function()
-  vim.diagnostic.open_float({ border = "rounded" })
+	vim.diagnostic.open_float({ border = "rounded" })
 end, { desc = "Show LSP message", silent = true, noremap = true })
 map("n", "<leader>dc", ":%s/\\v\\s*(#|\\/\\/|--|;).*$//g<CR>", { desc = "Clear all comments" })
 map("n", "<C-n>", "<cmd>b#<CR>", { desc = "Go to previous buffer", noremap = true, silent = true })
@@ -77,18 +81,22 @@ map("x", "p", 'p:let @+=@0<CR>:let @"=@0<CR>', { silent = true, desc = "Dont cop
 -- COMMENT.NVIM
 -- ===========================
 map("n", "<leader>/", function()
-  require("Comment.api").toggle.linewise.current()
+	require("Comment.api").toggle.linewise.current()
 end, { desc = "Toggle comment" })
 
-map("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-  { desc = "Toggle comment" })
+map(
+	"v",
+	"<leader>/",
+	"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+	{ desc = "Toggle comment" }
+)
 
 -- ===========================
 -- LSP CONFIG
 -- ===========================
 -- Go to definition
 map("n", "gd", function()
-  vim.lsp.buf.definition()
+	vim.lsp.buf.definition()
 end, { desc = "LSP definition" })
 
 -- Hover documentation
@@ -98,169 +106,169 @@ end, { desc = "LSP definition" })
 
 -- Go to implementation
 map("n", "gi", function()
-  vim.lsp.buf.implementation()
+	vim.lsp.buf.implementation()
 end, { desc = "LSP implementation" })
 
 -- Type definition
 map("n", "<leader>D", function()
-  vim.lsp.buf.type_definition()
+	vim.lsp.buf.type_definition()
 end, { desc = "LSP type definition" })
 
 -- Code action
 map("n", "<leader>ca", function()
-  vim.lsp.buf.code_action()
+	vim.lsp.buf.code_action()
 end, { desc = "LSP code action" })
 
 -- Find references
 map("n", "gr", function()
-  vim.lsp.buf.references()
+	vim.lsp.buf.references()
 end, { desc = "LSP references" })
 
 -- Show floating diagnostic
 map("n", "E", function()
-  vim.diagnostic.open_float({ border = "rounded" })
+	vim.diagnostic.open_float({ border = "rounded" })
 end, { desc = "Floating diagnostic" })
 
 -- Go to previous diagnostic
 map("n", "[d", function()
-  vim.diagnostic.goto_prev({ float = { border = "rounded" } })
+	vim.diagnostic.goto_prev({ float = { border = "rounded" } })
 end, { desc = "Goto previous diagnostic" })
 
 -- Go to next diagnostic
 map("n", "]d", function()
-  vim.diagnostic.goto_next({ float = { border = "rounded" } })
+	vim.diagnostic.goto_next({ float = { border = "rounded" } })
 end, { desc = "Goto next diagnostic" })
 
 -- Set diagnostic location list
 map("n", "<leader>q", function()
-  vim.diagnostic.setloclist()
+	vim.diagnostic.setloclist()
 end, { desc = "Diagnostic setloclist" })
 
 -- Workspace folders
 map("n", "<leader>wa", function()
-  vim.lsp.buf.add_workspace_folder()
+	vim.lsp.buf.add_workspace_folder()
 end, { desc = "Add workspace folder" })
 
 map("n", "<leader>wr", function()
-  vim.lsp.buf.remove_workspace_folder()
+	vim.lsp.buf.remove_workspace_folder()
 end, { desc = "Remove workspace folder" })
 
 map("n", "<leader>wl", function()
-  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end, { desc = "List workspace folders" })
 
 -- Rename
 map("n", "<leader>rN", function()
-  vim.lsp.buf.rename()
+	vim.lsp.buf.rename()
 end, { desc = "LSP rename" })
 
 -- Java specific commands
 map("n", "<leader>ev", function()
-  vim.lsp.buf.execute_command({ command = "java.extract.variable" })
+	vim.lsp.buf.execute_command({ command = "java.extract.variable" })
 end, { desc = "Extract variable" })
 
 map("n", "<leader>ec", function()
-  vim.lsp.buf.execute_command({ command = "java.extract.constant" })
+	vim.lsp.buf.execute_command({ command = "java.extract.constant" })
 end, { desc = "Extract constant" })
 
 map("n", "<leader>em", function()
-  vim.lsp.buf.execute_command({ command = "java.extract.method" })
+	vim.lsp.buf.execute_command({ command = "java.extract.method" })
 end, { desc = "Extract method" })
 
 map("n", "<leader>gc", function()
-  vim.lsp.buf.execute_command({ command = "java.generate.constructor" })
+	vim.lsp.buf.execute_command({ command = "java.generate.constructor" })
 end, { desc = "Generate constructor" })
 
 map("n", "<leader>gt", function()
-  vim.lsp.buf.execute_command({ command = "java.generate.toString" })
+	vim.lsp.buf.execute_command({ command = "java.generate.toString" })
 end, { desc = "Generate toString method" })
 
 map("n", "<leader>ge", function()
-  vim.lsp.buf.execute_command({ command = "java.generate.hashCodeAndEquals" })
+	vim.lsp.buf.execute_command({ command = "java.generate.hashCodeAndEquals" })
 end, { desc = "Generate hashCode and equals methods" })
 
 map("n", "<leader>gd", function()
-  vim.lsp.buf.execute_command({ command = "java.generate.delegate" })
+	vim.lsp.buf.execute_command({ command = "java.generate.delegate" })
 end, { desc = "Generate delegate methods" })
 
 map("n", "<leader>gm", function()
-  vim.lsp.buf.execute_command({ command = "java.move.methodOrClass" })
+	vim.lsp.buf.execute_command({ command = "java.move.methodOrClass" })
 end, { desc = "Move method or class" })
 
 map("n", "<leader>rf", function()
-  vim.lsp.buf.execute_command({ command = "java.refactor.signature" })
+	vim.lsp.buf.execute_command({ command = "java.refactor.signature" })
 end, { desc = "Refactor method signature" })
 
 map("n", "<leader>jp", function()
-  vim.lsp.buf.execute_command({ command = "java.javap" })
+	vim.lsp.buf.execute_command({ command = "java.javap" })
 end, { desc = "Display bytecode with javap" })
 
 map("n", "<leader>jl", function()
-  vim.lsp.buf.execute_command({ command = "java.jol" })
+	vim.lsp.buf.execute_command({ command = "java.jol" })
 end, { desc = "Show memory usage with jol" })
 
 map("n", "<leader>js", function()
-  vim.lsp.buf.execute_command({ command = "java.jshell" })
+	vim.lsp.buf.execute_command({ command = "java.jshell" })
 end, { desc = "Open JShell" })
 
 -- Java test commands
 map("n", "<leader>ft", function()
-  vim.lsp.buf.execute_command({ command = "java.test.run" })
+	vim.lsp.buf.execute_command({ command = "java.test.run" })
 end, { desc = "Run Java tests" })
 
 -- Organize imports
 map("n", "<leader>oi", function()
-  vim.lsp.buf.execute_command({ command = "java.organize.imports" })
+	vim.lsp.buf.execute_command({ command = "java.organize.imports" })
 end, { desc = "Organize imports" })
 
 -- Extract variable (all occurrences)
 map("n", "<leader>eva", function()
-  vim.lsp.buf.execute_command({ command = "java.extract.variable.all" })
+	vim.lsp.buf.execute_command({ command = "java.extract.variable.all" })
 end, { desc = "Extract variable (all)" })
 
 -- Class contents
 map("n", "<leader>cl", function()
-  vim.lsp.buf.execute_command({ command = "java.class.contents" })
+	vim.lsp.buf.execute_command({ command = "java.class.contents" })
 end, { desc = "Class contents" })
 
 -- Code actions
 map("n", "<leader>ea", function()
-  vim.lsp.buf.execute_command({ command = "java.code.actions" })
+	vim.lsp.buf.execute_command({ command = "java.code.actions" })
 end, { desc = "Code actions" })
 
 -- Generate toString
 map("n", "<leader>gT", function()
-  vim.lsp.buf.execute_command({ command = "java.generate.toString" })
+	vim.lsp.buf.execute_command({ command = "java.generate.toString" })
 end, { desc = "Generate toString" })
 
 -- Generate hashCode and equals
 map("n", "<leader>gh", function()
-  vim.lsp.buf.execute_command({ command = "java.generate.hashcode_equals" })
+	vim.lsp.buf.execute_command({ command = "java.generate.hashcode_equals" })
 end, { desc = "Generate hashCode and equals" })
 
 -- Generate delegate methods
 map("n", "<leader>gd", function()
-  vim.lsp.buf.execute_command({ command = "java.generate.delegate.methods" })
+	vim.lsp.buf.execute_command({ command = "java.generate.delegate.methods" })
 end, { desc = "Generate delegate methods" })
 
 -- Move package, method or type
 map("n", "<leader>mp", function()
-  vim.lsp.buf.execute_command({ command = "java.move.package.method.type" })
+	vim.lsp.buf.execute_command({ command = "java.move.package.method.type" })
 end, { desc = "Move package, method or type" })
 
 -- Refactor signature
 map("n", "<leader>rs", function()
-  vim.lsp.buf.execute_command({ command = "java.refactor.signature" })
+	vim.lsp.buf.execute_command({ command = "java.refactor.signature" })
 end, { desc = "Refactor signature" })
 
 -- JDTLS tests
 map("n", "<leader>ts", function()
-  require("jdtls.tests").goto_subjects()
+	require("jdtls.tests").goto_subjects()
 end, { desc = "Go to tests/subjects" })
 
 -- Visual mode code actions
 map("v", "<leader>ca", function()
-  vim.lsp.buf.code_action()
+	vim.lsp.buf.code_action()
 end, { desc = "LSP code action" })
 
 -- ===========================
@@ -275,31 +283,31 @@ map("n", "<leader>e", "<cmd>Oil<CR>", { desc = "Open oil file manager" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
 
 map("n", "<leader>fF", function()
-  require("telescope.builtin").find_files({
-    no_ignore = true,
-    hidden = true,
-    file_ignore_patterns = {},
-  })
+	require("telescope.builtin").find_files({
+		no_ignore = true,
+		hidden = true,
+		file_ignore_patterns = {},
+	})
 end, { desc = "Find all files" })
 
 -- Live grep
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "Live grep" })
 
 map("n", "<leader>fW", function()
-  require("telescope.builtin").live_grep({
-    additional_args = function(_)
-      return { "--hidden", "--no-ignore", "-L" }
-    end,
-    file_ignore_patterns = {},
-  })
+	require("telescope.builtin").live_grep({
+		additional_args = function(_)
+			return { "--hidden", "--no-ignore", "-L" }
+		end,
+		file_ignore_patterns = {},
+	})
 end, { desc = "Live grep (all files, hidden, no-ignore, follow)" })
 
 -- Buffers
 map("n", "<Tab>", function()
-  local bufs = vim.tbl_filter(function(b)
-    return vim.api.nvim_buf_is_loaded(b) and vim.api.nvim_buf_get_name(b) ~= ""
-  end, vim.api.nvim_list_bufs())
-  require("telescope.builtin").buffers({ buf_ids = bufs, sort_lastused = true })
+	local bufs = vim.tbl_filter(function(b)
+		return vim.api.nvim_buf_is_loaded(b) and vim.api.nvim_buf_get_name(b) ~= ""
+	end, vim.api.nvim_list_bufs())
+	require("telescope.builtin").buffers({ buf_ids = bufs, sort_lastused = true })
 end, { desc = "Find buffers" })
 
 -- Other telescope commands
@@ -322,55 +330,55 @@ map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope bookmarks
 -- ===========================
 -- Terminal mode
 map("t", "<A-i>", function()
-  require("nvterm.terminal").toggle("float")
+	require("nvterm.terminal").toggle("float")
 end, { desc = "Toggle floating term" })
 
 map("t", "<A-h>", function()
-  require("nvterm.terminal").toggle("horizontal")
+	require("nvterm.terminal").toggle("horizontal")
 end, { desc = "Toggle horizontal term" })
 
 map("t", "<A-v>", function()
-  require("nvterm.terminal").toggle("vertical")
+	require("nvterm.terminal").toggle("vertical")
 end, { desc = "Toggle vertical term" })
 
 -- Normal mode
 map("n", "<A-f>", function()
-  require("nvterm.terminal").toggle("float")
+	require("nvterm.terminal").toggle("float")
 end, { desc = "Toggle floating term" })
 
 map("n", "<A-h>", function()
-  require("nvterm.terminal").toggle("horizontal")
+	require("nvterm.terminal").toggle("horizontal")
 end, { desc = "Toggle horizontal term" })
 
 map("n", "<A-v>", function()
-  require("nvterm.terminal").toggle("vertical")
+	require("nvterm.terminal").toggle("vertical")
 end, { desc = "Toggle vertical term" })
 
 -- ===========================
 -- WHICH-KEY
 -- ===========================
 map("n", "<leader>wK", function()
-  vim.cmd("WhichKey")
+	vim.cmd("WhichKey")
 end, { desc = "Which-key all keymaps" })
 
 map("n", "<leader>wk", function()
-  local input = vim.fn.input("WhichKey: ")
-  vim.cmd("WhichKey " .. input)
+	local input = vim.fn.input("WhichKey: ")
+	vim.cmd("WhichKey " .. input)
 end, { desc = "Which-key query lookup" })
 
 -- ===========================
 -- INDENT BLANKLINE
 -- ===========================
 map("n", "<leader>cc", function()
-  local ok, start = require("indent_blankline.utils").get_current_context(
-    vim.g.indent_blankline_context_patterns,
-    vim.g.indent_blankline_use_treesitter_scope
-  )
+	local ok, start = require("indent_blankline.utils").get_current_context(
+		vim.g.indent_blankline_context_patterns,
+		vim.g.indent_blankline_use_treesitter_scope
+	)
 
-  if ok then
-    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-    vim.cmd([[normal! _]])
-  end
+	if ok then
+		vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
+		vim.cmd([[normal! _]])
+	end
 end, { desc = "Jump to current context" })
 
 -- ===========================

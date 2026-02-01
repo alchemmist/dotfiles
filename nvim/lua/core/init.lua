@@ -46,13 +46,12 @@ opt.undofile = true
 -- interval for writing swap file to disk
 opt.updatetime = 250
 
-vim.opt.fillchars:append { eob = "~" }
+vim.opt.fillchars:append({ eob = "~" })
 vim.opt.list = false
 vim.opt.shortmess:remove("I")
 
 vim.o.shell = "/usr/bin/zsh"
 vim.o.shellcmdflag = "-c"
-
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
@@ -80,6 +79,3 @@ autocmd("FileType", {
 		-- require("cmp").setup.buffer { enabled = false }
 	end,
 })
-
--------------------------------------- commands ------------------------------------------
-local new_cmd = vim.api.nvim_create_user_command
