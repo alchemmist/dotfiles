@@ -1,7 +1,7 @@
 :root {
-  --cc-bg: rgba(30, 30, 46, 0.7);
-  --noti-bg: rgba(30, 30, 46, 0.4);
-  --noti-bg-focus: rgba(30, 30, 46, 0.5);
+  --cc-bg: rgba(0, 0, 0, 0.6);
+  --noti-bg: rgba(0, 0, 0, 0.5);
+  --noti-bg-focus: rgba(0, 0, 0, 0.55);
   --noti-close-bg: rgba(255, 255, 255, 0.1);
   --noti-close-bg-hover: rgba(255, 255, 255, 0.2);
   --text-color: rgb(255, 255, 255);

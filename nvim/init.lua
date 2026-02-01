@@ -1,6 +1,5 @@
 require("core")
 
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	require("core.bootstrap").lazy(lazypath)
@@ -13,8 +12,8 @@ require("core.mappings")
 
 require("plugins.configs.treesitter")
 require("ibl").setup({
-    indent = { char = "▏" },
-    enabled = false,
+	indent = { char = "▏" },
+	enabled = false,
 	scope = {
 		enabled = false,
 		show_start = false,
@@ -190,7 +189,5 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
 require("git-conflict")
 
-
 vim.keymap.set("n", "'", "`", { noremap = true })
 vim.keymap.set("n", "`", "'", { noremap = true })
-

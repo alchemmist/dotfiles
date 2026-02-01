@@ -1,4 +1,3 @@
-
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=/usr/local/bin:$PATH
@@ -17,11 +16,7 @@ export PATH=/home/alchemmist/applications/keywords/build:$PATH
 export PATH=/home/alchemmist/applications/localports/target/release:$PATH
 export PATH="$HOME/.npm-global/bin:$PATH"
 
-
-
 export QT_QPA_PLATFORM=wayland
-
-
 
 export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.12/site-packages
 
@@ -31,7 +26,6 @@ export INFOPATH=/usr/local/texlive/2024/texmf-dist/doc/info:$INFOPATH
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
-
 
 export PATH=/usr/lib/jvm/java-23-openjdk/bin:$PATH
 
@@ -45,10 +39,6 @@ export TERM=xterm-256color
 export ANDROID_HOME=/opt/android-sdk
 export ANDROID_SDK_ROOT=/opt/android-sdk
 export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
-
-
-
-
 
 #export WAYLAND_DISPLAY=''
 # Path to your Oh My Zsh installation.
@@ -138,7 +128,6 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -170,9 +159,6 @@ source $ZSH/oh-my-zsh.sh
 # alias python="/home/alchemmist/.python3.12/bin/python"
 # alias pip="/home/alchemmist/.python3.12/bin/pip"
 
-alias pbcopy='wl-copy'
-alias pbpaste='wl-paste'
-
 alias tuxsay="cowsay -f tux"
 alias nvim_clear_swap="rm -rf ~/.local/state/nvim/swap/*"
 alias latex_clear_cache="rm -rf ~/latex/aux/* && rm -rf ~/latex/out/*"
@@ -191,7 +177,8 @@ alias mp42gif='~/scripts/mp42gif.sh'
 alias cat='mycat'
 alias cmatrix="unimatrix -n -s 97 -l o"
 
-
+pbcopy() { wl-copy "$@"; }
+pbpaste() { wl-paste "$@"; }
 
 hp-scan() {
     cd ~/Pictures/scans
@@ -205,10 +192,8 @@ dot() {
     cd -
 }
 
-
-
 # PROTECTION FOR RM COMMAND
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 STOP_MESSAGE="!!!    STOP     !!!\nWHAT ARE YOU DOING?"
 
 BLACK_LIST=(
@@ -260,8 +245,6 @@ rm() {
 }
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-
-
 source <(fzf --zsh)
 # eval "fastfetch"
 eval "$(starship init zsh)"
@@ -271,16 +254,13 @@ source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
 eval $(opam env)
 
 # SSH-agent
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    eval "$(ssh-agent -s > /dev/null)"
+if ! pgrep -u "$USER" ssh-agent >/dev/null; then
+    eval "$(ssh-agent -s >/dev/null)"
 fi
 
-
-
-if [ "$(tty)" = "/dev/tty1" -o "$(tty)" = "/dev/tty2"  ] && [ -z "$(printenv HYPRLAND_INSTANCE_SIGNATURE)" ]; then
-  exec ~/.local/bin/wlinitrc
+if [ "$(tty)" = "/dev/tty1" -o "$(tty)" = "/dev/tty2" ] && [ -z "$(printenv HYPRLAND_INSTANCE_SIGNATURE)" ]; then
+    exec ~/.local/bin/wlinitrc
 fi
-
 
 fzf_history() {
     local selected=$(fc -rl 1 | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//' | fzf --reverse --height=40%)
@@ -288,14 +268,6 @@ fzf_history() {
         LBUFFER="$selected"
     fi
 }
-
-
-# Зарегистрируйте функцию как виджет
-zle -N fzf_history
-
-# Привяжите Ctrl+S к виджету
-bindkey "^S" fzf_history
-
 
 # Функция для fzf, запускает поиск из текущей директории
 fzf-widget() {
@@ -308,12 +280,11 @@ fzf-widget() {
     zle reset-prompt
 }
 
-
 # Функция для zi, теперь эмулирует Enter после смены директории
 zi-widget() {
     zle reset-prompt
     zi
-    zle accept-line  # Эмулирует нажатие Enter
+    zle accept-line # Эмулирует нажатие Enter
 }
 
 # Функция для yazi с автопереходом и эмуляцией Enter
@@ -323,27 +294,29 @@ y-widget() {
     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
         builtin cd -- "$cwd"
         zle reset-prompt
-        zle accept-line  # Эмулирует нажатие Enter
+        zle accept-line # Эмулирует нажатие Enter
     fi
     rm -f -- "$tmp"
 }
 
+if [[ -t 1 ]]; then
+    zle -N fzf_history
+    bindkey "^S" fzf_history
 
-# Регистрируем функции как виджеты
-zle -N fzf-widget
-zle -N zi-widget
-zle -N y-widget
+    zle -N fzf-widget
+    zle -N zi-widget
+    zle -N y-widget
 
-# Привязываем сочетания клавиш
-bindkey '^G' fzf-widget
-bindkey '^J' zi-widget
-bindkey '^Y' y-widget
+    bindkey '^G' fzf-widget
+    bindkey '^J' zi-widget
+    bindkey '^Y' y-widget
 
-bindkey -M viins '^[^?' backward-kill-word
-bindkey -M viins '^[' backward-kill-word
-bindkey -M viins '^H' backward-kill-word
-
-
+    bindkey -M viins '^[^?' backward-kill-word
+    bindkey -M viins '^[' backward-kill-word
+    bindkey -M viins '^H' backward-kill-word
+else
+    unsetopt zle
+fi
 
 mycat() {
     if file --mime-type "$1" | grep -q 'image/'; then
@@ -353,30 +326,31 @@ mycat() {
     fi
 }
 
-
-PATH="/home/alchemmist/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/alchemmist/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/alchemmist/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/alchemmist/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/alchemmist/perl5"; export PERL_MM_OPT;
+PATH="/home/alchemmist/perl5/bin${PATH:+:${PATH}}"
+export PATH
+PERL5LIB="/home/alchemmist/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+export PERL5LIB
+PERL_LOCAL_LIB_ROOT="/home/alchemmist/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+export PERL_LOCAL_LIB_ROOT
+PERL_MB_OPT="--install_base \"/home/alchemmist/perl5\""
+export PERL_MB_OPT
+PERL_MM_OPT="INSTALL_BASE=/home/alchemmist/perl5"
+export PERL_MM_OPT
 
 . "$HOME/.local/share/../bin/env"
 
 eval "tmux bind-key s choose-tree -ZsN"
 eval "tmux bind-key w choose-tree -ZwN"
 
-
 docker() {
     ~/scripts/docker.sh "$@"
 }
 
-
-
 # pnpm
 export PNPM_HOME="/home/alchemmist/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 

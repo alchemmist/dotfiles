@@ -237,15 +237,6 @@ local plugins = {
 		"williamboman/mason.nvim",
 		opts = overrides.mason,
 	},
-
-	-- Install a plugin
-	{
-		"max397574/better-escape.nvim",
-		event = "InsertEnter",
-		config = function()
-			require("better_escape").setup()
-		end,
-	},
 	{
 		"simrat39/rust-tools.nvim",
 	},
@@ -304,7 +295,7 @@ local plugins = {
 				["<C-h>"] = { "actions.select", opts = { horizontal = true } },
 				["<C-t>"] = { "actions.select", opts = { tab = true } },
 				["<C-p>"] = "actions.preview",
-				["<C-c>"] = "actions.close",
+				["<Esc>"] = "actions.close",
 				["<C-l>"] = "actions.refresh",
 				["-"] = { "actions.parent", mode = "n" },
 				["_"] = { "actions.open_cwd", mode = "n" },
@@ -478,6 +469,7 @@ local plugins = {
 					css = { "prettier" },
 					scss = { "prettier" },
 					sh = { "shfmt" },
+					zsh = { "shfmt" },
 					rust = { "rustfmt" },
 					go = { "gofmt" },
 					toml = { "taplo" },
