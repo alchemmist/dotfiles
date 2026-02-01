@@ -3,6 +3,10 @@
 -- 'nvim/ftplugin/java.lua'.
 -- 'nvim/lang-servers/intellij-java-google-style.xml'
 
+vim.bo.tabstop = 4
+vim.bo.shiftwidth = 4
+vim.bo.expandtab = true
+
 local jdtls_ok, jdtls = pcall(require, "jdtls")
 if not jdtls_ok then
 	vim.notify("JDTLS not found, install with `:LspInstall jdtls`")

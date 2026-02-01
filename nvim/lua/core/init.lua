@@ -11,8 +11,6 @@ opt.clipboard = "unnamedplus"
 -- vim.keymap.set("n", "P", '"+p')
 -- vim.keymap.set("v", "P", '"+p')
 
-opt.cursorline = true
-
 opt.scrolloff = 5
 opt.scrolljump = 2
 
@@ -53,6 +51,10 @@ vim.opt.shortmess:remove("I")
 vim.o.shell = "/usr/bin/zsh"
 vim.o.shellcmdflag = "-c"
 
+vim.o.background = "dark"
+vim.o.cursorline = true
+vim.o.showtabline = 0
+
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append("<>[]hl")
@@ -79,3 +81,4 @@ autocmd("FileType", {
 		-- require("cmp").setup.buffer { enabled = false }
 	end,
 })
+

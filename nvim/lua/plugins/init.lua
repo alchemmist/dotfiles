@@ -42,16 +42,24 @@ local plugins = {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		opts = {
-			ensure_installed = { "lua", "vim", "python", "go", "javascript", "typescript", "c", "cpp", "html", "css" },
-			highlight = { enable = true },
-			indent = { enable = true },
-		},
+		config = function(_, opts)
+			require("plugins.configs.treesitter")
+		end,
 	},
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
+		opts = {
+			indent = { char = "▏" },
+			enabled = false,
+			scope = {
+				enabled = false,
+				show_start = false,
+				show_end = false,
+				highlight = nil,
+			},
+		},
 	},
 	-- git stuff
 	{
@@ -163,17 +171,6 @@ local plugins = {
 
 	-- file managing , picker etc
 	{
-		"nvim-tree/nvim-tree.lua",
-		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-		init = function() end,
-		opts = function()
-			return require("plugins.configs.nvimtree")
-		end,
-		config = function(_, opts)
-			require("nvim-tree").setup(opts)
-		end,
-	},
-	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
@@ -239,6 +236,7 @@ local plugins = {
 	},
 	{
 		"simrat39/rust-tools.nvim",
+		ft = "rust",
 	},
 	{
 		"pocco81/auto-save.nvim",
@@ -296,7 +294,7 @@ local plugins = {
 				["<C-t>"] = { "actions.select", opts = { tab = true } },
 				["<C-p>"] = "actions.preview",
 				["<Esc>"] = "actions.close",
-				["<C-l>"] = "actions.refresh",
+				["<C-r>"] = "actions.refresh",
 				["-"] = { "actions.parent", mode = "n" },
 				["_"] = { "actions.open_cwd", mode = "n" },
 				[">"] = { "actions.cd", mode = "n" },
@@ -325,28 +323,42 @@ local plugins = {
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { "markdown" },
+		config = function()
+			vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
+			vim.cmd([[
+                function OpenMarkdownPreview(url)
+                  execute "silent ! google-chrome-stable --new-window --app=" . a:url
+                endfunction
+              ]])
+		end,
 	},
 	{
 		"lervag/vimtex",
 		config = function()
 			vim.g.vimtex_quickfix_enabled = 0
+			vim.g.vimtex_quickfix_mode = 0
+
 			vim.g.vimtex_compiler_method = "latexmk"
+			vim.g.vimtex_compiler_progname = "nvr"
+
 			vim.g.vimtex_compiler_latexmk = {
 				aux_dir = vim.fn.expand("$HOME/latex/aux"),
 				out_dir = vim.fn.expand("$HOME/latex/out"),
 				build_dir = vim.fn.expand("$HOME/.cache/latex"),
 				continuous = 1,
-				callback = 1,
+				callback = 0,
 				executable = "latexmk",
 				options = {
 					"-pdf",
 					"-interaction=nonstopmode",
 					"-file-line-error",
 					"-synctex=1",
+					-- "-verbose",
 				},
 			}
+
+			vim.g.vimtex_compiler_callback_hooks = {}
 			vim.g.vimtex_view_method = "zathura"
-			vim.g.vimtex_compiler_progname = "nvr"
 			vim.opt.conceallevel = 1
 			vim.g.tex_conceal = "abdmg"
 		end,
@@ -409,29 +421,6 @@ local plugins = {
 	-- 		require("plugins.configs.java")
 	-- 	end,
 	-- },
-	-- {
-	-- 	"kevinhwang91/nvim-ufo",
-	-- 	dependencies = { "kevinhwang91/promise-async" },
-	-- 	event = "BufReadPost", -- Загружать плагин при открытии файла
-	-- 	config = function()
-	-- 		vim.o.foldcolumn = "0" -- Колонка сворачивания
-	-- 		vim.o.foldlevel = 99 -- Развернуть все блоки при старте
-	-- 		vim.o.foldlevelstart = 99
-	-- 		vim.o.foldenable = true
-	--
-	-- 		-- Устанавливаем методы сворачивания
-	-- 		vim.o.foldmethod = "expr"
-	-- 		vim.o.foldexpr = "v:lua.require'ufo'.foldexpr()"
-	--
-	-- 		-- Настройка провайдеров (LSP, Tree-sitter или indent)
-	-- 		require("ufo").setup({
-	-- 			provider_selector = function(_, _, _)
-	-- 				return { "lsp",  "treesitter" }
-	-- 			end,
-	-- 		})
-	-- 	end,
-	-- },
-	--
 	{
 		"stevearc/conform.nvim",
 		config = function()

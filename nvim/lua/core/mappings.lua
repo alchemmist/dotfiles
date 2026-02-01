@@ -14,8 +14,11 @@ map("i", "<A-BS>", "<ESC>dbi<DEL>", { desc = "Delete previous word" })
 map("i", "<C-l>", function()
 	vim.lsp.buf.signature_help()
 end, { desc = "LSP signature help" })
+map("i", "<C-_>", "<C-w>", { noremap = true })
 
 -- Normal mode
+map("n", "'", "`", { noremap = true })
+map("n", "`", "'", { noremap = true })
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
 map("n", "<C-BS>", "<ESC>dbi", { desc = "Delete previous word" })
 map("n", "<C-h>", "<C-w>h", { desc = "Window left" })
@@ -62,6 +65,51 @@ map("n", "<S-E>", function()
 end, { desc = "Show LSP message", silent = true, noremap = true })
 map("n", "<leader>dc", ":%s/\\v\\s*(#|\\/\\/|--|;).*$//g<CR>", { desc = "Clear all comments" })
 map("n", "<C-n>", "<cmd>b#<CR>", { desc = "Go to previous buffer", noremap = true, silent = true })
+
+map("n", "K", function()
+	local params = vim.lsp.util.make_position_params()
+	vim.lsp.buf_request(0, "textDocument/hover", params, function(err, result, ctx, config)
+		config = config or {}
+		config.border = "rounded"
+		vim.lsp.handlers.hover(err, result, ctx, config)
+	end)
+end, { desc = "LSP Hover with border" })
+
+map("n", "<A-j>", "<cmd> CoqNext <CR>", { noremap = true, silent = true })
+map("n", "<A-k>", "<cmd> CoqUndo <CR>", { noremap = true, silent = true })
+map("n", "<A-m>", "<cmd> CoqToLine <CR>", { noremap = true, silent = true })
+map("n", "<leader>sc", "<cmd> CoqStart <CR>", { noremap = true, silent = true })
+
+map("n", "<M-_>", "<cmd>:split<CR>", { noremap = true, silent = true })
+
+map("n", "zR", require("ufo").openAllFolds)
+map("n", "zM", require("ufo").closeAllFolds)
+map("n", "<leader>h", function()
+	local winid = vim.api.nvim_get_current_win()
+	if vim.api.nvim_win_get_config(winid).relative ~= "" then
+		return
+	end
+
+	local lnum = vim.api.nvim_win_get_cursor(winid)[1]
+
+	local is_closed = vim.fn.foldclosed(lnum)
+	local is_open = vim.fn.foldlevel(lnum) > 0 and is_closed == -1
+
+	if is_closed ~= -1 then
+		vim.cmd("normal! zo")
+	elseif is_open then
+		vim.cmd("normal! zc")
+	else
+	end
+end, { desc = "Toggle fold under cursor" })
+
+map("n", "<leader>tt", function()
+	if vim.o.showtabline == 0 then
+		vim.o.showtabline = 2
+	else
+		vim.o.showtabline = 0
+	end
+end, { desc = "Toggle tabline" })
 
 -- Terminal mode
 map("t", "<C-x>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), { desc = "Escape terminal mode" })
@@ -386,3 +434,6 @@ end, { desc = "Jump to current context" })
 -- ===========================
 map("n", "<A-j>", "<cmd>CoqNext<CR>", { desc = "Next coq line", noremap = true, silent = true })
 map("n", "<F-k>", "<cmd>CoqUndo<CR>", { desc = "Prev coq line", noremap = true, silent = true })
+map("n", "<leader>lr", function()
+	vim.cmd("LeanAbbreviationsReverseLookup")
+end, { noremap = true, silent = true, desc = "Lean: Reverse Abbreviation Lookup" })
