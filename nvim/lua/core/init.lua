@@ -2,14 +2,10 @@ local opt = vim.opt
 local g = vim.g
 
 -------------------------------------- options ------------------------------------------
-opt.laststatus = 0 -- global statusline
+opt.laststatus = 0
 opt.showmode = false
 
 opt.clipboard = "unnamedplus"
-
--- vim.keymap.set({ "n", "v" }, "y", '"+y')
--- vim.keymap.set("n", "P", '"+p')
--- vim.keymap.set("v", "P", '"+p')
 
 opt.scrolloff = 5
 opt.scrolljump = 2
@@ -52,12 +48,8 @@ vim.o.shell = "/usr/bin/zsh"
 vim.o.shellcmdflag = "-c"
 
 vim.o.background = "dark"
-vim.o.cursorline = true
 vim.o.showtabline = 0
-
--- go to previous/next line with h,l,left arrow and right arrow
--- when cursor reaches end/beginning of line
-opt.whichwrap:append("<>[]hl")
+vim.o.cursorline = true
 
 g.mapleader = " "
 
@@ -69,16 +61,3 @@ end
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
 vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin" .. (is_windows and ";" or ":") .. vim.env.PATH
-
--------------------------------------- autocmds ------------------------------------------
-local autocmd = vim.api.nvim_create_autocmd
-
--- dont list quickfix buffers
-autocmd("FileType", {
-	pattern = "qf",
-	callback = function()
-		vim.opt_local.buflisted = false
-		-- require("cmp").setup.buffer { enabled = false }
-	end,
-})
-

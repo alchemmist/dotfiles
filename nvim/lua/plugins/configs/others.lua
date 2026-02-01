@@ -1,50 +1,154 @@
 local M = {}
-local utils = require "core.utils"
-
-M.blankline = {
-  indentLine_enabled = 1,
-  filetype_exclude = {
-    "help",
-    "terminal",
-    "lazy",
-    "lspinfo",
-    "TelescopePrompt",
-    "TelescopeResults",
-    "mason",
-    "",
-  },
-  buftype_exclude = { "terminal" },
-  show_trailing_blankline_indent = false,
-  show_first_indent_level = false,
-  show_current_context = true,
-  show_current_context_start = true,
-}
 
 M.luasnip = function(opts)
-  require("luasnip").config.set_config(opts)
+	require("luasnip").config.set_config(opts)
 
-  -- vscode format
-  require("luasnip.loaders.from_vscode").lazy_load()
-  require("luasnip.loaders.from_vscode").lazy_load { paths = vim.g.vscode_snippets_path or "" }
+	-- vscode format
+	require("luasnip.loaders.from_vscode").lazy_load()
+	require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g.vscode_snippets_path or "" })
 
-  -- snipmate format
-  require("luasnip.loaders.from_snipmate").load()
-  require("luasnip.loaders.from_snipmate").lazy_load { paths = vim.g.snipmate_snippets_path or "" }
+	-- snipmate format
+	require("luasnip.loaders.from_snipmate").load()
+	require("luasnip.loaders.from_snipmate").lazy_load({ paths = vim.g.snipmate_snippets_path or "" })
 
-  -- lua format
-  require("luasnip.loaders.from_lua").load()
-  require("luasnip.loaders.from_lua").lazy_load { paths = vim.g.lua_snippets_path or "" }
+	-- lua format
+	require("luasnip.loaders.from_lua").load()
+	require("luasnip.loaders.from_lua").lazy_load({ paths = vim.g.lua_snippets_path or "" })
 
-  vim.api.nvim_create_autocmd("InsertLeave", {
-    callback = function()
-      if
-        require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-        and not require("luasnip").session.jump_active
-      then
-        require("luasnip").unlink_current()
-      end
-    end,
-  })
+	vim.api.nvim_create_autocmd("InsertLeave", {
+		callback = function()
+			if
+				require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+				and not require("luasnip").session.jump_active
+			then
+				require("luasnip").unlink_current()
+			end
+		end,
+	})
+end
+
+M.autopairs = function(opts)
+	local npairs = require("nvim-autopairs")
+	npairs.setup(opts)
+	npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
+	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+	require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+end
+
+M.comment = function(opts)
+	require("Comment").setup(opts)
+end
+
+M.auto_save = function()
+	require("auto-save").setup({
+		{
+			enabled = true,
+			execution_message = {
+				message = function()
+					return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+				end,
+				dim = 0.18,
+				cleaning_interval = 1250,
+			},
+			trigger_events = { "InsertLeave", "TextChanged" },
+			condition = function(buf)
+				local fn = vim.fn
+				local utils = require("auto-save.utils.data")
+
+				if fn.getbufvar(buf, "&modifiable") == 1 and utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+					return true
+				end
+				return false
+			end,
+			write_all_buffers = false,
+			debounce_delay = 135,
+			callbacks = {
+				enabling = nil,
+				disabling = nil,
+				before_asserting_save = nil,
+				before_saving = nil,
+				after_saving = nil,
+			},
+		},
+	})
+end
+
+M.vim_go = function()
+	vim.g.go_auto_type_info = 1
+	vim.g.go_fmt_autosave = 0
+	vim.g.go_fmt_fail_silently = 1
+	vim.g.syntastic_auto_loc_list = 0
+	vim.g.go_list_height = 0
+	vim.g.go_statusline_duration = 10
+	vim.g.go_statusline_info = 0
+	vim.g.go_doc_keywordprg_enabled = 0
+	vim.g.go_echo_command_info = 0
+	vim.g.go_echo_go_info = 0
+	vim.g.go_debug_windows = { "right" }
+	vim.g.go_fmt_command = "gofmt"
+end
+
+M.vimtex = function()
+	vim.g.vimtex_quickfix_enabled = 0
+	vim.g.vimtex_quickfix_mode = 0
+
+	vim.g.vimtex_compiler_method = "latexmk"
+	vim.g.vimtex_compiler_progname = "nvr"
+
+	vim.g.vimtex_compiler_latexmk = {
+		aux_dir = vim.fn.expand("$HOME/latex/aux"),
+		out_dir = vim.fn.expand("$HOME/latex/out"),
+		build_dir = vim.fn.expand("$HOME/.cache/latex"),
+		continuous = 1,
+		callback = 0,
+		executable = "latexmk",
+		options = {
+			"-pdf",
+			"-interaction=nonstopmode",
+			"-file-line-error",
+			"-synctex=1",
+			-- "-verbose",
+		},
+	}
+
+	vim.g.vimtex_compiler_callback_hooks = {}
+	vim.g.vimtex_view_method = "zathura"
+	vim.opt.conceallevel = 1
+	vim.g.tex_conceal = "abdmg"
+end
+
+M.cyrillic = function()
+	require("cyrillic").setup({ no_cyrillic_abbrev = false })
+end
+
+M.ufo = function()
+	vim.o.foldcolumn = "0"
+	vim.o.foldlevel = 99
+	vim.o.foldlevelstart = 99
+	vim.o.foldenable = true
+
+	require("ufo").setup({
+		provider_selector = function(_, _, _)
+			return { "treesitter", "indent" }
+		end,
+	})
+
+	vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+	vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+	vim.keymap.set("n", "<leader>h", function()
+		local winid = vim.api.nvim_get_current_win()
+		if vim.api.nvim_win_get_config(winid).relative ~= "" then
+			return
+		end
+		local lnum = vim.api.nvim_win_get_cursor(winid)[1]
+		local is_closed = vim.fn.foldclosed(lnum)
+		local is_open = vim.fn.foldlevel(lnum) > 0 and is_closed == -1
+		if is_closed ~= -1 then
+			vim.cmd("normal! zo")
+		elseif is_open then
+			vim.cmd("normal! zc")
+		end
+	end, { desc = "Toggle fold under cursor" })
 end
 
 return M

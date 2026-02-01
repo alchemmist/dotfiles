@@ -1,9 +1,25 @@
+local plugin = "nvim-lspconfig"
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufWinEnter", "BufNewFile" }, {
+	group = vim.api.nvim_create_augroup("BeLazyOnFileOpen_" .. plugin, {}),
+	callback = function()
+		local file = vim.fn.expand("%")
+		local condition = file ~= "NvimTree_1" and file ~= "[lazy]" and file ~= ""
+
+		if condition then
+			vim.api.nvim_del_augroup_by_name("BeLazyOnFileOpen_" .. plugin)
+
+			require("lazy").load({ plugins = plugin })
+
+			vim.cmd("silent! do FileType")
+		end
+	end,
+})
+
 local M = {}
 
 local servers =
 	{ "html", "cssls", "ts_ls", "clangd", "pyright", "lua_ls", "rust_analyzer", "eslint", "gopls", "sqlls", "texlab" }
-
-local utils = require("core.utils")
 
 local cmp = require("cmp")
 
