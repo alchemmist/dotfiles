@@ -31,7 +31,7 @@ require("nvim-treesitter").setup({
 	indent = {
 		enable = true,
 	},
-	playground = { -- если хочешь инспектировать деревья
+	playground = {
 		enable = true,
 		disable = {},
 		updatetime = 25,

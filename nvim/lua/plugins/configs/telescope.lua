@@ -1,20 +1,19 @@
 local options = {
 	pickers = {
 		buffers = {
-			previewer = false, -- без превью
+			previewer = false,
 			mappings = {
 				i = {
-					["<C-d>"] = require("telescope.actions").delete_buffer, -- в insert mode
+					["<C-d>"] = require("telescope.actions").delete_buffer,
 				},
 				n = {
-					["dd"] = require("telescope.actions").delete_buffer, -- в normal mode
+					["dd"] = require("telescope.actions").delete_buffer,
 				},
 			},
 			sort_lastused = true,
 			ignore_current_buffer = false,
 		},
 
-		-- поиск файлов: скрытые + follow, но без preview
 		find_files = {
 			hidden = true,
 			follow = true,
@@ -24,7 +23,6 @@ local options = {
 			previewer = false,
 		},
 
-		-- поиск по содержимому: с preview
 		live_grep = {
 			previewer = true,
 		},
@@ -84,7 +82,7 @@ local options = {
 		border = {},
 		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 		color_devicons = true,
-		set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+		set_env = { ["COLORTERM"] = "truecolor" },
 		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
 		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,

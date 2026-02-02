@@ -1,7 +1,6 @@
 local opt = vim.opt
 local g = vim.g
 
--------------------------------------- options ------------------------------------------
 opt.laststatus = 0
 opt.showmode = false
 
@@ -10,7 +9,6 @@ opt.clipboard = "unnamedplus"
 opt.scrolloff = 5
 opt.scrolljump = 2
 
--- Indenting
 opt.expandtab = true
 opt.shiftwidth = 4
 opt.smartindent = true
@@ -22,12 +20,10 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.mouse = "a"
 
--- Numbers
 opt.number = false
 opt.numberwidth = 2
 opt.ruler = false
 
--- disable nvim intro
 opt.shortmess:append("sI")
 
 opt.signcolumn = "yes"
@@ -37,7 +33,6 @@ opt.termguicolors = true
 opt.timeoutlen = 400
 opt.undofile = true
 
--- interval for writing swap file to disk
 opt.updatetime = 250
 
 vim.opt.fillchars:append({ eob = "~" })
@@ -53,11 +48,9 @@ vim.o.cursorline = true
 
 g.mapleader = " "
 
--- disable some default providers
 for _, provider in ipairs({ "node", "perl", "python3", "ruby" }) do
 	vim.g["loaded_" .. provider .. "_provider"] = 0
 end
 
--- add binaries installed by mason.nvim to path
 local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
 vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin" .. (is_windows and ";" or ":") .. vim.env.PATH

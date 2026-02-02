@@ -1,11 +1,5 @@
--- custom_mappings.lua
 local map = vim.keymap.set
 
--- ===========================
--- GENERAL MAPPINGS
--- ===========================
-
--- Insert mode
 map("i", "<C-a>", "<ESC>^i", { desc = "Beginning of line" })
 map("i", "<C-e>", "<End>", { desc = "End of line" })
 
@@ -59,7 +53,6 @@ map("n", ".", ".")
 
 map("n", "<C-n>", "<cmd>b#<CR>", { desc = "Go to previous buffer", noremap = true, silent = true })
 
--- Run different PL current file
 map("n", "<leader>rp", "<cmd>!python %<CR>", { desc = "Fast run python file" })
 map("n", "<leader>rr", "<cmd>RustRun<CR>", { desc = "Fast run rust file" })
 map("n", "<leader>rl", "<cmd>!lua %<CR>", { desc = "Fast run lua file" })
@@ -71,7 +64,6 @@ map(
 	{ desc = "Fast run C file" }
 )
 
--- Ufo: folding
 map("n", "zR", require("ufo").openAllFolds)
 map("n", "zM", require("ufo").closeAllFolds)
 map("n", "<leader>h", function()
@@ -93,16 +85,11 @@ map("n", "<leader>h", function()
 	end
 end, { desc = "Toggle fold under cursor" })
 
--- Terminal mode
 map("t", "<Esc>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), { desc = "Escape terminal mode" })
 
--- Visual mode
 map("v", "<", "<gv", { desc = "Indent line" })
 map("v", ">", ">gv", { desc = "Indent line" })
 
--- ===========================
--- COMMENT.NVIM
--- ===========================
 map("n", "<leader>/", function()
 	require("Comment.api").toggle.linewise.current()
 end, { desc = "Toggle comment" })
@@ -114,36 +101,26 @@ map(
 	{ desc = "Toggle comment" }
 )
 
--- ===========================
--- LSP CONFIG
--- ===========================
-
--- Show signature
 map("i", "<C-l>", function()
 	vim.lsp.buf.signature_help()
 end, { desc = "LSP signature help" })
 
--- Go to definition
 map("n", "gd", function()
 	vim.lsp.buf.definition()
 end, { desc = "LSP definition" })
 
--- Hover documentation
 map("n", "K", function()
 	vim.lsp.buf.hover({ border = "rounded" })
 end, { desc = "LSP hover" })
 
--- Show floating diagnostic
 map("n", "E", function()
 	vim.diagnostic.open_float({ border = "rounded" })
 end, { desc = "Floating diagnostic" })
 
--- Set diagnostic location list
 map("n", "<leader>q", function()
 	vim.diagnostic.setloclist()
 end, { desc = "Diagnostic setloclist" })
 
--- Rename
 map("v", "<C-r>", function()
 	vim.cmd('normal! "zy')
 	local query = vim.fn.getreg("z")
@@ -169,14 +146,8 @@ map("v", "<C-r>", function()
 	})
 end, { desc = "Rename with rgr" })
 
--- ===========================
--- Oil
--- ===========================
 map("n", "<C-e>", "<cmd>Oil<CR>", { desc = "Open oil file manager" })
 
--- ===========================
--- TELESCOPE
--- ===========================
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
 
 map("n", "<leader>fF", function()
@@ -213,20 +184,14 @@ map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "Git status" })
 
 map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope bookmarks" })
 
--- ===========================
--- COQ
--- ===========================
 map("n", "<A-j>", "<cmd>CoqNext<CR>", { desc = "Next coq line", noremap = true, silent = true })
 map("n", "<F-k>", "<cmd>CoqUndo<CR>", { desc = "Prev coq line", noremap = true, silent = true })
 map("n", "<A-m>", "<cmd> CoqToLine <CR>", { noremap = true, silent = true })
 map("n", "<leader>sc", "<cmd> CoqStart <CR>", { noremap = true, silent = true })
 
--- Lean
 map("n", "<leader>lr", function()
 	vim.cmd("LeanAbbreviationsReverseLookup")
 end, { noremap = true, silent = true, desc = "Lean: Reverse Abbreviation Lookup" })
 
--- LaTex
 map("i", "<C-.>", "\\Rightarrow", { desc = "Latex right arrow" })
 map("i", "<C-,>", "\\Leftarrow", { desc = "Latex left arrow" })
-

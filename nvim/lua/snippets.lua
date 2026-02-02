@@ -2,7 +2,6 @@ local ls = require("luasnip")
 local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
-local f = ls.function_node
 
 ls.add_snippets("python", {
 	s("pprint", {
@@ -169,8 +168,6 @@ ls.add_snippets("tex", {
         t({"\\includegraphics[width=1\\textwidth]{../../../figures/"}),
         i(1),
         t({".png}", }),
-        -- t({"\\caption{}", "\t"}),
-        -- t({"\\label{fig:robinson-table}"}),
         t({"", "\\end{figure}"})
 	}),
 })
