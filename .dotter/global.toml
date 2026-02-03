@@ -30,6 +30,7 @@ depends = []
 "swaync" = "~/.config/swaync"
 "starship" = "~/.config/starship"
 "yazi" = "~/.config/yazi"
+"systemd" = "~/.config/systemd/user"
 
 [default.variables]
 

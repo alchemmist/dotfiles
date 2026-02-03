@@ -1,0 +1,9 @@
+[Unit]
+Description=Battery level notifier
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'export DISPLAY=:0; export XAUTHORITY="$HOME/.Xauthority"; export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"; $HOME/scripts/battery-check.sh'
+
+[Install]
+WantedBy=default.target
