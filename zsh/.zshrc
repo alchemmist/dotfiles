@@ -355,3 +355,5 @@ esac
 # pnpm end
 
 fpath=(~/.zsh/completions $fpath)
+autoload -Uz compinit
+compinit

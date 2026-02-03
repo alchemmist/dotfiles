@@ -35,7 +35,7 @@ fi
 # ---------------------
 # Check full battery level (99%)
 # ---------------------
-if { [ "$BATTERY_STATUS" = "Charging" ] && [ "$BATTERY_LEVEL" -ge 89 ]; } ||
+if { [ "$BATTERY_STATUS" = "Charging" ] && [ "$BATTERY_LEVEL" -ge 85 ]; } ||
     [ "$BATTERY_STATUS" = "Full" ]; then
     if [ ! -f "$FULL_FLAG" ]; then
         notify-send -u normal "⚡ Battery full" "Battery: ${BATTERY_LEVEL}% 󰁹"
