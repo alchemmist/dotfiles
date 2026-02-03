@@ -29,5 +29,5 @@ style = "green"
 
 [python]
 symbol = ""
-format = "[($virtualenv)](#6c6cff) "
+format = "[($virtualenv)](#d787af) "
 
