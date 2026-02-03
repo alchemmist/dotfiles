@@ -10,5 +10,5 @@ What you can fine in this repo?
 - [wallpapers](https://github.com/alchemmist/dotfiles/blob/main/wallpapers) — Here you can find all my wallpapers packs and some scripts for great working with it.
 
 ## Features
-- Notifications about battery levels — script: [battery-check.sh](https://github.com/alchemmist/dotfiles/blob/main/scripts/battery-check.sh)
-- Tmux popup with GitHub repo issuse list
+- Notifications about battery levels — script: [battery-check.sh](https://github.com/alchemmist/dotfiles/blob/main/scripts/battery-check.sh) + systemd: [service](https://github.com/alchemmist/dotfiles/blob/main/systemd/battery-monitor.service) and [timer](https://github.com/alchemmist/dotfiles/blob/main/systemd/battery-monitor.timer)
+- Tmux popup with GitHub repo issuse list (`<prefix>+i`)
