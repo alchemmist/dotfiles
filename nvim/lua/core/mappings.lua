@@ -44,8 +44,8 @@ map("n", "<leader>v", "<cmd>VimtexView<CR>", { desc = "View place in latex doc" 
 
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save" })
 
-map("n", "<A-|>", "<cmd>vsplit<CR>", { desc = "Vertical split" })
-map("n", "<M-_", "<cmd>split<CR>", { desc = "Horizontal split", noremap = true, silent = true })
+map("n", "<Leader>-", "<cmd>vsplit<CR>")
+map("n", "<Leader>=", "<cmd>split<CR>")
 
 map("n", ".", ".")
 

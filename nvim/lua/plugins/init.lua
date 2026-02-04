@@ -4,6 +4,7 @@ local plugins = {
 	"nvim-lua/plenary.nvim",
 	{
 		"nvim-treesitter/nvim-treesitter",
+		lazy = true,
 		build = ":TSUpdate",
 		config = function(_, opts)
 			require("plugins.configs.treesitter")
@@ -13,6 +14,7 @@ local plugins = {
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
+		lazy = true,
 		keys = {
 			{
 				"<leader>i",
@@ -33,6 +35,7 @@ local plugins = {
 	},
 	{
 		"williamboman/mason.nvim",
+		lazy = true,
 		cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
 		opts = function()
 			return require("plugins.configs.mason")
@@ -49,6 +52,7 @@ local plugins = {
 	},
 	{
 		"L3MON4D3/LuaSnip",
+		lazy = true,
 		event = "InsertEnter",
 		dependencies = { "rafamadriz/friendly-snippets" },
 		config = function()
@@ -61,6 +65,7 @@ local plugins = {
 	},
 	{
 		"saghen/blink.cmp",
+		lazy = true,
 		version = "1.*",
 		event = "InsertEnter",
 		dependencies = {
@@ -121,6 +126,7 @@ local plugins = {
 	},
 	{
 		"numToStr/Comment.nvim",
+		lazy = true,
 		keys = {
 			{ "gcc", mode = "n", desc = "Comment toggle current line" },
 			{ "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
@@ -136,11 +142,13 @@ local plugins = {
 	},
 	{
 		"windwp/nvim-autopairs",
+		lazy = true,
 		event = "InsertEnter",
 		opts = {},
 	},
 	{
 		"nvim-telescope/telescope.nvim",
+		lazy = true,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -161,6 +169,7 @@ local plugins = {
 	},
 	{
 		"akinsho/git-conflict.nvim",
+		lazy = true,
 		version = "*",
 		config = function()
 			require("git-conflict").setup({
@@ -177,6 +186,7 @@ local plugins = {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		lazy = true,
 		config = function()
 			require("plugins.configs.lspconfig")
 		end,
@@ -220,6 +230,7 @@ local plugins = {
 	},
 	{
 		"iamcco/markdown-preview.nvim",
+		lazy = true,
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
 		build = "cd app && npm install",
 		init = function()
@@ -237,6 +248,7 @@ local plugins = {
 	},
 	{
 		"lervag/vimtex",
+		lazy = true,
 		config = function()
 			require("plugins.configs.others").vimtex()
 		end,
@@ -245,6 +257,7 @@ local plugins = {
 	{
 
 		"williamboman/mason-lspconfig.nvim",
+		lazy = true,
 		dependencies = {
 			"williamboman/mason.nvim",
 			"neovim/nvim-lspconfig",
@@ -253,6 +266,7 @@ local plugins = {
 	},
 	{
 		"whonore/Coqtail",
+		lazy = true,
 		ft = "coq",
 		config = function()
 			vim.cmd([[
@@ -272,6 +286,8 @@ local plugins = {
 	-- },
 	{
 		"stevearc/conform.nvim",
+		lazy = true,
+		event = "VeryLazy",
 		config = function()
 			require("plugins.configs.conform")
 		end,
@@ -279,6 +295,7 @@ local plugins = {
 
 	{
 		"kevinhwang91/nvim-ufo",
+		lazy = true,
 		dependencies = { "kevinhwang91/promise-async", "nvim-treesitter/nvim-treesitter" },
 		keys = {
 			{ "zR", map.ufo.zR, desc = "Open all folds" },
@@ -292,6 +309,7 @@ local plugins = {
 	},
 	{
 		"moss-theme/moss.nvim",
+		lazy = false,
 		version = "*",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
@@ -300,14 +318,15 @@ local plugins = {
 	},
 	{
 		"norcalli/nvim-colorizer.lua",
+		lazy = true,
 		keys = {
 			{ "<leader>c", map.colorizer["<leader>c"], desc = "Toggle Colorizer" },
 		},
 	},
 	{
 		"folke/flash.nvim",
+		lazy = true,
 		event = "VeryLazy",
-		opts = {},
 		keys = {
 			{
 				"s",
