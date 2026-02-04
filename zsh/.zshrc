@@ -318,6 +318,14 @@ else
     unsetopt zle
 fi
 
+if [[ -n "$TMUX_POPUP" ]]; then
+    _tmux_popup_close() { tmux display-popup -C >/dev/null 2>&1 }
+    zle -N _tmux_popup_close
+
+    bindkey -M viins $'\C-a\C-?' _tmux_popup_close
+    bindkey -M vicmd $'\C-a\C-?' _tmux_popup_close
+fi
+
 mycat() {
     if file --mime-type "$1" | grep -q 'image/'; then
         kitten icat --align left --scale-up "$1"
