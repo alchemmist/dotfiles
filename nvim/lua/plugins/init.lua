@@ -200,12 +200,6 @@ local plugins = {
 		ft = "rust",
 	},
 	{
-		"pocco81/auto-save.nvim",
-		config = function()
-			require("plugins.configs.others").auto_save()
-		end,
-	},
-	{
 		"stevearc/oil.nvim",
 		lazy = false,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -323,7 +317,7 @@ local plugins = {
 		},
 		event = "BufReadPost",
 		config = function()
-            require("plugins.configs.others").ufo()
+			require("plugins.configs.others").ufo()
 		end,
 	},
 	{
