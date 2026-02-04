@@ -1,3 +1,5 @@
+local map = require("core.mappings")
+
 local plugins = {
 	"nvim-lua/plenary.nvim",
 	{
@@ -11,6 +13,13 @@ local plugins = {
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
+		keys = {
+			{
+				"<leader>i",
+				map.ibl["<leader>i"],
+				desc = "Toggle indent blankline",
+			},
+		},
 		opts = {
 			indent = { char = "▏" },
 			enabled = false,
@@ -77,7 +86,7 @@ local plugins = {
 				},
 				keymap = {
 					["<Tab>"] = { "show", "accept" },
-                    ["<Esc>"] = { "cancel" },
+					["<Esc>"] = { "cancel" },
 					["<C-j>"] = { "show_and_insert_or_accept_single", "select_next" },
 					["<C-k>"] = { "show_and_insert_or_accept_single", "select_prev" },
 					["<CR>"] = { "accept", "fallback" },
@@ -267,13 +276,16 @@ local plugins = {
 			require("plugins.configs.conform")
 		end,
 	},
+
 	{
 		"kevinhwang91/nvim-ufo",
-		dependencies = {
-			"kevinhwang91/promise-async",
-			"nvim-treesitter/nvim-treesitter",
+		dependencies = { "kevinhwang91/promise-async", "nvim-treesitter/nvim-treesitter" },
+		keys = {
+			{ "zR", map.ufo.zR, desc = "Open all folds" },
+			{ "zM", map.ufo.zM, desc = "Close all folds" },
+			{ "<leader>h", map.ufo["<leader>h"], desc = "Toggle fold under cursor" },
 		},
-		event = "BufReadPost",
+
 		config = function()
 			require("plugins.configs.others").ufo()
 		end,
@@ -288,9 +300,9 @@ local plugins = {
 	},
 	{
 		"norcalli/nvim-colorizer.lua",
-		config = function()
-			require("colorizer").setup()
-		end,
+		keys = {
+			{ "<leader>c", map.colorizer["<leader>c"], desc = "Toggle Colorizer" },
+		},
 	},
 	{
 		"folke/flash.nvim",

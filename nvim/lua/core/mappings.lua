@@ -62,27 +62,6 @@ map(
 	{ desc = "Fast run C file" }
 )
 
-map("n", "zR", require("ufo").openAllFolds)
-map("n", "zM", require("ufo").closeAllFolds)
-map("n", "<leader>h", function()
-	local winid = vim.api.nvim_get_current_win()
-	if vim.api.nvim_win_get_config(winid).relative ~= "" then
-		return
-	end
-
-	local lnum = vim.api.nvim_win_get_cursor(winid)[1]
-
-	local is_closed = vim.fn.foldclosed(lnum)
-	local is_open = vim.fn.foldlevel(lnum) > 0 and is_closed == -1
-
-	if is_closed ~= -1 then
-		vim.cmd("normal! zo")
-	elseif is_open then
-		vim.cmd("normal! zc")
-	else
-	end
-end, { desc = "Toggle fold under cursor" })
-
 map("t", "<Esc>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), { desc = "Escape terminal mode" })
 
 map("v", "<", "<gv", { desc = "Indent line" })
@@ -193,3 +172,53 @@ end, { noremap = true, silent = true, desc = "Lean: Reverse Abbreviation Lookup"
 
 map("i", "<C-.>", "\\Rightarrow", { desc = "Latex right arrow" })
 map("i", "<C-,>", "\\Leftarrow", { desc = "Latex left arrow" })
+
+local M = {}
+
+M.ufo = {
+	zR = function()
+		require("ufo").openAllFolds()
+	end,
+	zM = function()
+		require("ufo").closeAllFolds()
+	end,
+	["<leader>h"] = function()
+		local winid = vim.api.nvim_get_current_win()
+		if vim.api.nvim_win_get_config(winid).relative ~= "" then
+			return
+		end
+
+		local lnum = vim.api.nvim_win_get_cursor(winid)[1]
+		local is_closed = vim.fn.foldclosed(lnum)
+		local is_open = vim.fn.foldlevel(lnum) > 0 and is_closed == -1
+
+		if is_closed ~= -1 then
+			vim.cmd("normal! zo")
+		elseif is_open then
+			vim.cmd("normal! zc")
+		end
+	end,
+}
+
+M.colorizer = {
+	["<leader>c"] = function()
+		if not vim.g.colorizer_loaded then
+			require("colorizer").setup()
+			vim.g.colorizer_loaded = true
+		end
+		vim.cmd("ColorizerToggle")
+	end,
+}
+
+M.ibl = {
+	["<leader>i"] = function()
+		local loaded, ibl = pcall(require, "ibl")
+		if not loaded then
+			vim.notify("Failed to load indent-blankline.nvim", vim.log.levels.WARN)
+			return
+		end
+		vim.cmd("IBLToggle")
+	end,
+}
+
+return M

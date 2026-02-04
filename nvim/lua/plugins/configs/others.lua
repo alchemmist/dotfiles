@@ -89,23 +89,6 @@ M.ufo = function()
 			return { "treesitter", "indent" }
 		end,
 	})
-
-	vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-	vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-	vim.keymap.set("n", "<leader>h", function()
-		local winid = vim.api.nvim_get_current_win()
-		if vim.api.nvim_win_get_config(winid).relative ~= "" then
-			return
-		end
-		local lnum = vim.api.nvim_win_get_cursor(winid)[1]
-		local is_closed = vim.fn.foldclosed(lnum)
-		local is_open = vim.fn.foldlevel(lnum) > 0 and is_closed == -1
-		if is_closed ~= -1 then
-			vim.cmd("normal! zo")
-		elseif is_open then
-			vim.cmd("normal! zc")
-		end
-	end, { desc = "Toggle fold under cursor" })
 end
 
 return M
