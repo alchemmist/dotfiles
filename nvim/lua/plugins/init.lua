@@ -235,20 +235,6 @@ local plugins = {
 		ft = { "tex", "cls" },
 	},
 	{
-		"Alchemmist/cyrillic.nvim",
-		event = { "VeryLazy" },
-		config = function()
-			require("plugins.configs.others").cyrillic()
-		end,
-	},
-	{
-		"fatih/vim-go",
-		ft = "go",
-		config = function()
-			require("plugins.configs.others").vim_go()
-		end,
-	},
-	{
 
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {

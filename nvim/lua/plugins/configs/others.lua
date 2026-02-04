@@ -80,10 +80,6 @@ M.vimtex = function()
 	vim.g.tex_conceal = "abdmg"
 end
 
-M.cyrillic = function()
-	require("cyrillic").setup({ no_cyrillic_abbrev = false })
-end
-
 M.ufo = function()
 	vim.o.foldcolumn = "0"
 	vim.o.foldlevel = 99
