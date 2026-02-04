@@ -30,14 +30,6 @@ local overrides = {
 local plugins = {
 	"nvim-lua/plenary.nvim",
 	{
-		"nvim-tree/nvim-web-devicons",
-		opts = function() end,
-		config = function(_, opts)
-			require("nvim-web-devicons").setup(opts)
-		end,
-	},
-
-	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		config = function(_, opts)
@@ -59,24 +51,6 @@ local plugins = {
 			},
 		},
 	},
-	{
-		"kdheepak/lazygit.nvim",
-		lazy = true,
-		cmd = {
-			"LazyGit",
-			"LazyGitConfig",
-			"LazyGitCurrentFile",
-			"LazyGitFilter",
-			"LazyGitFilterCurrentFile",
-		},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		keys = {
-			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-		},
-	},
-
 	{
 		"williamboman/mason.nvim",
 		cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
@@ -202,7 +176,6 @@ local plugins = {
 	{
 		"stevearc/oil.nvim",
 		lazy = false,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			buf_options = {
 				buflisted = false,

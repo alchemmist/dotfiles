@@ -32,8 +32,6 @@ map("n", "<leader>z", "<cmd>bufdo bd<CR>", { desc = "Dashboard" })
 
 map("n", "<leader>x", "<cmd>bd<CR>", { desc = "Close buffer" })
 
-map("n", "<leader>l", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
-
 map("n", "gq", function()
 	require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "Format code with Conform" })
