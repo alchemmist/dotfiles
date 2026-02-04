@@ -36,7 +36,7 @@ tmux_conf_new_session_retain_current_path=false
 #   - true
 #   - false (default)
 #   - disabled (do not modify new-window bindings)
-tmux_conf_new_window_retain_current_path=false
+tmux_conf_new_window_retain_current_path=true
 
 # new window tries to reconnect ssh sessions, possible values are:
 #   - true
@@ -329,7 +329,7 @@ set -g mouse on
 # bind C-a send-prefix
 
 # if you don't want Oh my tmux! to alter a binding, use #!important
-# bind c new-window -c '#{pane_current_path}' #!important
+bind c new-window -c '#{pane_current_path}' #!important
 
 # move status line to top
 #set -g status-position top
