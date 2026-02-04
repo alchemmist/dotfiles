@@ -26,6 +26,8 @@ adjust-cursor-thickness = 1
 cursor-style = block_hollow
 mouse-hide-while-typing = true
 
+keybind = ctrl+enter=unbind
+
 
 
 palette = 0=#000000
