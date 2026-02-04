@@ -39,45 +39,77 @@ local plugins = {
 		end,
 	},
 	{
-		"hrsh7th/nvim-cmp",
+		"L3MON4D3/LuaSnip",
 		event = "InsertEnter",
-		dependencies = {
-			{
-				"L3MON4D3/LuaSnip",
-				dependencies = "rafamadriz/friendly-snippets",
-				opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-				config = function(_, opts)
-					require("plugins.configs.others").luasnip(opts)
-				end,
-			},
-
-			{
-				"windwp/nvim-autopairs",
-				opts = {
-					fast_wrap = {},
-					disable_filetype = { "TelescopePrompt", "vim" },
-				},
-				config = function(_, opts)
-					require("plugins.configs.others").autopairs(opts)
-				end,
-			},
-
-			{
-				"saadparwaiz1/cmp_luasnip",
-				"hrsh7th/cmp-nvim-lua",
-				"hrsh7th/cmp-nvim-lsp",
-				"hrsh7th/cmp-buffer",
-				"hrsh7th/cmp-path",
-			},
-		},
-		opts = function()
-			return require("plugins.configs.cmp")
-		end,
-		config = function(_, opts)
-			require("cmp").setup(opts)
+		dependencies = { "rafamadriz/friendly-snippets" },
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip").config.set_config({
+				history = true,
+				updateevents = "TextChanged,TextChangedI",
+			})
 		end,
 	},
+	{
+		"saghen/blink.cmp",
+		version = "1.*",
+		event = "InsertEnter",
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			"L3MON4D3/LuaSnip",
+		},
+		opts = {
+			keymap = {
+				preset = "none",
 
+				["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<CR>"] = { "accept", "fallback" },
+
+				["<C-j>"] = { "select_next", "fallback" },
+				["<C-k>"] = { "select_prev", "fallback" },
+				["<C-e>"] = { "hide", "fallback" },
+			},
+			cmdline = {
+				enabled = true,
+				completion = {
+					menu = { auto_show = false },
+					ghost_text = { enabled = false },
+				},
+				keymap = {
+					["<Tab>"] = { "show", "accept" },
+                    ["<Esc>"] = { "cancel" },
+					["<C-j>"] = { "show_and_insert_or_accept_single", "select_next" },
+					["<C-k>"] = { "show_and_insert_or_accept_single", "select_prev" },
+					["<CR>"] = { "accept", "fallback" },
+				},
+			},
+			completion = {
+				documentation = { auto_show = true, window = {
+					border = "rounded",
+				} },
+				trigger = {
+					show_on_insert = false,
+					show_on_keyword = false,
+				},
+				menu = {
+					border = "rounded",
+					winblend = 0,
+					scrollbar = false,
+				},
+			},
+
+			appearance = {
+				nerd_font_variant = "mono",
+				use_nvim_cmp_as_default = false,
+			},
+
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
+
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
+	},
 	{
 		"numToStr/Comment.nvim",
 		keys = {
@@ -93,7 +125,11 @@ local plugins = {
 			require("plugins.configs.others").comment(opts)
 		end,
 	},
-
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
+	},
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {

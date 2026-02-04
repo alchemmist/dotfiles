@@ -21,8 +21,6 @@ local M = {}
 local servers =
 	{ "html", "cssls", "ts_ls", "clangd", "pyright", "lua_ls", "rust_analyzer", "eslint", "gopls", "sqlls", "texlab" }
 
-local cmp = require("cmp")
-
 M.on_attach = function(client, bufnr)
 	client.server_capabilities.documentFormattingProvider = false
 	client.server_capabilities.documentRangeFormattingProvider = false
@@ -30,24 +28,7 @@ M.on_attach = function(client, bufnr)
 	client.server_capabilities.semanticTokensProvider = nil
 end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem = {
-	documentationFormat = { "markdown", "plaintext" },
-	snippetSupport = true,
-	preselectSupport = true,
-	insertReplaceSupport = true,
-	labelDetailsSupport = true,
-	deprecatedSupport = true,
-	commitCharactersSupport = true,
-	tagSupport = { valueSet = { 1 } },
-	resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	},
-}
+M.capabilities = require("blink.cmp").get_lsp_capabilities()
 
 vim.lsp.config("*", {
 	on_attach = M.on_attach,
@@ -61,28 +42,6 @@ vim.diagnostic.config({
 	underline = true,
 	severity_sort = true,
 	open_loclist = true,
-})
-
-cmp.setup({
-	snippet = {
-		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<C-e>"] = cmp.mapping.close(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-	}),
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-	}, {
-		{ name = "buffer" },
-		{ name = "path" },
-	}),
 })
 
 vim.lsp.config("lua_ls", {

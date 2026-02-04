@@ -28,8 +28,6 @@ M.autopairs = function(opts)
 	local npairs = require("nvim-autopairs")
 	npairs.setup(opts)
 	npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
-	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-	require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
 end
 
 M.comment = function(opts)

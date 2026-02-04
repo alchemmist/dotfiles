@@ -148,8 +148,6 @@ local config = {
 }
 
 config["on_attach"] = function(client, bufnr)
-	-- require("keymaps").map_java_keys(bufnr)
-	-- require("cmp_nvim_lsp").on_attach(client, bufnr)
 	require("lsp_signature").on_attach({
 		bind = true,
 		floating_window_above_cur_line = false,
@@ -159,10 +157,8 @@ config["on_attach"] = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 config.capabilities = capabilities
 
--- This starts a new client & server,
--- or attaches to an existing client & server depending on the `root_dir`.
 require("jdtls").start_or_attach(config)
 
