@@ -1,32 +1,3 @@
-local overrides = {
-	mason = {
-		ensure_installed = {
-			"lua-language-server",
-			"stylua",
-			"css-lsp",
-			"html-lsp",
-			"typescript-language-server",
-			"deno",
-			"prettier",
-			"clangd",
-			"pyright",
-			"ruff",
-			"latexindent",
-			"rust-analyzer",
-			"gopls",
-			"jdtls",
-			"kotlin-language-server",
-			"clang-format",
-			"coq-lsp",
-			"tex-fmt",
-			"shfmt",
-			"texlab",
-			"mbake",
-			"taplo",
-		},
-	},
-}
-
 local plugins = {
 	"nvim-lua/plenary.nvim",
 	{
@@ -164,14 +135,6 @@ local plugins = {
 		config = function()
 			require("plugins.configs.lspconfig")
 		end,
-	},
-	{
-		"williamboman/mason.nvim",
-		opts = overrides.mason,
-	},
-	{
-		"simrat39/rust-tools.nvim",
-		ft = "rust",
 	},
 	{
 		"stevearc/oil.nvim",
