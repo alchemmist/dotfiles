@@ -20,6 +20,9 @@
 [images/dolina-tuman-priroda-1.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/dolina-tuman-priroda-1.jpg)<br>
 <img src="/media/wlp-preview/nature/dolina-tuman-priroda-1.png" width="500">
 
+[images/doroga-zakat-more-tuman.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/doroga-zakat-more-tuman.jpg)<br>
+<img src="/media/wlp-preview/nature/doroga-zakat-more-tuman.png" width="500">
+
 [images/forest-trees-road-lights-winter-snow-snowy-snowy-landscape-m.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/forest-trees-road-lights-winter-snow-snowy-snowy-landscape-m.jpg)<br>
 <img src="/media/wlp-preview/nature/forest-trees-road-lights-winter-snow-snowy-snowy-landscape-m.png" width="500">
 
@@ -53,17 +56,23 @@
 [images/les-zelen-svet-zarosli-derevia-leto-tuman.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/les-zelen-svet-zarosli-derevia-leto-tuman.jpg)<br>
 <img src="/media/wlp-preview/nature/les-zelen-svet-zarosli-derevia-leto-tuman.png" width="500">
 
+[images/liod-nebo-ldiny-grenlandiia-surovaia-krasota-ldy-priroda-sne.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/liod-nebo-ldiny-grenlandiia-surovaia-krasota-ldy-priroda-sne.jpg)<br>
+<img src="/media/wlp-preview/nature/liod-nebo-ldiny-grenlandiia-surovaia-krasota-ldy-priroda-sne.png" width="500">
+
 [images/lofoten-air-norway-88.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/lofoten-air-norway-88.jpg)<br>
 <img src="/media/wlp-preview/nature/lofoten-air-norway-88.png" width="500">
+
+[images/nature-sunset-cloud.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/nature-sunset-cloud.jpg)<br>
+<img src="/media/wlp-preview/nature/nature-sunset-cloud.png" width="500">
 
 [images/nebo-oblaka-peizazh-vetrogeneratory-11.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/nebo-oblaka-peizazh-vetrogeneratory-11.jpg)<br>
 <img src="/media/wlp-preview/nature/nebo-oblaka-peizazh-vetrogeneratory-11.png" width="500">
 
+[images/nebo-zakat-doroga-derevya.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/nebo-zakat-doroga-derevya.jpg)<br>
+<img src="/media/wlp-preview/nature/nebo-zakat-doroga-derevya.png" width="500">
+
 [images/new-zealand-river-mountains.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/new-zealand-river-mountains.jpg)<br>
 <img src="/media/wlp-preview/nature/new-zealand-river-mountains.png" width="500">
-
-[images/patrick-mueller-9lEGCbgAQSQ-unsplash.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/patrick-mueller-9lEGCbgAQSQ-unsplash.jpg)<br>
-<img src="/media/wlp-preview/nature/patrick-mueller-9lEGCbgAQSQ-unsplash.png" width="500">
 
 [images/peizazh-ozero-prichal-noch.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/peizazh-ozero-prichal-noch.jpg)<br>
 <img src="/media/wlp-preview/nature/peizazh-ozero-prichal-noch.png" width="500">
