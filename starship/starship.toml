@@ -5,7 +5,7 @@ format = "$directory$git_branch$git_status$python\n$character"
 add_newline = true
 
 [character]
-success_symbol = '[➜](#fff)'
+success_symbol = "[➜](fg)"
 error_symbol = "[➜](red)"
 
 vicmd_symbol = "[➜](green)"
@@ -14,7 +14,7 @@ vimcmd_replace_symbol = "[➜](green)"
 vimcmd_visual_symbol = "[➜](green)"
 
 [directory]
-style = "#ffffff"
+style = "fg"
 format = "[$path]($style) "
 truncation_length = 3
 truncate_to_repo = false
@@ -29,5 +29,4 @@ style = "green"
 
 [python]
 symbol = ""
-format = "[($virtualenv)](#d787af) "
-
+format = "[($virtualenv)](magenta) "

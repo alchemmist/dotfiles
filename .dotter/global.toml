@@ -24,7 +24,6 @@ depends = []
 "wallpapers" = "~/Pictures/wallpapers"
 "mako" = "~/.config/mako"
 "vim/.vimrc" = "~/.vimrc"
-"ghostty" = "~/.config/ghostty"
 "helix" = "~/.config/helix"
 "wlogout" = "~/.config/wlogout"
 "swaync" = "~/.config/swaync"
