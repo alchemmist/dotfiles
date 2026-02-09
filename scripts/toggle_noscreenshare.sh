@@ -6,7 +6,7 @@ STATE_FILE="$HOME/.config/hypr/.screenshare_rule_disabled"
 RULE_REGEX='[[:space:]]*(windowrule|layerrule)[[:space:]]*=[[:space:]]*no_screen_share'
 
 enable_rules() {
-    sed -i -E "/^[[:space:]]*#?[[:space:]]*$RULE_REGEX/{
+    sed -i --follow-symlinks -E "/^[[:space:]]*#?[[:space:]]*$RULE_REGEX/{
         s/^[[:space:]]*#[[:space:]]*//
     }" "$CONFIG_FILE"
 
@@ -15,7 +15,7 @@ enable_rules() {
 }
 
 disable_rules() {
-    sed -i -E "/^[[:space:]]*$RULE_REGEX/{
+    sed -i --follow-symlinks -E "/^[[:space:]]*$RULE_REGEX/{
         /^[[:space:]]*#/! s/^/# /
     }" "$CONFIG_FILE"
 
