@@ -78,7 +78,6 @@ golangci-lint
 google-chrome
 gptfdisk
 gradle
-grafana
 grim
 gspell
 gvfs
@@ -186,7 +185,6 @@ polkit-kde-agent
 postgresql
 power-profiles-daemon
 pre-commit
-prometheus
 pulseaudio-alsa
 pulseaudio-qt
 pycharm-community-edition
