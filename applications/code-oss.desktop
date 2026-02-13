@@ -1,0 +1,29 @@
+[Desktop Entry]
+Name=Code - OSS
+Comment=Code Editing. Redefined.
+GenericName=Text Editor
+Exec=code-oss %F
+Icon=com.visualstudio.code.oss
+Type=Application
+StartupNotify=false
+StartupWMClass=code-oss
+Categories=TextEditor;Development;IDE;
+MimeType=application/x-code-oss-workspace;
+Actions=new-empty-window;
+Keywords=vscode;
+X-Desktop-File-Install-Version=0.28
+
+[Desktop Action new-empty-window]
+Name=New Empty Window
+Name[cs]=Nové prázdné okno
+Name[de]=Neues leeres Fenster
+Name[es]=Nueva ventana vacía
+Name[fr]=Nouvelle fenêtre vide
+Name[it]=Nuova finestra vuota
+Name[ja]=新しい空のウィンドウ
+Name[ko]=새 빈 창
+Name[ru]=Новое пустое окно
+Name[zh_CN]=新建空窗口
+Name[zh_TW]=開新空視窗
+Exec=code-oss --new-window %F
+Icon=com.visualstudio.code.oss

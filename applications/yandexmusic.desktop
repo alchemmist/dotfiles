@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Яндекс Музыка
+Exec="/opt/yandex-music/yandexmusic" --gtk-version=3 %U
+Terminal=false
+Type=Application
+Icon=yandexmusic
+StartupWMClass=Яндекс Музыка
+Comment=Personal recommendations, mixes for any occasion and the latest musical releases
+MimeType=x-scheme-handler/yandexmusic;
+Categories=AudioVideo;Audio;
