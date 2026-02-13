@@ -124,6 +124,7 @@ plugins=(
     docker
     docker-compose
     vi-mode
+    you-should-use
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -142,23 +143,6 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-# alias python="/home/alchemmist/.python3.12/bin/python"
-# alias pip="/home/alchemmist/.python3.12/bin/pip"
-
 alias tuxsay="cowsay -f tux"
 alias nvim_clear_swap="rm -rf ~/.local/state/nvim/swap/*"
 alias latex_clear_cache="rm -rf ~/latex/aux/* && rm -rf ~/latex/out/*"
@@ -171,7 +155,7 @@ alias cd="z"
 alias glog="git log --oneline --graph --decorate --all"
 alias gacp="git add . && git commit --amend --no-edit && git push --force-with-lease"
 alias gac="git add . && git commit --amend --no-edit"
-# alias glog="serie"
+
 alias pptx2pdf='libreoffice --headless --convert-to pdf'
 alias mp42gif='~/scripts/mp42gif.sh'
 alias cat='mycat'
@@ -192,8 +176,6 @@ dot() {
     cd -
 }
 
-# PROTECTION FOR RM COMMAND
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 STOP_MESSAGE="!!!    STOP     !!!\nWHAT ARE YOU DOING?"
 
 BLACK_LIST=(
