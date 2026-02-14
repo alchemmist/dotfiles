@@ -169,7 +169,6 @@ pyright
 python-annotated-doc
 python-dbus
 python-pillow
-python-poetry
 python-pyqt5
 python-requests
 python-tomli

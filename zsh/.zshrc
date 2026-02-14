@@ -117,7 +117,6 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 plugins=(
     git
     gitfast
-    poetry
     zoxide
     fzf
     shellfirm
@@ -232,8 +231,6 @@ source <(fzf --zsh)
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
-
-eval $(opam env)
 
 # SSH-agent
 if ! pgrep -u "$USER" ssh-agent >/dev/null; then
