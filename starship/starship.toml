@@ -1,13 +1,21 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$directory$git_branch$git_status$python\n$character"
-
 add_newline = true
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+${custom.gahead}\
+${custom.gbehind}\
+${custom.docker}\
+$python\n\
+$character\
+"""
 
 [character]
 success_symbol = "[➜](fg)"
 error_symbol = "[➜](red)"
-
 vicmd_symbol = "[➜](green)"
 vimcmd_replace_one_symbol = "[➜](green)"
 vimcmd_replace_symbol = "[➜](green)"
@@ -21,27 +29,47 @@ truncate_to_repo = false
 
 [git_branch]
 symbol = ""
-format = "[$symbol $branch]($style) "
-style = "green"
+format = "[$symbol $branch](green) "
 
 [git_status]
-style = "green"
-
-format = "$conflicted$staged$renamed$modified$deleted$untracked$stashed$ahead_behind "
-
+format = "$conflicted$staged$renamed$modified$deleted$untracked$stashed"
 conflicted = "🏳"
-staged     = " "
-renamed    = ""
-modified   = " "
-deleted    = "✘ "
-untracked  = " "
-stashed    = "📦"
-ahead      = "⇡${count}"
-behind     = "⇣${count}"
-diverged   = "⇕⇡${ahead_count}⇣${behind_count}"
+staged = " "
+renamed = " "
+modified = " "
+deleted = "✘ "
+untracked = " "
+stashed = "📦 "
+# ahead = "󱦲${count}"
+# behind = "󱦳${count}"
+ahead = ""
+behind = ""
+diverged = "⇕"
 up_to_date = ""
 typechanged = ""
 
 [python]
 symbol = ""
 format = "[$virtualenv](#d787af) "
+
+[custom.gahead]
+description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
+command = """
+git rev-list --count @{u}..HEAD 2>/dev/null | awk '{for(i=0;i<$1;i++) printf "󱦲"}'
+"""
+style = "($fg)"
+detect_folders = [".git"]
+
+[custom.gbehind]
+description = "Shows dots for commits behind remote"
+command = """
+git rev-list --count HEAD..@{u} 2>/dev/null | awk '{for(i=0;i<$1;i++) printf "󱦳"}'
+"""
+style = "($fg)"
+detect_folders = [".git"]
+
+[custom.docker]
+description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
+command = "echo 🐋"
+files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
+when = """ command -v docker &> /dev/null; exit (echo $?); """
