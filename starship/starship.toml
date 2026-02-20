@@ -8,7 +8,9 @@ $git_branch\
 $git_status\
 ${custom.gahead}\
 ${custom.gbehind}\
+${custom.venv}\
 ${custom.docker}\
+${custom.makefile}\
 $python\n\
 $character\
 """
@@ -32,11 +34,11 @@ symbol = ""
 format = "[$symbol $branch](green) "
 
 [git_status]
-format = "$conflicted$staged$renamed$modified$deleted$untracked$stashed"
+format = "$modified[$conflicted](red)[$staged](green)[$renamed](yellow)[$deleted](red)[$untracked](blue)$stashed"
 conflicted = "🏳"
-staged = " "
+staged = "󰸞 "
 renamed = " "
-modified = " "
+modified = " "
 deleted = "✘ "
 untracked = " "
 stashed = "📦 "
@@ -50,12 +52,12 @@ typechanged = ""
 
 [python]
 symbol = ""
-format = "[$virtualenv](#d787af) "
+format = ""
 
 [custom.gahead]
 description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
 command = """
-git rev-list --count @{u}..HEAD 2>/dev/null | awk '{for(i=0;i<$1;i++) printf "󱦲"}'
+git rev-list --count @{u}..HEAD 2>/dev/null | awk '{for(i=0;i<$1;i++) printf ""}'
 """
 style = "($fg)"
 detect_folders = [".git"]
@@ -63,13 +65,25 @@ detect_folders = [".git"]
 [custom.gbehind]
 description = "Shows dots for commits behind remote"
 command = """
-git rev-list --count HEAD..@{u} 2>/dev/null | awk '{for(i=0;i<$1;i++) printf "󱦳"}'
+git rev-list --count HEAD..@{u} 2>/dev/null | awk '{for(i=0;i<$1;i++) printf ""}'
 """
 style = "($fg)"
 detect_folders = [".git"]
 
 [custom.docker]
 description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
-command = "echo 🐋"
+command = "printf '  '"
 files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
 when = """ command -v docker &> /dev/null; exit (echo $?); """
+
+[custom.makefile]
+detect_files = ["Makefile", "makefile"]
+symbol = "  "
+style = "yellow"
+format = "[$symbol]($style)"
+
+[custom.venv]
+description = "Shows Python virtual environment if active"
+command = "echo  $(basename $VIRTUAL_ENV)"
+when = 'test -n "$VIRTUAL_ENV"'
+style = "#d787af"
