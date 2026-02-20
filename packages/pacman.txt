@@ -7,7 +7,6 @@ anki-bin
 appmenu-gtk-module
 aquamarine
 ascii
-asm-lsp
 atac
 base
 base-devel
@@ -27,7 +26,6 @@ code
 cowsay
 cpanminus
 cpio
-cpptools-debug-bin
 cups
 dbus-glib
 debugedit
@@ -65,6 +63,7 @@ gptfdisk
 gradle
 grim
 gspell
+gst-plugin-pipewire
 gvfs
 helix
 hostapd
@@ -96,7 +95,6 @@ jq
 jre11-openjdk
 kdsingleapplication
 kitty
-kubectl
 lazygit
 lib32-vulkan-radeon
 libei
@@ -112,10 +110,10 @@ lua-language-server
 luarocks
 man-db
 man-pages
+markdownlint-cli2
 maven
 maxima
 mesa
-minikube
 modemmanager
 mpv
 muparser
@@ -173,11 +171,8 @@ python-pyqt5
 python-requests
 python-tomli
 python-typer
-qemu-full
-qemu-user
 qt5-graphicaleffects
 qt5-quickcontrols2
-quickshell-git
 refind
 reflector
 repgrep
@@ -258,6 +253,7 @@ xcalib
 xclip
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
+xdg-desktop-portal-wlr
 xf86-input-wacom
 xf86-video-amdgpu
 xorg-xwayland

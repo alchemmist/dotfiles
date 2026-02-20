@@ -27,6 +27,21 @@ style = "green"
 [git_status]
 style = "green"
 
+format = "$conflicted$staged$renamed$modified$deleted$untracked$stashed$ahead_behind "
+
+conflicted = "🏳"
+staged     = " "
+renamed    = ""
+modified   = " "
+deleted    = "✘ "
+untracked  = " "
+stashed    = "📦"
+ahead      = "⇡${count}"
+behind     = "⇣${count}"
+diverged   = "⇕⇡${ahead_count}⇣${behind_count}"
+up_to_date = ""
+typechanged = ""
+
 [python]
 symbol = ""
-format = "[($virtualenv)](magenta) "
+format = "[$virtualenv](#d787af) "
