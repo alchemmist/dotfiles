@@ -1,5 +1,6 @@
 [font]
 size = 12
+
 [font.normal]
 family = "JetBrainsMono Nerd Font Mono"
 style = "Bold"
@@ -7,6 +8,6 @@ style = "Bold"
 [general]
 live_config_reload = true
 import = [
-    "~/.config/alacritty/themes/moss-dark.toml",
-    "~/.config/alacritty/themes/moss-light.toml",
+  "~/.config/alacritty/themes/moss-dark.toml",
+  # "~/.config/alacritty/themes/moss-light.toml",
 ]
