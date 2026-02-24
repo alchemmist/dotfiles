@@ -42,8 +42,8 @@ modified = " "
 deleted = "✘ "
 untracked = " "
 stashed = "📦 "
-# ahead = "󱦲${count}"
-# behind = "󱦳${count}"
+# ahead = "󱦲 ${count}"
+# behind = "󱦳 ${count}"
 ahead = ""
 behind = ""
 diverged = "⇕"
@@ -72,6 +72,7 @@ detect_folders = [".git"]
 
 [custom.docker]
 description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
+style = "($fg)"
 command = "printf '  '"
 files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
 when = """ command -v docker &> /dev/null; exit (echo $?); """
@@ -79,7 +80,7 @@ when = """ command -v docker &> /dev/null; exit (echo $?); """
 [custom.makefile]
 detect_files = ["Makefile", "makefile"]
 symbol = "  "
-style = "yellow"
+style = "($fg)"
 format = "[$symbol]($style)"
 
 [custom.venv]
