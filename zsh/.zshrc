@@ -142,6 +142,8 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
+stty -ixon
+
 alias tuxsay="cowsay -f tux"
 alias nvim_clear_swap="rm -rf ~/.local/state/nvim/swap/*"
 alias latex_clear_cache="rm -rf ~/latex/aux/* && rm -rf ~/latex/out/*"
@@ -241,13 +243,6 @@ if [ "$(tty)" = "/dev/tty1" -o "$(tty)" = "/dev/tty2" ] && [ -z "$(printenv HYPR
     exec ~/.local/bin/wlinitrc
 fi
 
-fzf_history() {
-    local selected=$(fc -rl 1 | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//' | fzf --reverse --height=40%)
-    if [[ -n $selected ]]; then
-        LBUFFER="$selected"
-    fi
-}
-
 # Функция для fzf, запускает поиск из текущей директории
 fzf-widget() {
     zle reset-prompt
@@ -279,9 +274,6 @@ y-widget() {
 }
 
 if [[ -t 1 ]]; then
-    zle -N fzf_history
-    bindkey "^S" fzf_history
-
     zle -N fzf-widget
     zle -N zi-widget
     zle -N y-widget
@@ -297,13 +289,11 @@ else
     unsetopt zle
 fi
 
-if [[ -n "$TMUX_POPUP" ]]; then
-    _tmux_popup_close() { tmux display-popup -C >/dev/null 2>&1 }
-    zle -N _tmux_popup_close
+_tmux_popup_close() { tmux display-popup -C >/dev/null 2>&1 }
+zle -N _tmux_popup_close
 
-    bindkey -M viins $'\C-a\C-?' _tmux_popup_close
-    bindkey -M vicmd $'\C-a\C-?' _tmux_popup_close
-fi
+bindkey -M viins $'\C-a\C-?' _tmux_popup_close
+bindkey -M vicmd $'\C-a\C-?' _tmux_popup_close
 
 mycat() {
     if file --mime-type "$1" | grep -q 'image/'; then
@@ -336,11 +326,88 @@ docker() {
 # pnpm
 export PNPM_HOME="/home/alchemmist/.local/share/pnpm"
 case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
 fpath=(~/.zsh/completions $fpath)
 autoload -Uz compinit
 compinit
+
+fzf-history-widget() {
+    local selected extracted_with_perl=0
+    local -a cmds
+    local -a mbegin mend match
+
+    setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases no_glob no_ksharrays extendedglob 2> /dev/null
+
+    local max_width=$(( COLUMNS > 100 ? 100 : COLUMNS - 10 ))
+    local fzf_ui_opts="--height=30% --layout=reverse --border=rounded --info=inline --prompt='history> '"
+
+    if zmodload -F zsh/parameter p:{commands,history} 2> /dev/null && [[ -n ${commands[perl]} ]]; then
+        selected="$(
+      printf '%s\t%s\000' "${(kv)history[@]}" |
+      perl -0 -ne 'if (!$seen{(/^\s*[0-9]+\**\t(.*)/s, $1)}++) { s/\n/\n\t/g; print; }' |
+      FZF_DEFAULT_OPTS=$(
+        __fzf_defaults "" "-n2..,.. --scheme=history --bind=ctrl-r:toggle-sort,alt-r:toggle-raw --wrap-sign '\t↳ ' --highlight-line --multi $fzf_ui_opts --query=${(qqq)LBUFFER} --read0"
+      ) \
+      FZF_DEFAULT_OPTS_FILE='' COLUMNS=$max_width $(__fzfcmd)
+    )"
+        extracted_with_perl=1
+    else
+        selected="$(
+      fc -rl 1 |
+      __fzf_exec_awk '{ cmd=$0; sub(/^[ \t]*[0-9]+\**[ \t]+/, "", cmd); if (!seen[cmd]++) print $0 }' |
+      FZF_DEFAULT_OPTS=$(
+        __fzf_defaults "" "-n2..,.. --scheme=history --bind=ctrl-r:toggle-sort,alt-r:toggle-raw --wrap-sign '\t↳ ' --highlight-line --multi $fzf_ui_opts --query=${(qqq)LBUFFER}"
+      ) \
+      FZF_DEFAULT_OPTS_FILE='' COLUMNS=$max_width $(__fzfcmd)
+    )"
+    fi
+
+    local ret=$?
+
+    if [[ -n $selected ]]
+    then
+        if (
+            (( extracted_with_perl )) && [[ $selected == <->$'\t'* ]]
+            ) || (
+            (( ! extracted_with_perl )) && [[ $selected == [[:blank:]]#<->(  |\* )* ]]
+        )
+        then
+            for line in ${(ps:\n:)selected}
+            do if (( extracted_with_perl ))
+                then
+                    if [[ $line == (#b)(<->)(#B)$'\t'* ]]
+                    then
+                        (( ${+history[${match[1]}]} )) && cmds+=("${history[${match[1]}]}")
+                    fi
+                elif [[ $line == [[:blank:]]#(#b)(<->)(#B)(  |\* )* ]]
+                then
+                    zle .push-line
+                    zle vi-fetch-history -n ${match[1]}
+                    (( ${#BUFFER} )) && cmds+=("${BUFFER}")
+                    BUFFER=""
+                    zle .get-line
+                fi
+            done
+
+            if (( ${#cmds[@]} ))
+            then
+                BUFFER="${(pj:\n:)${(@)cmds%%$'\n'#}}"
+                CURSOR=${#BUFFER}
+            fi
+        else
+            LBUFFER="$selected"
+        fi
+    fi
+
+    zle reset-prompt
+    return $ret
+}
+
+zle -N fzf-history-widget
+bindkey '^R' fzf-history-widget
+
+eval "$(cier completion zsh)"

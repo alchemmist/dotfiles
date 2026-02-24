@@ -139,6 +139,7 @@ opam
 opencl-mesa
 opencv
 openvpn
+otter-launcher
 pacman-contrib
 pamixer
 pass
@@ -218,6 +219,7 @@ tokei
 trash-cli
 tree
 ttf-cascadia-code
+ttf-cascadia-code-nerd
 ttf-dejavu
 ttf-fira-code
 ttf-jetbrains-mono-nerd

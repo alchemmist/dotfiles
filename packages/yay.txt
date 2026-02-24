@@ -9,6 +9,7 @@ hyprland-protocols-git
 hyprswitch
 ngrok
 nomacs
+otter-launcher
 qt5-remoteobjects
 qt5-webchannel
 qt5-webengine
