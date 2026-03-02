@@ -32,8 +32,18 @@
     "custom/caffeine",
     "custom/hyprshade",
     "custom/noscreenshare",
-    "custom/notifications-manager"
+    "custom/notifications-manager",
+    "custom/pinglo"
   ],
+  "custom/pinglo": {
+    "return-type": "json",
+    "exec": "pinglo render --format waybar",
+    "interval": "once",
+    "signal": 4,
+    "escape": false,
+    "tooltip": true,
+    "on-click": "pinglo clear"
+  },
   "custom/notifications-manager": {
     "tooltip": false,
     "format": " {text}",

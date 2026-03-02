@@ -411,3 +411,27 @@ zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
 
 eval "$(cier completion zsh)"
+
+autoload -Uz add-zsh-hook
+
+function _pinglo_preexec() {
+  local raw="$1"
+
+  if [[ "$raw" == ' '* ]]; then
+    export PINGLO_TRACKED_CMD="${raw# }"
+    pinglo start --cmd "$PINGLO_TRACKED_CMD" --cwd "$PWD" >/dev/null 2>&1
+  else
+    unset PINGLO_TRACKED_CMD
+  fi
+}
+
+function _pinglo_precmd() {
+  local exit_code=$?
+  if [[ -n "$PINGLO_TRACKED_CMD" ]]; then
+    pinglo done --cmd "$PINGLO_TRACKED_CMD" --cwd "$PWD" --exit-code "$exit_code" >/dev/null 2>&1
+    unset PINGLO_TRACKED_CMD
+  fi
+}
+
+add-zsh-hook preexec _pinglo_preexec
+add-zsh-hook precmd _pinglo_precmd

@@ -46,6 +46,7 @@ tooltip {
   border-radius: 8px;
 }
 
+#custom-pinglo,
 #custom-wallpaper,
 #clock,
 #custom-localtime,
@@ -77,6 +78,7 @@ tooltip {
 #temperature,
 #language,
 #custom-language,
+#custom-pinglo,
 #custom-notifications-manager,
 #backlight {
   background: rgba(0, 0, 0, 0.6);
@@ -122,17 +124,14 @@ tooltip {
 
 #custom-notifications {
   border-radius: 10px;
-  margin-right: 5px;
-  padding-right: 13px;
   font-size: 18px;
   min-width: 17px;
 }
 
 #custom-notifications-manager {
   border-radius: 10px;
-  margin-right: 5px;
-  padding-right: 13px;
   min-width: 17px;
+  margin-right: 5px;
 }
 
 #custom-notifications.off {
@@ -337,4 +336,45 @@ tooltip {
   /* border-radius: 0px 10px 10px 0px; */
   /* border-right: 0px; */
   margin-left: 5px;
+}
+
+#custom-pinglo {
+  font-size: 14px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+
+#custom-pinglo.empty {
+  padding: 0;
+  margin: 0;
+}
+
+#custom-pinglo.running {
+  color: #e5c07b;
+}
+
+#custom-pinglo.success {
+  color: #98c379;
+}
+
+#custom-pinglo.failed {
+  color: #e06c75;
+}
+
+#custom-pinglo .pinglo-dot {
+  font-size: 16px;
+  margin-right: 2px;
+}
+
+#custom-pinglo .pinglo-running {
+  color: #e5c07b;
+}
+#custom-pinglo .pinglo-success {
+  color: #98c379;
+}
+#custom-pinglo .pinglo-failed {
+  color: #e06c75;
+}
+#custom-pinglo .pinglo-unknown {
+  color: #abb2bf;
 }
