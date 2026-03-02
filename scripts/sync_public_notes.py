@@ -81,23 +81,6 @@ def generate_book_md_files():
     print(f"📚 Сгенерировано {count} книг в виде Markdown-файлов в {books_path}")
 
 
-def process_inline_code(content: str) -> str:
-    """
-    Заменяет тильды внутри inline-блоков кода на <span class="tilde">~</span>
-    Не затрагивает многострочные блоки кода (```code```)
-    """
-    # Шаблон для поиска inline-блоков кода
-    pattern = r"(?<!`)`([^`\n]*~[^`\n]*)`(?!`)"
-
-    def replace_tildes(match):
-        code_content = match.group(1)
-        # Заменяем все тильды внутри блока кода
-        processed = code_content.replace("~", '<span class="tilde">~</span>')
-        return f"<code>{processed}</code>"
-
-    return re.sub(pattern, replace_tildes, content)
-
-
 def load_metadata(file_path: str) -> dict | None:
     """Извлекает YAML-метаинформацию из markdown-файла"""
     with open(file_path, "r", encoding="utf-8") as f:
@@ -173,7 +156,7 @@ def process_note(file_path: str) -> str:
         processed_content = update_date_metadata(content, full_date)
 
         # Обрабатываем inline-блоки кода
-        return process_inline_code(processed_content)
+        return processed_content
 
     except (ValueError, TypeError):
         if isinstance(time_value, int):
