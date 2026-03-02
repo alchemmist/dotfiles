@@ -12,6 +12,7 @@ ${custom.venv}\
 ${custom.docker}\
 ${custom.makefile}\
 $python\n\
+$jobs\
 $character\
 """
 
