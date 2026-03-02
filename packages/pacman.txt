@@ -27,6 +27,7 @@ cowsay
 cpanminus
 cpio
 cups
+dbeaver
 dbus-glib
 debugedit
 discord
