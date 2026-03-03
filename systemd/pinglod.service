@@ -1,0 +1,13 @@
+[Unit]
+Description=Pinglo daemon
+After=graphical-session.target
+
+[Service]
+ExecStart=/home/alchemmist/go/bin/pinglod
+
+Restart=on-failure
+Environment=WAYLAND_DISPLAY=%E{WAYLAND_DISPLAY}
+Environment=XDG_RUNTIME_DIR=%t
+
+[Install]
+WantedBy=default.target
