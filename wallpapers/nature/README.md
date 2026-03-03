@@ -35,17 +35,11 @@
 [images/grenlandiia-liod-aisberg-ldiny-zakat-aisbergi-sneg-zima-vodo.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/grenlandiia-liod-aisberg-ldiny-zakat-aisbergi-sneg-zima-vodo.jpg)<br>
 <img src="/media/wlp-preview/nature/grenlandiia-liod-aisberg-ldiny-zakat-aisbergi-sneg-zima-vodo.png" width="500">
 
-[images/iseltwald-bernese-oberland-switzerland-lake-brienz-alps-izel.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/iseltwald-bernese-oberland-switzerland-lake-brienz-alps-izel.jpg)<br>
-<img src="/media/wlp-preview/nature/iseltwald-bernese-oberland-switzerland-lake-brienz-alps-izel.png" width="500">
-
 [images/italiya-gavan-more-rassvet.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/italiya-gavan-more-rassvet.jpg)<br>
 <img src="/media/wlp-preview/nature/italiya-gavan-more-rassvet.png" width="500">
 
 [images/italiya-italy-cinque-terre.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/italiya-italy-cinque-terre.jpg)<br>
 <img src="/media/wlp-preview/nature/italiya-italy-cinque-terre.png" width="500">
-
-[images/kanada-jacques-cartier-park.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/kanada-jacques-cartier-park.jpg)<br>
-<img src="/media/wlp-preview/nature/kanada-jacques-cartier-park.png" width="500">
 
 [images/lake-bled-slovenia-julian-alps-bled-island-church-mountain-1.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/lake-bled-slovenia-julian-alps-bled-island-church-mountain-1.jpg)<br>
 <img src="/media/wlp-preview/nature/lake-bled-slovenia-julian-alps-bled-island-church-mountain-1.png" width="500">
@@ -94,7 +88,4 @@
 
 [images/wallhaven-je8725.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/wallhaven-je8725.jpg)<br>
 <img src="/media/wlp-preview/nature/wallhaven-je8725.png" width="500">
-
-[images/wp3057966-forest-moss-wallpapers.jpg](https://github.com/alchemmist/dotfiles/blob/main/wallpapers/nature/images/wp3057966-forest-moss-wallpapers.jpg)<br>
-<img src="/media/wlp-preview/nature/wp3057966-forest-moss-wallpapers.png" width="500">
 
