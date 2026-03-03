@@ -35,7 +35,7 @@ symbol = ""
 format = "[$symbol $branch](green) "
 
 [git_status]
-format = "$modified[$conflicted](red)[$staged](green)[$renamed](yellow)[$deleted](red)[$untracked](blue)$stashed"
+format = "[$conflicted](red)$modified[$staged](green)[$renamed](yellow)[$deleted](red)[$untracked](blue)$stashed"
 conflicted = "🏳"
 staged = "󰸞 "
 renamed = " "
@@ -74,13 +74,13 @@ detect_folders = [".git"]
 [custom.docker]
 description = "Shows the docker symbol if the current directory has Dockerfile or docker-compose.yml files"
 style = "($fg)"
-command = "printf '  '"
+command = "printf ' '"
 files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
 when = """ command -v docker &> /dev/null; exit (echo $?); """
 
 [custom.makefile]
 detect_files = ["Makefile", "makefile"]
-symbol = "  "
+symbol = " "
 style = "($fg)"
 format = "[$symbol]($style)"
 
