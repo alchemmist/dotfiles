@@ -1,5 +1,8 @@
 anki-bin
+awww-bin-debug
 bridge-utils
+checkmake
+checkmake-debug
 flameshot-git
 flameshot-git-debug
 git-extras
