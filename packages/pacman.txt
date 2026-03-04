@@ -19,6 +19,7 @@ bluez
 bluez-utils
 brightnessctl
 cava
+checkmake
 cliphist
 cloc
 cmatrix
@@ -188,7 +189,9 @@ rustup
 sagemath
 sagetex
 sane
+shellcheck
 shellfirm
+shfmt
 sl
 slurp
 sqlfluff
@@ -261,6 +264,8 @@ xf86-input-wacom
 xf86-video-amdgpu
 xorg-xwayland
 xsel
+yamlfmt
+yamllint
 yandex-music
 yay
 yazi

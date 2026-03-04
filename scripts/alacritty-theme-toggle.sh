@@ -16,7 +16,7 @@ send_nvim() {
 }
 
 if grep -q "^[[:space:]]*\"$DARK\"" "$CONFIG"; then
-    sed -i -E \
+    sed -i -E --follow-symlinks  \
         "s|^[[:space:]]*\"$DARK\"|# \"$DARK\"|; s|^[[:space:]]*# \"$LIGHT\"|\"$LIGHT\"|" \
         "$CONFIG"
 
@@ -26,7 +26,7 @@ if grep -q "^[[:space:]]*\"$DARK\"" "$CONFIG"; then
 
     send_nvim "MossLight"
 else
-    sed -i -E \
+    sed -i -E --follow-symlinks \
         "s|^[[:space:]]*# \"$DARK\"|\"$DARK\"|; s|^[[:space:]]*\"$LIGHT\"|# \"$LIGHT\"|" \
         "$CONFIG"
 
