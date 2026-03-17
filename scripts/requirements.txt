@@ -12,7 +12,7 @@ idna==3.11
 oauthlib==3.3.1
 proto-plus==1.27.1
 protobuf==7.34.0
-pyasn1==0.6.2
+pyasn1==0.6.3
 pyasn1_modules==0.4.2
 pyparsing==3.3.2
 requests==2.32.5
