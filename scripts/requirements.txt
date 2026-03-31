@@ -15,7 +15,7 @@ protobuf==7.34.1
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
 pyparsing==3.3.2
-requests==2.33.0
+requests==2.33.1
 requests-oauthlib==2.0.0
 rsa==4.9.1
 uritemplate==4.2.0
