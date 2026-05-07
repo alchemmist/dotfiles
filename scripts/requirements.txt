@@ -10,7 +10,7 @@ googleapis-common-protos==1.74.0
 httplib2==0.31.2
 idna==3.13
 oauthlib==3.3.1
-proto-plus==1.27.2
+proto-plus==1.28.0
 protobuf==7.34.1
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
