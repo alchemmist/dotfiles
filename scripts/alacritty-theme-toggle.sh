@@ -94,6 +94,49 @@ set_codex_terminal_palette() {
     fi
 }
 
+active_tmux_pane_pids() {
+    local tmux_bin="${TMUX_BIN:-$(command -v tmux || true)}"
+    [[ -n "$tmux_bin" ]] || return 1
+    "$tmux_bin" has-session 2>/dev/null || return 1
+
+    local pane="${TMUX_PANE:-}"
+    if [[ -z "$pane" ]]; then
+        local client
+        local session
+        client=$("$tmux_bin" list-clients -F '#{client_activity}:#{client_session}' 2>/dev/null | sort -rn | sed -n '1p')
+        [[ -n "$client" ]] || return 1
+        session="${client#*:}"
+        pane=$("$tmux_bin" display-message -p -t "${session}:" '#{pane_id}' 2>/dev/null)
+    fi
+
+    local window
+    window=$("$tmux_bin" display-message -p -t "$pane" '#{window_id}' 2>/dev/null)
+    [[ -n "$window" ]] || return 1
+    "$tmux_bin" list-panes -t "$window" -F '#{pane_active}:#{pane_pid}' 2>/dev/null \
+        | sort -rn \
+        | cut -d: -f2
+}
+
+process_descends_from() {
+    local pid="$1"
+    local root_pid="$2"
+    local parent
+
+    while [[ "$pid" == <-> && "$pid" -gt 1 ]]; do
+        [[ "$pid" == "$root_pid" ]] && return 0
+        parent=$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')
+        [[ "$parent" == <-> && "$parent" != "$pid" ]] || break
+        pid="$parent"
+    done
+    return 1
+}
+
+nvim_socket_pid() {
+    local name="${1:t}"
+    [[ "$name" =~ '^nvim\.([0-9]+)\.' ]] || return 1
+    print -r -- "$match[1]"
+}
+
 send_nvim_theme() {
     local command="$1"
     local nvim_bin="${NVIM_BIN:-$(command -v nvim || true)}"
@@ -102,11 +145,35 @@ send_nvim_theme() {
     # Neovim sockets are commonly under TMPDIR on macOS, unlike Linux's
     # XDG_RUNTIME_DIR convention.  The explicit --listen sockets are safe to
     # probe; failed probes are silently ignored.
+    local pane_pid
     local socket
-    while IFS= read -r socket; do
+    local socket_pid
+    local -a pane_pids
+    local -a sockets
+    local -a ordered_sockets
+    pane_pids=("${(@f)$(active_tmux_pane_pids 2>/dev/null || true)}")
+    sockets=("${(@f)$(find -L "${TMPDIR:-/tmp}" /tmp /private/tmp -type s -name 'nvim.*' -print 2>/dev/null | sort -u)}")
+
+    for pane_pid in "${pane_pids[@]}"; do
+        [[ "$pane_pid" == <-> ]] || continue
+        for socket in "${sockets[@]}"; do
+            [[ -S "$socket" ]] || continue
+            (( ${ordered_sockets[(Ie)$socket]} )) && continue
+            socket_pid=$(nvim_socket_pid "$socket" 2>/dev/null || true)
+            if [[ "$socket_pid" == <-> ]] && process_descends_from "$socket_pid" "$pane_pid"; then
+                ordered_sockets+=("$socket")
+            fi
+        done
+    done
+
+    for socket in "${sockets[@]}"; do
         [[ -S "$socket" ]] || continue
+        (( ${ordered_sockets[(Ie)$socket]} )) || ordered_sockets+=("$socket")
+    done
+
+    for socket in "${ordered_sockets[@]}"; do
         "$nvim_bin" --server "$socket" --remote-send "<Esc>:${command}<CR>" >/dev/null 2>&1 || true
-    done < <(find -L "${TMPDIR:-/tmp}" /tmp /private/tmp -type s -name 'nvim.*' -print 2>/dev/null | sort -u)
+    done
 }
 
 theme="${1:-toggle}"

@@ -3,27 +3,124 @@ import shutil
 import yaml
 import datetime
 import re
+import urllib.request
 from dateutil import tz  # Для работы с часовыми поясами
 
 # Установите нужный часовой пояс (например, Europe/Moscow)
 TIMEZONE = tz.gettz("Europe/Moscow")
 
-# Пути к базе знаний и директориям блога
-obsidian_notes_path = "/home/alchemmist/knowledge-base"
+# Пути к базе знаний и директориям блога.
+# expanduser обязателен: Python (в отличие от шелла) сам "~" не разворачивает,
+# иначе os.walk/open работают с буквальной папкой "~" и молча ничего не делают.
+obsidian_notes_path = os.path.expanduser("~/knowledge-base")
 obsidian_images_path = os.path.join(obsidian_notes_path, "images")
+covers_dir = os.path.join(obsidian_images_path, "covers")
 
-content_path = "/home/alchemmist/code/blog/site/content"
+
+content_path = os.path.expanduser("~/code/blog/site/content")
 books_path = os.path.join(content_path, "books")
 articles_path = os.path.join(content_path, "articles")
 moss_path = os.path.join(content_path, "moss")
 teach_path = os.path.join(content_path, "teach")
 essay_path = os.path.join(content_path, "essays")
 poetry_path = os.path.join(content_path, "poetry")
-static_images_path = "/home/alchemmist/code/blog/site/static/images"
+static_images_path = os.path.expanduser("~/code/blog/site/static/images")
 
 
 def slugify(value):
     return re.sub(r"[^\w\-]+", "-", str(value).lower()).strip("-")
+
+
+def is_book(props) -> bool:
+    if not isinstance(props, dict):
+        return False
+    type_value = props.get("type")
+    if isinstance(type_value, list):
+        return "book" in type_value
+    return type_value == "book"
+
+
+def sniff_ext(data: bytes) -> str | None:
+    """Определяет расширение по магическим байтам. Расширение из URL не годится:
+    litres/ozon отдают webp под .jpg-адресом, а Hugo выбирает декодер по
+    расширению и падает. None — если это вообще не картинка."""
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return ".png"
+    if data[:3] == b"\xff\xd8\xff":
+        return ".jpg"
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return ".webp"
+    if data[:4] == b"GIF8":
+        return ".gif"
+    return None
+
+
+def download_cover(url: str, slug: str) -> str:
+    """Скачивает обложку в knowledge-base/images/covers и возвращает локальный
+    путь вида /images/covers/<slug>.<ext> для поля cover."""
+    os.makedirs(covers_dir, exist_ok=True)
+
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        data = resp.read()
+
+    ext = sniff_ext(data)
+    if ext is None:
+        raise ValueError("ответ не является поддерживаемой картинкой")
+
+    dest = os.path.join(covers_dir, f"{slug}{ext}")
+    with open(dest, "wb") as f:
+        f.write(data)
+
+    return f"/images/covers/{slug}{ext}"
+
+
+def localize_book_covers():
+    """Находит книги с обложкой-URL, скачивает картинку в KB и заменяет URL на
+    локальный путь прямо в исходной заметке (и там, и в блоге — через генерацию)."""
+    count = 0
+    for root, dirs, files in os.walk(obsidian_notes_path):
+        for file in files:
+            if not file.endswith(".md"):
+                continue
+
+            file_path = os.path.join(root, file)
+            if "Templates" in file_path:
+                continue
+
+            metadata = load_metadata(file_path)
+            if not metadata:
+                continue
+
+            extra = metadata.get("extra")
+            props = extra.get("custom_props", {}) if isinstance(extra, dict) else {}
+            if not is_book(props):
+                continue
+
+            cover = props.get("cover")
+            if not isinstance(cover, str) or not cover.startswith(("http://", "https://")):
+                continue
+
+            title = props.get("title") or "Без названия"
+            slug = slugify(title)
+            try:
+                local = download_cover(cover, slug)
+            except Exception as e:
+                print(f"⚠️ Не удалось скачать обложку для «{title}»: {e}")
+                continue
+
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            new_content = content.replace(cover, local)
+            if new_content != content:
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write(new_content)
+
+            print(f"🖼  Обложка «{title}» → {local}")
+            count += 1
+
+    print(f"🖼  Локализовано обложек: {count}")
 
 
 def generate_book_md_files():
@@ -245,6 +342,7 @@ def copy_images():
 
 
 if __name__ == "__main__":
+    localize_book_covers()
     copy_notes_to_blog()
     copy_images()
     generate_book_md_files()
