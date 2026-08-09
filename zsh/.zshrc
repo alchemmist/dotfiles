@@ -1,5 +1,10 @@
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/scripts:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.python3.12/bin:$PATH
@@ -15,6 +20,7 @@ export PATH=/home/alchemmist/applications/codefetch/build:$PATH
 export PATH=/home/alchemmist/applications/keywords/build:$PATH
 export PATH=/home/alchemmist/applications/localports/target/release:$PATH
 export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export QT_QPA_PLATFORM=wayland
 
@@ -39,6 +45,7 @@ export TERM=xterm-256color
 export ANDROID_HOME=/opt/android-sdk
 export ANDROID_SDK_ROOT=/opt/android-sdk
 export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
+export _ZO_DOCTOR=0
 
 #export WAYLAND_DISPLAY=''
 # Path to your Oh My Zsh installation.
@@ -119,9 +126,6 @@ plugins=(
     gitfast
     zoxide
     fzf
-    shellfirm
-    docker
-    docker-compose
     vi-mode
     you-should-use
 )
@@ -161,9 +165,9 @@ alias pptx2pdf='libreoffice --headless --convert-to pdf'
 alias mp42gif='~/scripts/mp42gif.sh'
 alias cat='mycat'
 alias cmatrix="unimatrix -n -s 97 -l o"
+alias ad="arc diff | lumen diff --stdin"
+alias ndiff="nvimdiv"
 
-pbcopy() { wl-copy "$@"; }
-pbpaste() { wl-paste "$@"; }
 
 hp-scan() {
     cd ~/Pictures/scans
@@ -195,38 +199,6 @@ check_blacklist() {
     return 1
 }
 
-rm() {
-    # Использовать настоящее rm, если явно указано --no-trash
-    for arg in "$@"; do
-        if [[ "$arg" == "--no-trash" ]]; then
-            # Удаляем --no-trash из аргументов
-            args=()
-            for a in "$@"; do
-                [[ "$a" != "--no-trash" ]] && args+=("$a")
-            done
-            /bin/rm "${args[@]}"
-            return
-        fi
-    done
-
-    # Предотвращаем удаление критичных путей
-    for arg in "$@"; do
-        if check_blacklist "$arg"; then
-            echo -e "$STOP_MESSAGE"
-            return 1
-        fi
-    done
-
-    # Используем trash-put вместо rm
-    command -v trash-put >/dev/null 2>&1
-    if [[ $? -ne 0 ]]; then
-        echo "trash-put не установлен. Установи trash-cli: sudo pacman -S trash-cli"
-        return 1
-    fi
-
-    trash-put "$@"
-}
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 source <(fzf --zsh)
 # eval "fastfetch"
@@ -289,12 +261,6 @@ else
     unsetopt zle
 fi
 
-_tmux_popup_close() { tmux display-popup -C >/dev/null 2>&1 }
-zle -N _tmux_popup_close
-
-bindkey -M viins $'\C-a\C-?' _tmux_popup_close
-bindkey -M vicmd $'\C-a\C-?' _tmux_popup_close
-
 mycat() {
     if file --mime-type "$1" | grep -q 'image/'; then
         kitten icat --align left --scale-up "$1"
@@ -313,15 +279,6 @@ PERL_MB_OPT="--install_base \"/home/alchemmist/perl5\""
 export PERL_MB_OPT
 PERL_MM_OPT="INSTALL_BASE=/home/alchemmist/perl5"
 export PERL_MM_OPT
-
-. "$HOME/.local/share/../bin/env"
-
-eval "tmux bind-key s choose-tree -ZsN"
-eval "tmux bind-key w choose-tree -ZwN"
-
-docker() {
-    ~/scripts/docker.sh "$@"
-}
 
 # pnpm
 export PNPM_HOME="/home/alchemmist/.local/share/pnpm"
@@ -410,8 +367,6 @@ fzf-history-widget() {
 zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-eval "$(cier completion zsh)"
-
 autoload -Uz add-zsh-hook
 
 function _pinglo_preexec() {
@@ -435,3 +390,114 @@ function _pinglo_precmd() {
 
 add-zsh-hook preexec _pinglo_preexec
 add-zsh-hook precmd _pinglo_precmd
+
+# Async cache для starship-промпта: номер PR (git → GitHub, arc → Arcanum).
+# Git и Arc взаимоисключающие. Контекст определяем дёшево (walk вверх за .arc/.git),
+# поиск PR НЕ на render-пути: при протухшем кэше дёргаем фоновый рефрешер, а
+# starship-модули (ghpr / arc_pr) просто `cat`-ают готовый файл. Никогда не блокирует.
+function _starship_vcs_precmd() {
+  emulate -L zsh
+  unset STARSHIP_GH_PR STARSHIP_ARC_BASE STARSHIP_DANGER
+
+  # --- Arc-репозиторий? Дешёвый поиск .arc вверх по дереву (стоп до $HOME, чтобы
+  #     не словить глобальный ~/.arc). Внутри Аркадии ветку/PR берём через arc. ---
+  local d=$PWD found=''
+  while [[ -n $d && $d != $HOME && $d != / ]]; do
+    [[ -d $d/.arc ]] && { found=1; break; }
+    d=${d:h}
+  done
+  if [[ -n $found ]]; then
+    # $d — корень рабочей копии (каталог с .arc). НИКАКИХ вызовов arc здесь:
+    # всю медленную работу делает фоновый arc-refresh.sh, промпт читает кэш.
+    local root=$d
+    local dir=${XDG_RUNTIME_DIR:-/tmp}/starship-arc
+    local hash=$(print -r -- "$root" | cksum | cut -d' ' -f1)
+    local base="$dir/$hash"
+    export STARSHIP_ARC_BASE="$base"
+    command mkdir -p $dir 2>/dev/null
+    local mt=0
+    zmodload -F zsh/stat b:zstat 2>/dev/null && zstat -A reply +mtime $base.branch 2>/dev/null && mt=$reply[1]
+    zmodload zsh/datetime 2>/dev/null
+    if (( ${EPOCHSECONDS:-0} - mt > 2 )); then          # кэш протух (>2с) — рефреш в фоне
+      ( ~/.config/starship/arc-refresh.sh "$root" "$base" &>/dev/null &! )
+    fi
+    return
+  fi
+
+  # --- Git-репозиторий? root+branch считаем в шелле, без форков ---
+  local root=$PWD
+  while [[ $root != / && ! -e $root/.git ]]; do root=${root:h}; done
+  if [[ -e $root/.git ]]; then
+    local head branch=''
+    if [[ -r $root/.git/HEAD ]]; then
+      read -r head < $root/.git/HEAD
+      [[ $head == 'ref: refs/heads/'* ]] && branch=${head#ref: refs/heads/}
+    fi
+    local dir=${XDG_CACHE_HOME:-$HOME/.cache}/starship-gh
+    local base=$dir/${root//[^A-Za-z0-9._-]/_}__${branch//[^A-Za-z0-9._-]/_}
+    export STARSHIP_GH_PR=$base.pr
+    local mt=0
+    zmodload -F zsh/stat b:zstat 2>/dev/null && zstat -A reply +mtime $base.pr 2>/dev/null && mt=$reply[1]
+    zmodload zsh/datetime 2>/dev/null
+    if (( ${EPOCHSECONDS:-0} - mt > 60 )); then
+      command mkdir -p $dir 2>/dev/null
+      ( ~/.config/starship/gh-prompt.py refresh "$root" "$branch" "$base" &>/dev/null &! )
+    fi
+  fi
+}
+add-zsh-hook precmd _starship_vcs_precmd
+
+function ssh_tmux_deimos() {
+  local tmux_bin="~/bin/tmux.appimage"
+  local session
+
+  session=$(
+    ssh deimos.vla.yp-c.yandex.net \
+      "$tmux_bin ls" |
+      sed 's/:.*//' |
+      fzf \
+        --height=~25% \
+        --layout=reverse \
+        --border \
+        --prompt='tmux session > '
+  )
+
+  [[ -z "$session" ]] && return
+
+  exec ssh -t deimos.vla.yp-c.yandex.net \
+    "$tmux_bin attach -t '$session'"
+}
+
+function _ssh_tmux_deimos_widget() {
+  zle -I
+  ssh_tmux_deimos
+  zle reset-prompt
+}
+
+zle -N _ssh_tmux_deimos_widget
+bindkey '^K' _ssh_tmux_deimos_widget
+export PATH="$(brew --prefix llvm)/bin:$PATH"
+
+# Machine-local secrets / env (tokens, LMS, Stefania) — kept OUT of the repo so
+# they survive `dotter deploy`. The actual values live in ~/.zshrc.local (0600).
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# >>> stefania-customize >>>
+# Командные переменные Стефании. Источник правды — сам файл;
+# значения отсюда не читай, только source.
+[ -f "${STEFANIA_HOME:-$HOME/.stefania}/customize.env" ] && source "${STEFANIA_HOME:-$HOME/.stefania}/customize.env"
+# <<< stefania-customize <<<
+
+# Added by Antigravity CLI installer
+export PATH="/Users/antonmoss/.local/bin:$PATH"
+alias arc-wt='/Users/antonmoss/bin/arc-wt'
+
+zi-widget() {
+  zle reset-prompt
+  zi
+  zle reset-prompt
+}
+
+zle -N zi-widget
+bindkey -M emacs '^J' zi-widget
+bindkey -M viins '^J' zi-widget

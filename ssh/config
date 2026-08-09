@@ -1,64 +1,29 @@
-Host demo
-    HostName 185.11.246.34 
-    User root
-    IdentityFile ~/.ssh/deploy-demo
-
 Host github.com
     HostName github.com
     User git
     IdentityFile ~/.ssh/github-main
 
-Host github-sub
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/github-sub
+Host bb.yandex-team.ru
+    PubkeyAcceptedKeyTypes +ssh-rsa
 
-Host gitlab.com
-    HostName gitlab.com
-    User git
-    IdentityFile ~/.ssh/gitlab
+Host deimos.vla.yp-c.yandex.net
+    ForwardAgent ~/.skotty/sock/default.sock
 
-Host romanenko
-    HostName 45.95.235.20
-    User root
-    IdentityFile ~/.ssh/romanenko_vpn_server
+Host *.yandex.net
+    ForwardAgent ~/.skotty/sock/sudo.sock
+    IdentityAgent ~/.skotty/sock/default.sock
 
 Host laba
     HostName 178.208.79.42
     User www
     IdentityFile ~/.ssh/personal_server
 
-Host cu_ctf
-    HostName 10.80.2.2
+Host zaborsky
+    HostName 135.106.137.20
+    User www
+    IdentityFile ~/.ssh/zaborsky
+
+Host tmplab
+    HostName 91.108.254.199
     User root
-    IdentityFile ~/.ssh/cu_ctf
-
-Host 84.201.163.192
-    HostName 84.201.163.192
-    User root
-    IdentityFile ~/.ssh/maks_ctf
-
-Host git.culab.ru
-    HostName git.culab.ru
-    User git
-    IdentityFile ~/.ssh/cu-gitlab
-
-Host patchloyalty.com
-    HostName patchloyalty.com
-    User root
-    IdentityFile ~/.ssh/patch-landing-server
-
-Host flycloud.ballkit.ru
-    HostName flycloud.ballkit.ru
-    User root
-    IdentityFile ~/.ssh/ballkit-flycloud
-
-Host coffeelibrary.ballkit.ru
-    HostName 185.221.155.230
-    User root
-    IdentityFile ~/.ssh/balkit-coffeelib
-
-Host aur.archlinux.org
-  IdentityFile ~/.ssh/aur
-  User aur
-
+    IdentityFile ~/.ssh/tmplab

@@ -3,3 +3,5 @@
 .dotter/cache
 venv
 token.json
+.DS_Store
+__pycache__/
