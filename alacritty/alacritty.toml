@@ -1,24 +1,38 @@
 [window]
-padding = {x = 12, y = 0}
+decorations = "transparent"
+option_as_alt = "Both"
+padding = {x = 12, y = 8}
 
 [font]
-size = 12
+size = 13
 
 [font.normal]
-family = " FiraCode Nerd Font Propo"
+family = "FiraCode Nerd Font Propo"
 style = "Regular"
 
 [font.bold]
-family = " FiraCode Nerd Font Propo"
+family = "FiraCode Nerd Font Propo"
 style = "Bold"
 
 [font.italic]
-family = " FiraCode Nerd Font Propo"
+family = "FiraCode Nerd Font Propo"
 style = "Italic"
 
 [general]
 live_config_reload = true
 import = [
-# "~/.config/alacritty/themes/moss-dark.toml",
-"~/.config/alacritty/themes/moss-light.toml",
+"~/.config/alacritty/themes/moss-dark.toml",
+# "~/.config/alacritty/themes/moss-light.toml",
 ]
+
+
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Command"
+action = "Paste"

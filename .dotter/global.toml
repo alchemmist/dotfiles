@@ -8,6 +8,7 @@ depends = []
 "waybar" = "~/.config/waybar"
 "hypr" = "~/.config/hypr"
 "tmux/.tmux.conf" = "~/.tmux.conf"
+"lazy-tmux/lazy-tmux.toml" = "~/.config/lazy-tmux/lazy-tmux.toml"
 "sway" = "~/.config/sway"
 "neovim" = "~/.config/nvim"
 "wofi" = "~/.config/wofi"
@@ -28,7 +29,6 @@ depends = []
 "starship" = "~/.config/starship"
 "yazi" = "~/.config/yazi"
 "systemd" = "~/.config/systemd/user"
-"applications" = "~/.local/share/applications"
 
 [default.variables]
 
