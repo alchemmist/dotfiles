@@ -29,6 +29,20 @@ def run(args: list[str], cwd: Path) -> subprocess.CompletedProcess[bytes]:
     )
 
 
+def command_text(args: list[str], cwd: Path) -> tuple[int, str, str]:
+    try:
+        result = subprocess.run(
+            args, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False
+        )
+    except OSError as error:
+        return 127, "", str(error)
+    return (
+        result.returncode,
+        result.stdout.decode(errors="replace"),
+        result.stderr.decode(errors="replace"),
+    )
+
+
 def command_root(command: list[str], cwd: Path) -> Path | None:
     if shutil.which(command[0]) is None:
         return None
@@ -57,6 +71,87 @@ def repository(cwd: Path) -> tuple[str, Path] | None:
     if not candidates:
         return None
     return max(candidates, key=lambda item: len(item[1].parts))
+
+
+def current_branch(vcs: str, root: Path) -> str | None:
+    if vcs == "git":
+        code, output, _ = command_text(
+            ["git", "symbolic-ref", "--quiet", "--short", "HEAD"], root
+        )
+        branch = output.strip()
+        return branch if code == 0 and branch else None
+
+    code, output, _ = command_text(["arc", "info"], root)
+    if code != 0:
+        return None
+    for line in output.splitlines():
+        if line.startswith("branch: "):
+            branch = line.removeprefix("branch: ").strip()
+            return branch or None
+    return None
+
+
+def json_value(payload: object, keys: set[str]) -> object | None:
+    if isinstance(payload, dict):
+        for key in keys:
+            if key in payload and payload[key] is not None and payload[key] != "":
+                return payload[key]
+        for value in payload.values():
+            found = json_value(value, keys)
+            if found is not None:
+                return found
+    elif isinstance(payload, list):
+        for value in payload:
+            found = json_value(value, keys)
+            if found is not None:
+                return found
+    return None
+
+
+def github_pr_patch(root: Path, branch: str) -> tuple[str | None, str | None]:
+    code, output, error = command_text(
+        ["gh", "pr", "view", branch, "--json", "number"], root
+    )
+    if code != 0:
+        return None, error.strip() or "GitHub PR not found for the current branch"
+    try:
+        payload = json.loads(output)
+    except json.JSONDecodeError:
+        return None, "gh returned invalid PR metadata"
+    number = json_value(payload, {"number"})
+    if number is None:
+        return None, "GitHub PR not found for the current branch"
+    code, patch, error = command_text(
+        ["gh", "pr", "diff", str(number), "--patch", "--color", "never"], root
+    )
+    if code != 0:
+        return None, error.strip() or "could not read GitHub PR diff"
+    return patch, None
+
+
+def arc_pr_patch(root: Path, branch: str) -> tuple[str | None, str | None]:
+    code, output, error = command_text(
+        ["arc", "pr", "status", "--json", branch], root
+    )
+    if code != 0:
+        return None, error.strip() or "Arcadia PR not found for the current branch"
+    try:
+        payload = json.loads(output)
+    except json.JSONDecodeError:
+        return None, "arc returned invalid PR metadata"
+    pr_id = json_value(payload, {"id", "pr_id", "pull_request_id"})
+    if pr_id is None:
+        return None, "Arcadia PR not found for the current branch"
+    code, patch, error = command_text(["arc", "pr", "changes", str(pr_id)], root)
+    if code != 0:
+        return None, error.strip() or "could not read Arcadia PR diff"
+    return patch, None
+
+
+def pull_request_patch(vcs: str, root: Path, branch: str) -> tuple[str | None, str | None]:
+    if vcs == "git":
+        return github_pr_patch(root, branch)
+    return arc_pr_patch(root, branch)
 
 
 def safe_path(value: str) -> Path:
@@ -174,6 +269,10 @@ def repository_main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("paths", nargs="*")
     args = parser.parse_args(argv)
+    if args.paths and args.paths[0] == "pr":
+        if len(args.paths) > 1:
+            parser.error("the pr mode does not accept path arguments")
+        return pull_request_main(args.dry_run)
     cwd = Path.cwd()
     detected = repository(cwd)
     if not detected:
@@ -348,6 +447,26 @@ def patch_snapshots(files: list[PatchFile], before: Path, after: Path) -> list[s
     return paths
 
 
+def display_patch(text: str, cwd: Path, dry_run: bool, label: str) -> int:
+    text = clean_patch(text.encode())
+    files = parse_patch(text)
+    if not files:
+        files = parse_normal_diff(text)
+    if not files:
+        if text.strip():
+            return raw_patch(text, dry_run)
+        print(f"nvimdiv: {label} has no changes")
+        return 0
+    with tempfile.TemporaryDirectory(prefix="nvimdiv-") as temp:
+        temp_root = Path(temp)
+        before = temp_root / "before"
+        after = temp_root / "after"
+        before.mkdir()
+        after.mkdir()
+        paths = patch_snapshots(files, before, after)
+        return launch_directories(before, after, cwd, dry_run, paths)
+
+
 def raw_patch(text: str, dry_run: bool) -> int:
     if dry_run:
         print(json.dumps({"mode": "raw", "bytes": len(text.encode())}))
@@ -358,6 +477,24 @@ def raw_patch(text: str, dry_run: bool) -> int:
         return subprocess.call(
             ["nvim", "-R", str(patch_file), "-c", "setlocal filetype=diff"]
         )
+
+
+def pull_request_main(dry_run: bool) -> int:
+    cwd = Path.cwd()
+    detected = repository(cwd)
+    if not detected:
+        print("nvimdiv: not inside a Git or Arc repository", file=sys.stderr)
+        return 1
+    vcs, root = detected
+    branch = current_branch(vcs, root)
+    if not branch:
+        print("nvimdiv: current repository state has no branch", file=sys.stderr)
+        return 1
+    patch, error = pull_request_patch(vcs, root, branch)
+    if patch is None:
+        print(f"nvimdiv: {error}", file=sys.stderr)
+        return 1
+    return display_patch(patch, root, dry_run, f"PR for {branch}")
 
 
 def patch_main(argv: list[str] | None = None) -> int:
