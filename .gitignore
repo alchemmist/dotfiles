@@ -5,3 +5,4 @@ venv
 token.json
 .DS_Store
 __pycache__/
+graphify-out/

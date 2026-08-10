@@ -118,6 +118,66 @@ diff --git a/new.txt b/new.txt
         self.assertTrue(nvim_diff.path_selected("dir/file.txt", ["dir/file.txt"]))
         self.assertFalse(nvim_diff.path_selected("other/file.txt", ["dir"]))
 
+    def test_github_pr_patch_uses_branch_and_pr_diff(self):
+        responses = [
+            (0, '{"number": 123}', ""),
+            (0, "diff --git a/file.txt b/file.txt\n", ""),
+        ]
+        with patch.object(nvim_diff, "command_text", side_effect=responses) as command:
+            patch_text, error = nvim_diff.github_pr_patch(Path("/repo"), "feature")
+
+        self.assertIsNone(error)
+        self.assertIn("diff --git", patch_text)
+        self.assertEqual(command.call_args_list[0].args[0], ["gh", "pr", "view", "feature", "--json", "number"])
+        self.assertEqual(command.call_args_list[1].args[0], ["gh", "pr", "diff", "123", "--patch", "--color", "never"])
+
+    def test_arc_pr_patch_resolves_nested_pr_id(self):
+        responses = [
+            (0, '{"pull_request": {"id": 456}}', ""),
+            (0, "diff --git a/file.txt b/file.txt\n", ""),
+        ]
+        with patch.object(nvim_diff, "command_text", side_effect=responses) as command:
+            patch_text, error = nvim_diff.arc_pr_patch(Path("/repo"), "users/me/feature")
+
+        self.assertIsNone(error)
+        self.assertIn("diff --git", patch_text)
+        self.assertEqual(command.call_args_list[0].args[0], ["arc", "pr", "status", "--json", "users/me/feature"])
+        self.assertEqual(command.call_args_list[1].args[0], ["arc", "pr", "changes", "456"])
+
+    def test_display_patch_dry_run_contains_all_files(self):
+        diff = """diff --git a/a.txt b/a.txt
+--- a/a.txt
++++ b/a.txt
+@@ -1 +1 @@
+-old
++new
+diff --git a/b.txt b/b.txt
+--- a/b.txt
++++ b/b.txt
+@@ -1 +1 @@
+-old
++new
+"""
+        with patch("builtins.print") as output:
+            result = nvim_diff.display_patch(diff, Path("/repo"), True, "PR")
+
+        self.assertEqual(result, 0)
+        rendered = output.call_args.args[0]
+        self.assertEqual(json.loads(rendered)["files"], ["a.txt", "b.txt"])
+
+    def test_repository_pr_mode_fetches_diff_for_current_branch(self):
+        with (
+            patch.object(nvim_diff, "repository", return_value=("git", Path("/repo"))),
+            patch.object(nvim_diff, "current_branch", return_value="feature"),
+            patch.object(nvim_diff, "pull_request_patch", return_value=("patch", None)) as fetch,
+            patch.object(nvim_diff, "display_patch", return_value=0) as display,
+        ):
+            result = nvim_diff.repository_main(["--dry-run", "pr"])
+
+        self.assertEqual(result, 0)
+        fetch.assert_called_once_with("git", Path("/repo"), "feature")
+        display.assert_called_once_with("patch", Path("/repo"), True, "PR for feature")
+
 
 if __name__ == "__main__":
     unittest.main()
