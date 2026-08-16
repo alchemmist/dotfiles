@@ -4,6 +4,8 @@ import yaml
 import datetime
 import re
 import urllib.request
+import unicodedata
+from collections import Counter
 from dateutil import tz  # Для работы с часовыми поясами
 
 # Установите нужный часовой пояс (например, Europe/Moscow)
@@ -28,7 +30,8 @@ static_images_path = os.path.expanduser("~/code/blog/site/static/images")
 
 
 def slugify(value):
-    return re.sub(r"[^\w\-]+", "-", str(value).lower()).strip("-")
+    value = unicodedata.normalize("NFC", str(value))
+    return re.sub(r"[^\w\-]+", "-", value.lower()).strip("-")
 
 
 def is_book(props) -> bool:
@@ -127,6 +130,8 @@ def generate_book_md_files():
     count = 0
     os.makedirs(books_path, exist_ok=True)
 
+    books = []
+
     for root, dirs, files in os.walk(obsidian_notes_path):
         for file in files:
             if not file.endswith(".md"):
@@ -150,30 +155,45 @@ def generate_book_md_files():
             if isinstance(type_value, str) and type_value != "book":
                 continue
 
-            title = props.get("title") or "Без названия"
-            filename = f"{slugify(title)}.md"
-            filepath = os.path.join(books_path, filename)
+            books.append((file_path, file, metadata, props))
 
-            frontmatter = {
-                # "build": {"list": True, "render": False},
-                "title": title,
-                "author": props.get("author"),
-                "genre": (
-                    [props.get("genre")]
-                    if isinstance(props.get("genre"), str)
-                    else props.get("genre")
-                ),
-                "status": props.get("status"),
-                "cover": props.get("cover"),
-                "date": metadata.get("date"),
-            }
+    title_counts = Counter(
+        slugify(props.get("title") or "Без названия")
+        for _, _, _, props in books
+    )
 
-            with open(filepath, "w", encoding="utf-8") as f:
-                f.write("---\n")
-                yaml.dump(frontmatter, f, allow_unicode=True, sort_keys=False)
-                f.write("---\n\n")
+    for file_path, file, metadata, props in books:
+        title = props.get("title") or "Без названия"
+        title_slug = slugify(title)
+        if title_counts[title_slug] > 1:
+            legacy_path = os.path.join(books_path, f"{title_slug}.md")
+            if os.path.exists(legacy_path):
+                os.remove(legacy_path)
+            filename = f"{slugify(os.path.splitext(file)[0])}.md"
+        else:
+            filename = f"{title_slug}.md"
+        filepath = os.path.join(books_path, filename)
 
-            count += 1
+        frontmatter = {
+            # "build": {"list": True, "render": False},
+            "title": title,
+            "author": props.get("author"),
+            "genre": (
+                [props.get("genre")]
+                if isinstance(props.get("genre"), str)
+                else props.get("genre")
+            ),
+            "status": props.get("status"),
+            "cover": props.get("cover"),
+            "date": metadata.get("date"),
+        }
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write("---\n")
+            yaml.dump(frontmatter, f, allow_unicode=True, sort_keys=False)
+            f.write("---\n\n")
+
+        count += 1
 
     print(f"📚 Сгенерировано {count} книг в виде Markdown-файлов в {books_path}")
 
