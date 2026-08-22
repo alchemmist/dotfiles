@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Yandex Translate Ad Hider",
+  "version": "1.0.4",
+  "description": "Hides dynamically loaded advertising panels on Yandex Translate.",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://translate.yandex.com/*",
+        "https://translate.yandex.ru/*"
+      ],
+      "css": ["hide-ads.css"],
+      "js": ["hide-ads.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
