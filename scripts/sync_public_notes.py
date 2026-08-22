@@ -130,6 +130,14 @@ def generate_book_md_files():
     count = 0
     os.makedirs(books_path, exist_ok=True)
 
+    for entry in os.scandir(books_path):
+        if (
+            entry.is_file()
+            and entry.name.endswith(".md")
+            and entry.name != "_index.md"
+        ):
+            os.remove(entry.path)
+
     books = []
 
     for root, dirs, files in os.walk(obsidian_notes_path):
@@ -202,12 +210,12 @@ def load_metadata(file_path: str) -> dict | None:
     """Извлекает YAML-метаинформацию из markdown-файла"""
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
-        if content.startswith("---"):
-            try:
-                yaml_part = content.split("---")[1]
-                return yaml.safe_load(yaml_part)
-            except yaml.YAMLError:
-                return None
+    match = re.match(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|\Z)", content, re.DOTALL)
+    if match:
+        try:
+            return yaml.safe_load(match.group(1))
+        except yaml.YAMLError:
+            return None
     return None
 
 
