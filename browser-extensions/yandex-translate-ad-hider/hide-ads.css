@@ -1,0 +1,51 @@
+:is(
+  .side-block,
+  [id^="adfox_"],
+  [id*="adfox" i],
+  [class*="adfox" i],
+  [class*="advert" i],
+  [class*="ad-banner" i],
+  [data-adfox],
+  [data-advertisement],
+  iframe[src*="adfox" i],
+  iframe[src*="an.yandex" i],
+  iframe[title*="advert" i],
+  iframe[title*="реклама" i],
+  .yt-ad-hidden
+) {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+@media (min-width: 901px) {
+  .page.page_vertical-menu {
+    box-sizing: border-box !important;
+    justify-content: flex-start !important;
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+  }
+
+  .page.page_vertical-menu > .verticalMenu {
+    flex: 0 0 96px !important;
+    min-width: 96px !important;
+    max-width: 96px !important;
+  }
+
+  .page.page_vertical-menu > :is(.page-content, .page-content-wrapper),
+  .page.page_vertical-menu .page-content-wrapper {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+}
