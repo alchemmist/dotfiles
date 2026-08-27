@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+"$HOME/.tmux/plugins/tmux-flash/flash.sh"
+
+tmux list-windows -a -F '#{window_id} #{window_name}' | while read -r window name; do
+    if [ "$name" = "flash" ]; then
+        tmux set-window-option -t "$window" remain-on-exit off
+    fi
+done
