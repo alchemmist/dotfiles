@@ -26,6 +26,8 @@ depends = []
 "codex/skills/grilling" = { target = "~/.codex/skills/grilling", type = "symbolic" }
 "codex/skills/impeccable" = { target = "~/.codex/skills/impeccable", type = "symbolic" }
 "codex/skills/rebase" = { target = "~/.codex/skills/rebase", type = "symbolic" }
+"hammerspoon/init.lua" = { target = "~/.hammerspoon/init.lua", type = "symbolic" }
+"hammerspoon/startup-layout.lua" = { target = "~/.hammerspoon/startup-layout.lua", type = "symbolic" }
 
 [shared.variables]
 
