@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# arc-pf-mount — run `arc mount` with the gated path-filter appended.
+#
+# Why a wrapper: the path-filter tokens must be split into separate argv entries. A raw
+# `arc mount ... $FILTERS` only works in bash; in zsh (e.g. the shell many agents run
+# commands in) an unquoted $VAR / $(...) is NOT word-split, so the whole filter set
+# collapses into ONE bad argument and the mount fails. Splitting here, inside bash,
+# makes the command correct regardless of the caller's shell.
+#
+# Usage:  arc-pf-mount [--force] [--] <args passed verbatim to `arc mount`>
+#   --force   force the path-filter on for this mount (otherwise gated by ARC_WT_PATHFILTER)
+# Example:
+#   arc-pf-mount --force -- -m ~/arcadia-worktrees/foo -S ~/.arc/stores/foo \
+#                           --object-store <obj> -r arcadia
+#
+# With the switch off and no --force, resolve-path-filter prints nothing and this is just
+# a normal full-repo `arc mount`.
+#
+# NOTE: a path-filtered mount does upfront network/FUSE work and can HANG in a sandboxed /
+# non-TTY shell. If it never returns, run it in a real terminal (see SKILL.md Troubleshooting).
+set -eo pipefail
+
+here="$(cd "$(dirname "$0")" && pwd)"
+
+force=""
+case "${1:-}" in -f|--force|--enable) force="--force"; shift ;; esac
+case "${1:-}" in --) shift ;; esac
+
+# bash word-splits the resolver output into the array (tokens are plain paths, no spaces).
+# shellcheck disable=SC2207
+filters=( $("$here/resolve-path-filter" $force) )
+
+echo "+ arc mount $* ${filters[*]}" >&2
+exec arc mount "$@" "${filters[@]}"

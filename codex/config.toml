@@ -1,0 +1,316 @@
+model = "gpt-5.6-sol"
+model_context_window = 1000000
+model_reasoning_effort = "low"
+suppress_unstable_features_warning = true
+approval_mode = "never"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+service_tier = "default"
+
+model_auto_compact_token_limit = 750000
+
+[projects."/Users/antonmoss"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/monori"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/monori-3"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/monori-2"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-gagne/quality/user_sessions"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-chet/quality/user_sessions"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/ic"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-turbo/quality/user_sessions"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-turbo/quality/user_sessions/money_rt/tools/yp_stop"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-burn/quality/user_sessions"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/lazy-tmux"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/codex"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/format-quorum"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-burn"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-chet"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-wt/turbo"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-wt/chet"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-wt/burn"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-wt/gagne"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/blog"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/dotfiles/neovim"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/lms"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/zaborsky"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/tmp/test-figma"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/slidev-theme-alchemmist"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/talks"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/eosp"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-wt/tmp"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-wt/tmp/quality/user_sessions"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/cacai"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/devsyringe"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/loglint"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/quality-graph"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/git-yellow-circles"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/alchemmist"]
+trust_level = "trusted"
+
+[features]
+realtime_conversation = true
+hooks = true
+
+[features.multi_agent_v2]
+enabled = true
+max_concurrent_threads_per_session = 16
+expose_spawn_agent_model_overrides = true
+wait_agent_enabled = true
+non_code_mode_only = false
+multi_agent_mode_hint_text = """
+Proactively use subagents when a task can be decomposed into independent workstreams.
+Keep the critical path local. Give parallel agents disjoint write scopes.
+Review and integrate every agent result before completing the task.
+"""
+
+[agents]
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "medium"
+
+[tui]
+theme = "ansi"
+vim_mode_default = true
+vim_mode_start = "insert"
+status_line = ["current-dir", "model", "weekly-limit", "pull-request-number", "five-hour-limit"]
+status_line_use_colors = true
+tmux_command_log = false
+
+[tui.model_availability_nux]
+"gpt-5.6-sol" = 2
+
+[mcp_servers.stefania-devtools]
+command = "/opt/homebrew/bin/python3"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "devtools"]
+
+[mcp_servers.sandbox]
+command = "/opt/homebrew/bin/python3"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "sandbox"]
+
+[mcp_servers.sandbox.tools.sandbox_get_task_output]
+approval_mode = "auto"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_context]
+approval_mode = "auto"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_audit]
+approval_mode = "auto"
+
+[mcp_servers.sandbox.tools.sandbox_get_task]
+approval_mode = "auto"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_logs]
+approval_mode = "auto"
+
+[mcp_servers.sandbox.tools.sandbox_read_artifact_text]
+approval_mode = "auto"
+
+[mcp_servers.stefania-infractl]
+command = "/opt/homebrew/bin/python3"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "infractl"]
+
+[mcp_servers.stefania-infractl.tools.namespace_lister]
+approval_mode = "auto"
+
+[mcp_servers.stefania-infractl.tools.object_lister]
+approval_mode = "auto"
+
+[mcp_servers.stefania-intrasearch]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "intrasearch"]
+
+[mcp_servers.stefania-intrasearch.tools.evaluate_sources]
+approval_mode = "auto"
+
+[mcp_servers.stefania-intrasearch.tools.fetch]
+approval_mode = "auto"
+
+[mcp_servers.stefania-intrasearch.tools.search]
+approval_mode = "auto"
+
+[mcp_servers.stefania-intrasearch.tools.stsearch]
+approval_mode = "auto"
+
+[mcp_servers.stefania-abc]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "abc"]
+
+[mcp_servers.stefania-dispenser]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "dispenser"]
+
+[mcp_servers.stefania-idp]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "idp"]
+
+[mcp_servers.stefania-tars]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tars"]
+
+[mcp_servers.github]
+command = "/Users/antonmoss/.local/bin/github-mcp-server-codex"
+
+[mcp_servers.stefania-monium_mcp]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "monium_mcp"]
+startup_timeout_sec = 60.0
+
+[mcp_servers.google-sheets]
+url = "https://sheetsmcp.googleapis.com/mcp/v1"
+
+[mcp_servers.google-sheets.oauth]
+client_id = "1039367826430-ku4q669p1n814npcq8j8d691jh836i4f.apps.googleusercontent.com"
+
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest"]
+[shell_environment_policy]
+inherit = "all"
+ignore_default_excludes = true
+
+[hooks.state]
+
+[hooks.state."/Users/antonmoss/.codex/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:41d80596600537a3e07f489d70d2c0d78d85a51735cda4913aa5f5741a9469cd"
+
+[hooks.state."/Users/antonmoss/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:35b9bd33f0e4b62c61aa1e780fce826c910177b9a493956692a7ca007b76253b"
+
+[hooks.state."/Users/antonmoss/.codex/hooks.json:user_prompt_submit:1:0"]
+trusted_hash = "sha256:d54043780acb61d1dbabd63a995018791acbb76becfdd764d69d2dd66e412d01"
+
+[hooks.state."/Users/antonmoss/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:2a3581875e105edab7d72e40ec6bf1f0e1ae6db56b01744d3c31b7a878fc1997"
+
+[hooks.state."/Users/antonmoss/arcadia-turbo/quality/user_sessions/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:eda73ee46b431c5fc984398d38e9700100c7214c89efbc0edf81c55f54363d60"
+enabled = true
+
+[hooks.state."/Users/antonmoss/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:2b9428d7ecaf75927e992d6aa7af5da318317f64f9b694bdb87933b7977fdca5"
+
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:afec901aa95670a4835e056e1ecc1a601cb901fa4d9230bc58e98dd32c448870"
+
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:48bef8fb2b482134dbfb1a7622be1dc346d9ead9311df8f8be96a39793df9afb"
+
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:51d6ffa574dd974e12c67e327c44d544d0de64406962dbda45fabcf01ab15519"
+
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:f2bd7e67eb58c88dbfd4566a943046bb89ee9aea6d867bb4451e427fedf222e1"
+
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:bc72e7db6d2fed08dbb3d991c50ae9c605bd715b17e926d79ddd8e0363ff75d8"
+
+[hooks.state."/Users/antonmoss/code/quality-graph/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:12efdd54b3c8a0778d63d1056073a7cbeec09518b5bfd46e2893c96b2292af7f"
+
+[hooks.state."/Users/antonmoss/code/quality-graph/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:15e2e58db3e02eb8b44667e15b8ae7c28d08178d5dd1c1ed4b9369ef3ecf56d9"
+
+[notice.model_migrations]
+"gpt-5.4-mini" = "gpt-5.6-luna"
+
+[plugins."openai-templates@openai-curated-remote"]
+enabled = false
+
+[[skills.config]]
+path = "/Users/antonmoss/.codex/skills/.system/imagegen"
+enabled = false
+
+[[skills.config]]
+path = "/Users/antonmoss/.agents/skills/migrate-to-shoehorn"
+enabled = false
+
+[[skills.config]]
+path = "/Users/antonmoss/.agents/skills/scaffold-exercises"
+enabled = false
+
+[[skills.config]]
+path = "/Users/antonmoss/.agents/skills/stefania-goliath-skills"
+enabled = false
+
+[[skills.config]]
+path = "/Users/antonmoss/.agents/skills/stefania-bug"
+enabled = false
+
+[[skills.config]]
+path = "/Users/antonmoss/.agents/skills/stefania-bug-hook"
+enabled = false

@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+# resolve-path-filter — print `--path-filter ...` flags for `arc mount`, derived from
+# the project you are currently in (cwd inside an arc mount) plus a configurable
+# per-project override map. Part of the arc-worktrees skill.
+#
+# Path-filter is OFF by default: with no switch the script prints NOTHING (full mount).
+# It emits filters only when enabled — so the skill can always call it unconditionally
+# and just append the (possibly empty) output to `arc mount`.
+#
+# Enable via EITHER:
+#   - env  ARC_WT_PATHFILTER=1   (truthy: 1/true/yes/on) — always-on for the shell
+#   - flag --force / --enable    — one-off (used when the user explicitly asks to scope)
+#
+# Usage:
+#   resolve-path-filter [--force] [PROJECT_PATH]
+#     --force        emit filters even if ARC_WT_PATHFILTER is not set
+#     PROJECT_PATH   optional path (absolute, or relative to the mount root) to resolve
+#                    for; defaults to the current working directory.
+#
+# Config (optional): ~/.config/arc-worktrees/path-filters.conf
+#   One project per line:   <prefix>   <filter1> <filter2> ...
+#   '#' starts a comment. The longest <prefix> matching the cwd wins.
+#   If nothing matches, the project's own relative path is used as the single filter.
+#
+# Env:
+#   ARC_WT_PATHFILTER      master switch (truthy = enable path-filter by default)
+#   ARC_WT_FILTER_CONFIG   override config path
+#   ARC_WT_ALWAYS          override the always-included system paths (space-separated)
+#
+# Output (when enabled): a single line like
+#   --path-filter <project> --path-filter ya --path-filter devtools ...
+# Designed to be used unquoted:  arc mount ... $(resolve-path-filter)
+set -euo pipefail
+
+CONFIG="${ARC_WT_FILTER_CONFIG:-$HOME/.config/arc-worktrees/path-filters.conf}"
+
+# System paths `ya` needs to operate + personal junk. Override via ARC_WT_ALWAYS.
+ALWAYS_DEFAULT="ya devtools build .arcadia.root .arcignore junk/${USER}"
+ALWAYS="${ARC_WT_ALWAYS:-$ALWAYS_DEFAULT}"
+
+die() { echo "resolve-path-filter: $*" >&2; exit 1; }
+
+# --- Gate: OFF by default. Enable via --force/--enable flag or truthy ARC_WT_PATHFILTER. ---
+force=0
+case "${1:-}" in
+  -f|--force|--enable) force=1; shift ;;
+esac
+enabled=0
+[ "$force" = 1 ] && enabled=1
+case "${ARC_WT_PATHFILTER:-}" in
+  1|true|TRUE|True|yes|YES|on|ON) enabled=1 ;;
+esac
+if [ "$enabled" != 1 ]; then
+  echo "resolve-path-filter: disabled — set ARC_WT_PATHFILTER=1 or pass --force to enable. No filters emitted (full mount)." >&2
+  exit 0
+fi
+
+root="$(arc root 2>/dev/null)" || die "not inside an arc mount (arc root failed)"
+[ -n "$root" ] || die "arc root returned empty"
+
+# Target path (default: cwd), normalized to mount-root-relative.
+target="${1:-$PWD}"
+case "$target" in
+  /*) ;;                          # absolute — use as-is
+  *)  target="$root/$target" ;;   # otherwise treat as relative to the mount root
+esac
+
+rel="${target#"$root"/}"
+if [ "$rel" = "$target" ] || [ -z "$rel" ] || [ "$target" = "$root" ]; then
+  die "at mount root ($root) — cd into a project first, or pass a project path"
+fi
+rel="${rel%/}"
+
+# Longest-prefix override lookup in the config.
+best_prefix=""
+best_filters=""
+if [ -f "$CONFIG" ]; then
+  while IFS= read -r line || [ -n "$line" ]; do
+    line="${line%%#*}"               # strip comment
+    # shellcheck disable=SC2086
+    set -- $line                     # word-split into prefix + filters
+    [ "$#" -ge 1 ] || continue
+    prefix="$1"; shift
+    [ -n "$prefix" ] || continue
+    if [ "$rel" = "$prefix" ] || [ "${rel#"$prefix"/}" != "$rel" ]; then
+      if [ "${#prefix}" -gt "${#best_prefix}" ]; then
+        best_prefix="$prefix"
+        if [ "$#" -ge 1 ]; then best_filters="$*"; else best_filters="$prefix"; fi
+      fi
+    fi
+  done < "$CONFIG"
+fi
+
+if [ -n "$best_prefix" ]; then
+  project_filters="$best_filters"
+else
+  project_filters="$rel"
+  echo "resolve-path-filter: no config entry for '$rel' — using it as-is." >&2
+  echo "  Add deps to $CONFIG so that 'ya make' can find them." >&2
+fi
+
+# Emit deduped --path-filter flags (project filters first, then the always set).
+seen=" "
+# shellcheck disable=SC2086
+for p in $project_filters $ALWAYS; do
+  [ -n "$p" ] || continue
+  case "$seen" in
+    *" $p "*) continue ;;
+  esac
+  seen="$seen$p "
+  printf -- '--path-filter %s ' "$p"
+done
+printf '\n'

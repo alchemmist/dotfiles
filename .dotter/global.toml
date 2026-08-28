@@ -29,6 +29,13 @@ depends = []
 "starship" = "~/.config/starship"
 "yazi" = "~/.config/yazi"
 "systemd" = "~/.config/systemd/user"
+"codex/config.toml" = { target = "~/.codex/config.toml", type = "symbolic" }
+"codex/AGENTS.md" = { target = "~/.codex/AGENTS.md", type = "symbolic" }
+"codex/skills/arc-worktrees" = { target = "~/.codex/skills/arc-worktrees", type = "symbolic" }
+"codex/skills/grill-me" = { target = "~/.codex/skills/grill-me", type = "symbolic" }
+"codex/skills/grilling" = { target = "~/.codex/skills/grilling", type = "symbolic" }
+"codex/skills/impeccable" = { target = "~/.codex/skills/impeccable", type = "symbolic" }
+"codex/skills/rebase" = { target = "~/.codex/skills/rebase", type = "symbolic" }
 
 [default.variables]
 
