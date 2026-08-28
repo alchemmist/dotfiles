@@ -1,7 +1,7 @@
 PRECOMMIT_SCRIPT := scripts/backup-packages.sh
 HOOK_PATH := .git/hooks/pre-commit
 
-.PHONY: install-precommit uninstall-precommit precommit
+.PHONY: install-precommit uninstall-precommit precommit fingerprint-install fingerprint-uninstall
 
 install-precommit:
 	@mkdir -p .git/hooks
@@ -18,3 +18,9 @@ uninstall-precommit:
 
 precommit:
 	@$(PRECOMMIT_SCRIPT)
+
+fingerprint-install:
+	@./fingerprint/install.sh
+
+fingerprint-uninstall:
+	@./fingerprint/uninstall.sh
