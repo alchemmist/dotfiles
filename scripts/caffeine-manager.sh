@@ -1,38 +1,56 @@
 #!/usr/bin/env bash
 
-SERVICE="hypridle"
+set -u
 
-STATUS_CAFFEINE='{"text":"Caffeine","class":"activated","alt":"activated","tooltip":"Sleep inhibited"}'
-STATUS_IDLE='{"text":"Idle","class":"deactivated","alt":"deactivated","tooltip":"Sleep allowed"}'
+readonly SERVICE="hypridle.service"
+readonly WAYBAR_SIGNAL=7
+readonly STATUS_ENABLED='{"text":"Hypridle enabled","class":"enabled","alt":"enabled","tooltip":"Автогашение и блокировка включены"}'
+readonly STATUS_DISABLED='{"text":"Hypridle disabled","class":"disabled","alt":"disabled","tooltip":"Автогашение и блокировка отключены"}'
 
-is_idle_active() {
-  systemctl --user is-active --quiet "$SERVICE"
+is_enabled() {
+  pgrep -x hypridle >/dev/null
 }
 
 print_status() {
-  if is_idle_active; then
-    echo "$STATUS_IDLE"
+  if is_enabled; then
+    printf '%s\n' "$STATUS_ENABLED"
   else
-    echo "$STATUS_CAFFEINE"
+    printf '%s\n' "$STATUS_DISABLED"
   fi
+}
+
+notify_waybar() {
+  pkill -SIGRTMIN+"$WAYBAR_SIGNAL" waybar 2>/dev/null || true
+}
+
+start_hypridle() {
+  systemctl --user start "$SERVICE"
+}
+
+stop_hypridle() {
+  systemctl --user stop "$SERVICE" 2>/dev/null || true
+  pkill -x hypridle 2>/dev/null || true
 }
 
 toggle() {
-  if is_idle_active; then
-    systemctl --user stop "$SERVICE"
+  if is_enabled; then
+    stop_hypridle
   else
-    systemctl --user start "$SERVICE"
+    start_hypridle
   fi
+
+  notify_waybar
 }
 
-case "$1" in
+case "${1:-}" in
   -t|--toggle)
     toggle
-    sleep 0.1
-    print_status
     ;;
   -s|--status|"")
     print_status
     ;;
+  *)
+    printf 'Usage: %s [--status|--toggle]\n' "$0" >&2
+    exit 2
+    ;;
 esac
-

@@ -4,7 +4,7 @@ option_as_alt = "Both"
 padding = {x = 12, y = 8}
 
 [font]
-size = 13
+size = 14
 
 [font.normal]
 family = "FiraCode Nerd Font Propo"
@@ -35,4 +35,9 @@ chars = "\u001B\r"
 [[keyboard.bindings]]
 key = "V"
 mods = "Command"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Alt"
 action = "Paste"

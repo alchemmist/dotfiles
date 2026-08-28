@@ -1,11 +1,15 @@
 [init]
 	defaultBranch = main
+	templatedir = ~/.git-templates
 [user]
 	email = anton.ingrish@gmail.com
 	name = alchemmist
 [core]
 	editor = nvim
 	quotePath = false
+	excludesfile = ~/.gitignore_global
+[include]
+	path = ~/.gitconfig.local
 [url "git@github.com:"]
     insteadOf = git@github.com:Alchemmist/
 
@@ -26,7 +30,7 @@
 
 [credential "https://github.com"]
 	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential

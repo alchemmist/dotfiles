@@ -27,3 +27,8 @@ Host tmplab
     HostName 91.108.254.199
     User root
     IdentityFile ~/.ssh/tmplab
+
+Host ssh.genken.dev
+    HostName ssh.genken.dev
+    User git
+    IdentityFile ~/.ssh/genken

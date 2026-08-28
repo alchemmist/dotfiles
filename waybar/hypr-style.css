@@ -144,6 +144,14 @@ tooltip {
   margin-right: 5px;
 }
 
+#custom-caffeine.enabled {
+  color: #bfbfbf;
+}
+
+#custom-caffeine.disabled {
+  color: #c8a45c;
+}
+
 #custom-noscreenshare {
   border-radius: 10px;
   margin-right: 5px;

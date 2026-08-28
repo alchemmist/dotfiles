@@ -8,34 +8,32 @@ export PATH=$HOME/scripts:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.python3.12/bin:$PATH
-export PATH=/home/alchemmist/.local/lib/python3.12/site-packages:$PATH
 export PATH=$HOME/code/syncthing-wrapper/src-tauri/target/release:$PATH
-export PATH=/usr/local/texlive/2025/bin/x86_64-linux:$PATH
-export PATH=/home/alchemmist/time-desktop-linux-x64:$PATH
 export PATH=$HOME/code/CU-lms-wrapper/src-tauri/target/release:$PATH
 export PATH=~/.npm-global/bin:$PATH
 export PATH=$HOME/.elan/bin:$PATH
-export PATH=/home/alchemmist/.local/share/gem/ruby/3.4.0/bin:$PATH
-export PATH=/home/alchemmist/applications/codefetch/build:$PATH
-export PATH=/home/alchemmist/applications/keywords/build:$PATH
-export PATH=/home/alchemmist/applications/localports/target/release:$PATH
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
-if [[ "$(uname)" == "Linux" ]]; then
+if [[ "$OSTYPE" == linux* ]]; then
+  export PATH="$HOME/.local/lib/python3.12/site-packages:$PATH"
+  export PATH="/usr/local/texlive/2026/bin/x86_64-linux:$PATH"
+  export PATH="$HOME/time-desktop-linux-x64:$PATH"
+  export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
+  export PATH="$HOME/applications/codefetch/build:$PATH"
+  export PATH="$HOME/applications/keywords/build:$PATH"
+  export PATH="$HOME/applications/localports/target/release:$PATH"
   export QT_QPA_PLATFORM=wayland
+  export PYTHONPATH="$PYTHONPATH:/usr/lib/python3.12/site-packages"
+  export GOPATH="$HOME/applications/go"
+  export OLLAMA_VULKAN=1
+else
+  export GOPATH="$HOME/go"
 fi
 
-export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.12/site-packages
+export PATH="$GOPATH/bin:$PATH"
 
-export MANPATH=/usr/local/texlive/2024/texmf-dist/doc/man:$MANPATH
-export INFOPATH=/usr/local/texlive/2024/texmf-dist/doc/info:$INFOPATH
-
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$PATH
-export PATH=$GOPATH/bin:$PATH
-
-export PATH=/usr/lib/jvm/java-23-openjdk/bin:$PATH
+[[ "$OSTYPE" == linux* ]] && export PATH="/usr/lib/jvm/java-23-openjdk/bin:$PATH"
 
 export XDG_DATA_HOME="$HOME/.local/share"
 
@@ -44,9 +42,11 @@ export CHROME_EXECUTABLE=google-chrome-stable
 
 export TERM=xterm-256color
 
-export ANDROID_HOME=/opt/android-sdk
-export ANDROID_SDK_ROOT=/opt/android-sdk
-export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
+if [[ "$OSTYPE" == linux* ]]; then
+  export ANDROID_HOME=/opt/android-sdk
+  export ANDROID_SDK_ROOT=/opt/android-sdk
+  export PATH="$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH"
+fi
 export _ZO_DOCTOR=0
 
 #export WAYLAND_DISPLAY=''
@@ -126,7 +126,6 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 plugins=(
     git
     gitfast
-    zoxide
     fzf
     vi-mode
     you-should-use
@@ -154,10 +153,13 @@ alias tuxsay="cowsay -f tux"
 alias nvim_clear_swap="rm -rf ~/.local/state/nvim/swap/*"
 alias latex_clear_cache="rm -rf ~/latex/aux/* && rm -rf ~/latex/out/*"
 alias tex_compile="latexmk -pdf -silent -c -outdir=. -auxdir=/home/alchemmist/.cache/latex/aux"
-alias xo="xdg-open"
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias xo="open"
+else
+  alias xo="xdg-open"
+fi
 alias cls="clear"
 alias vim="/usr/bin/vim -u ~/.vimrc"
-alias cd="z"
 
 alias glog="git log --oneline --graph --decorate --all"
 alias gacp="git add . && git commit --amend --no-edit && git push --force-with-lease"
@@ -205,7 +207,6 @@ check_blacklist() {
 source <(fzf --zsh)
 # eval "fastfetch"
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
 source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
 
 # SSH-agent
@@ -228,13 +229,6 @@ fzf-widget() {
     zle reset-prompt
 }
 
-# Функция для zi, теперь эмулирует Enter после смены директории
-zi-widget() {
-    zle reset-prompt
-    zi
-    zle accept-line # Эмулирует нажатие Enter
-}
-
 # Функция для yazi с автопереходом и эмуляцией Enter
 y-widget() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -249,18 +243,14 @@ y-widget() {
 
 if [[ -t 1 ]]; then
     zle -N fzf-widget
-    zle -N zi-widget
     zle -N y-widget
 
     bindkey '^G' fzf-widget
-    bindkey '^J' zi-widget
     bindkey '^Y' y-widget
 
     bindkey -M viins '^[^?' backward-kill-word
     bindkey -M viins '^[' backward-kill-word
     bindkey -M viins '^H' backward-kill-word
-else
-    unsetopt zle
 fi
 
 mycat() {
@@ -393,6 +383,21 @@ function _pinglo_precmd() {
 add-zsh-hook preexec _pinglo_preexec
 add-zsh-hook precmd _pinglo_precmd
 
+function tmux-safe-clear() {
+  zle -I
+  printf '\n%.0s' {1..$LINES}
+  printf '\033[H'
+  zle redisplay
+}
+
+zle -N tmux-safe-clear
+bindkey '^L' tmux-safe-clear
+
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+[[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
+[[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"
+
 # Async cache для starship-промпта: номер PR (git → GitHub, arc → Arcanum).
 # Git и Arc взаимоисключающие. Контекст определяем дёшево (walk вверх за .arc/.git),
 # поиск PR НЕ на render-пути: при протухшем кэше дёргаем фоновый рефрешер, а
@@ -478,7 +483,9 @@ function _ssh_tmux_deimos_widget() {
 
 zle -N _ssh_tmux_deimos_widget
 bindkey '^K' _ssh_tmux_deimos_widget
-export PATH="$(brew --prefix llvm)/bin:$PATH"
+if command -v brew >/dev/null 2>&1; then
+  export PATH="$(brew --prefix llvm)/bin:$PATH"
+fi
 
 # Machine-local secrets / env (tokens, LMS, Stefania) — kept OUT of the repo so
 # they survive `dotter deploy`. The actual values live in ~/.zshrc.local (0600).
@@ -491,15 +498,25 @@ export PATH="$(brew --prefix llvm)/bin:$PATH"
 # <<< stefania-customize <<<
 
 # Added by Antigravity CLI installer
-export PATH="/Users/antonmoss/.local/bin:$PATH"
-alias arc-wt='/Users/antonmoss/bin/arc-wt'
+if [[ "$OSTYPE" == darwin* ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
+  alias arc-wt="$HOME/bin/arc-wt"
+fi
 
-zi-widget() {
-  zle reset-prompt
-  zi
-  zle reset-prompt
-}
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+  alias cd='z'
 
-zle -N zi-widget
-bindkey -M emacs '^J' zi-widget
-bindkey -M viins '^J' zi-widget
+  zi-widget() {
+    zle -I
+    zi
+    local status=$?
+    zle reset-prompt
+    return "$status"
+  }
+
+  zle -N zi-widget
+  bindkey -M emacs '^J' zi-widget
+  bindkey -M viins '^J' zi-widget
+  bindkey -M vicmd '^J' zi-widget
+fi
