@@ -22,7 +22,9 @@ export PATH=/home/alchemmist/applications/localports/target/release:$PATH
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
-export QT_QPA_PLATFORM=wayland
+if [[ "$(uname)" == "Linux" ]]; then
+  export QT_QPA_PLATFORM=wayland
+fi
 
 export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.12/site-packages
 
