@@ -1,13 +1,16 @@
 aarch64-linux-gnu-binutils
 aarch64-linux-gnu-gcc
 alacritty
+alsa-firmware
 alsa-utils
 amdgpu_top
 anki-bin
+anydesk-bin
 appmenu-gtk-module
 aquamarine
 ascii
 atac
+awww
 base
 base-devel
 bat
@@ -20,6 +23,7 @@ bluez-utils
 brightnessctl
 cava
 checkmake
+chromium
 cliphist
 cloc
 cmatrix
@@ -44,7 +48,6 @@ ex-vi-compat
 fastfetch
 fd
 ffmpeg
-firefox
 flameshot-git
 flite
 fprintd
@@ -67,6 +70,7 @@ grim
 gspell
 gst-plugin-pipewire
 gvfs
+happ-desktop-bin
 helix
 hostapd
 htop
@@ -79,6 +83,7 @@ hyprgraphics
 hypridle
 hyprland
 hyprland-guiutils
+hyprland-protocols
 hyprland-qt-support
 hyprlang
 hyprlock
@@ -86,6 +91,7 @@ hyprpaper
 hyprswitch
 hyprtoolkit
 hyprutils
+hyprwayland-scanner
 hyprwire
 imagemagick
 img2pdf
@@ -106,7 +112,9 @@ libvips
 linux
 linux-firmware
 linux-headers
+lm-studio
 lolcat
+loupe
 lsd
 lua-language-server
 luarocks
@@ -170,6 +178,7 @@ pyright
 python-annotated-doc
 python-dbus
 python-pillow
+python-pip
 python-pyqt5
 python-requests
 python-tomli
@@ -182,18 +191,22 @@ repgrep
 resvg
 ripgrep
 rocm-opencl-runtime
+rocm-toolchain
+rocminfo
 rofi
 rpmextract
 rust-analyzer
 rustup
 sagemath
-sagetex
 sane
+serie
 shellcheck
 shellfirm
 shfmt
 sl
+slides
 slurp
+sof-firmware
 sqlfluff
 sqlitebrowser
 sshfs
@@ -206,7 +219,6 @@ sway
 swaybg
 swaylock
 swaync
-swww
 syncthing
 sysstat
 taplo-cli
@@ -217,7 +229,6 @@ texlab
 thunar
 thunar-archive-plugin
 time
-time-desktop-bin
 tmux
 tokei
 trash-cli
@@ -234,6 +245,7 @@ usb_modeswitch
 usbutils
 v4l2loopback-dkms
 v4l2loopback-utils
+valkey
 vhs
 vim
 vlc
@@ -249,6 +261,8 @@ wget
 whois
 wireguard-tools
 wlogout
+wlrobs
+wlroots-nvidia
 wmctrl
 wofi
 wofi-emoji

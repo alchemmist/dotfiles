@@ -11,7 +11,7 @@ done
 
 selected_pack=$(printf "%s\n" "${packs[@]}" | fzf --prompt="Select wallpaper pack: ")
 
-sed -i "s/^export WALLPAPER_PACK=.*/export WALLPAPER_PACK=${selected_pack}/" "/home/alchemmist/scripts/swww_random.sh"
+sed --follow-symlinks -i "s/^export WALLPAPER_PACK=.*/export WALLPAPER_PACK=${selected_pack}/" "/home/alchemmist/scripts/swww_random.sh"
 
 exec "/home/alchemmist/scripts/swww_random.sh"
 

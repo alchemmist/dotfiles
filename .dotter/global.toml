@@ -1,35 +1,25 @@
 [helpers]
 
-[default]
+[shared]
 depends = []
 
-[default.files]
+[shared.files]
 "zsh/.zshrc" = "~/.zshrc"
-"waybar" = "~/.config/waybar"
-"hypr" = "~/.config/hypr"
 "tmux/.tmux.conf" = "~/.tmux.conf"
 "lazy-tmux/lazy-tmux.toml" = "~/.config/lazy-tmux/lazy-tmux.toml"
-"sway" = "~/.config/sway"
 "neovim" = "~/.config/nvim"
-"wofi" = "~/.config/wofi"
 "kitty" = "~/.config/kitty"
 "git/.gitconfig" = "~/.gitconfig"
+"git/.gitignore_global" = "~/.gitignore_global"
 "ssh/config" = "~/.ssh/config"
 "scripts" = "~/scripts"
 "alacritty" = "~/.config/alacritty"
-"wlinitrc/wlinitrc" = "~/.local/bin/wlinitrc"
 "fastfetch" = "~/.config/fastfetch"
-"zathura" = "~/.config/zathura"
 "wallpapers" = "~/Pictures/wallpapers"
-"mako" = "~/.config/mako"
 "vim/.vimrc" = "~/.vimrc"
 "helix" = "~/.config/helix"
-"wlogout" = "~/.config/wlogout"
-"swaync" = "~/.config/swaync"
 "starship" = "~/.config/starship"
 "yazi" = "~/.config/yazi"
-"systemd" = "~/.config/systemd/user"
-"codex/config.toml" = { target = "~/.codex/config.toml", type = "symbolic" }
 "codex/AGENTS.md" = { target = "~/.codex/AGENTS.md", type = "symbolic" }
 "codex/skills/arc-worktrees" = { target = "~/.codex/skills/arc-worktrees", type = "symbolic" }
 "codex/skills/grill-me" = { target = "~/.codex/skills/grill-me", type = "symbolic" }
@@ -37,7 +27,31 @@ depends = []
 "codex/skills/impeccable" = { target = "~/.codex/skills/impeccable", type = "symbolic" }
 "codex/skills/rebase" = { target = "~/.codex/skills/rebase", type = "symbolic" }
 
-[default.variables]
+[shared.variables]
+
+[default]
+depends = ["shared"]
+
+[default.files]
+"codex/config.toml" = { target = "~/.codex/config.toml", type = "symbolic" }
+
+[linux]
+depends = ["shared"]
+
+[linux.files]
+"waybar" = "~/.config/waybar"
+"hypr" = "~/.config/hypr"
+"sway" = "~/.config/sway"
+"wofi" = "~/.config/wofi"
+"wlinitrc/wlinitrc" = "~/.local/bin/wlinitrc"
+"zathura" = "~/.config/zathura"
+"mako" = "~/.config/mako"
+"wlogout" = "~/.config/wlogout"
+"swaync" = "~/.config/swaync"
+"systemd" = "~/.config/systemd/user"
+
+[macos]
+depends = ["default"]
 
 [settings]
 default_target_type = "automatic"

@@ -143,13 +143,13 @@
     "exec": "~/scripts/caffeine-manager.sh -s",
     "format": "{icon}",
     "format-icons": {
-      "activated": "󱐋",
-      "deactivated": "⏾"
+      "enabled": "󰌾",
+      "disabled": "󱐋"
     },
     "return-type": "json",
     "interval": "once",
     "signal": 7,
-    "on-click": "~/scripts/caffeine-manager.sh -t && pkill -SIGRTMIN+7 waybar"
+    "on-click": "~/scripts/caffeine-manager.sh -t"
   },
 
   "custom/pacman_updates": {
