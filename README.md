@@ -9,6 +9,7 @@ What you can fine in this repo?
 - [shell](https://github.com/alchemmist/dotfiles/blob/main/zsh) — `zsh` with `oh-my-zsh` plugin and some custom stafe.
 - [wallpapers](https://github.com/alchemmist/dotfiles/blob/main/wallpapers) — Here you can find all my wallpapers packs and some scripts for great working with it.
 - [browser extensions](./browser-extensions) — Local browser extensions, including the Yandex Translate ad hider.
+- [fingerprint reader](./fingerprint) — Reproducible Goodix `27c6:5f10` driver, PSK recovery and Hyprlock setup for the HONOR MagicBook.
 
 ## Features
 - Notifications about battery levels — script: [battery-check.sh](https://github.com/alchemmist/dotfiles/blob/main/scripts/battery-check.sh) + systemd: [service](https://github.com/alchemmist/dotfiles/blob/main/systemd/battery-monitor.service) and [timer](https://github.com/alchemmist/dotfiles/blob/main/systemd/battery-monitor.timer)
