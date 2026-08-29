@@ -1,6 +1,6 @@
 ---
 name: rebase
-description: Rebase the current Git or Arc PR branch onto the repository default branch and update its remote branch with the strongest available remote-head guard.
+description: Use only when the user explicitly invokes $rebase to rebase the current Git or Arc PR branch onto the repository default branch and update its remote branch with the strongest available remote-head guard.
 ---
 
 # Rebase

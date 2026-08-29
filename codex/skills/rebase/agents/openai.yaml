@@ -2,6 +2,3 @@ interface:
   display_name: "Rebase"
   short_description: "Rebase a PR branch and update it safely"
   default_prompt: "Use $rebase to rebase the current PR branch onto its default branch and update the remote."
-
-policy:
-  allow_implicit_invocation: false
