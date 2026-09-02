@@ -123,6 +123,9 @@ trust_level = "trusted"
 [projects."/Users/antonmoss/code/alchemmist"]
 trust_level = "trusted"
 
+[projects."/Users/antonmoss/code/CV"]
+trust_level = "trusted"
+
 [features]
 realtime_conversation = true
 hooks = true
@@ -147,7 +150,7 @@ default_subagent_reasoning_effort = "medium"
 theme = "ansi"
 vim_mode_default = true
 vim_mode_start = "insert"
-status_line = ["current-dir", "model", "weekly-limit", "pull-request-number", "five-hour-limit"]
+status_line = ["current-dir", "model"]
 status_line_use_colors = true
 tmux_command_log = false
 

@@ -4,7 +4,7 @@ option_as_alt = "Both"
 padding = {x = 12, y = 8}
 
 [font]
-size = 14
+size = 12
 
 [font.normal]
 family = "FiraCode Nerd Font Propo"
