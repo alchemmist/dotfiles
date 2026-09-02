@@ -41,3 +41,23 @@ action = "Paste"
 key = "V"
 mods = "Alt"
 action = "Paste"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Command"
+chars = "\u001B[28~"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+chars = "\u001B[29~"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Command"
+chars = "\u000A"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+chars = "\u000B"
