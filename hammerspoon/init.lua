@@ -35,6 +35,33 @@ hs.hotkey.bind({"cmd"}, "delete", function()
     hs.eventtap.keyStroke({"alt"}, "delete", 0)
 end)
 
+local tmuxPreviousWindow = hs.hotkey.new({"cmd"}, "h", function()
+    hs.eventtap.keyStroke({}, "f13", 0)
+end)
+
+local tmuxNextWindow = hs.hotkey.new({"cmd"}, "l", function()
+    hs.eventtap.keyStroke({}, "f14", 0)
+end)
+
+local function updateTmuxWindowHotkeys(application)
+    local enabled = application and application:bundleID() == "org.alacritty"
+    if enabled then
+        tmuxPreviousWindow:enable()
+        tmuxNextWindow:enable()
+    else
+        tmuxPreviousWindow:disable()
+        tmuxNextWindow:disable()
+    end
+end
+
+hs.tmuxWindowHotkeyWatcher = hs.application.watcher.new(function(_, event, application)
+    if event == hs.application.watcher.activated or event == hs.application.watcher.deactivated then
+        updateTmuxWindowHotkeys(hs.application.frontmostApplication())
+    end
+end):start()
+
+updateTmuxWindowHotkeys(hs.application.frontmostApplication())
+
 -- Keep Alacritty, tmux, Neovim and terminal TUIs (including Codex) on one
 -- palette.  Alacritty live-reloads the import; tmux and running nvim sessions
 -- are updated by the script.  New nvim instances read the shared state file.
