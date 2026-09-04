@@ -126,6 +126,84 @@ trust_level = "trusted"
 [projects."/Users/antonmoss/code/CV"]
 trust_level = "trusted"
 
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-lvvf7ekp"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-k_ca5o5m"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-0ps38e_k"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-c9q_nfpy"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-o530ua3x"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-0yqy1rsc"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-w92csjwe"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-5pknpg1l"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-ic91a0tw"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-93lchaeh"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-wmdb00ia"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-ksu42f1o"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-1kvtmm4y"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-k32wr0q6"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-r2cx_y9f"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-jtq7i1lz"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-gvjrhezz"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-hteai6iz"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-mcs6oars"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-t5ajif2f"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-ddrred74"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-3f9ndrzu"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-55nc3imp"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-5uwjyqui"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-8_uwudg4"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-lvd3wapv"]
+trust_level = "trusted"
+
 [features]
 realtime_conversation = true
 hooks = true
