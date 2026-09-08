@@ -1,2 +1,4 @@
+theme = "dark"
+
 [session_picker]
 navigation_modifiers = ["command", "control"]
