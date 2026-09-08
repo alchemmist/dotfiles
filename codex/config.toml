@@ -1,6 +1,6 @@
-model = "gpt-5.6-sol"
+model = "gpt-5.6-terra"
 model_context_window = 1000000
-model_reasoning_effort = "low"
+model_reasoning_effort = "medium"
 suppress_unstable_features_warning = true
 approval_mode = "never"
 approval_policy = "never"
@@ -204,6 +204,12 @@ trust_level = "trusted"
 [projects."/private/var/folders/3z/nmhv2_wj2gx9_d2pwjc3zbcw0000gn/T/stefania-flush-codex-lvd3wapv"]
 trust_level = "trusted"
 
+[projects."/Users/antonmoss/arcadia/quality/user_sessions"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia/quality/user_sessions/rt/infractl"]
+trust_level = "trusted"
+
 [features]
 realtime_conversation = true
 hooks = true
@@ -234,6 +240,7 @@ tmux_command_log = false
 
 [tui.model_availability_nux]
 "gpt-5.6-sol" = 2
+gpt-6-astra = 4
 
 [mcp_servers.stefania-devtools]
 command = "/opt/homebrew/bin/python3"
@@ -343,7 +350,7 @@ trusted_hash = "sha256:eda73ee46b431c5fc984398d38e9700100c7214c89efbc0edf81c55f5
 enabled = true
 
 [hooks.state."/Users/antonmoss/.codex/hooks.json:session_start:0:0"]
-trusted_hash = "sha256:2b9428d7ecaf75927e992d6aa7af5da318317f64f9b694bdb87933b7977fdca5"
+trusted_hash = "sha256:3130025f3c9d1a46954d26d9b15920974d7b9184199778e62dac7f046b799f83"
 
 [hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:afec901aa95670a4835e056e1ecc1a601cb901fa4d9230bc58e98dd32c448870"
