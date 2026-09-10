@@ -245,81 +245,92 @@ gpt-6-astra = 4
 [mcp_servers.stefania-devtools]
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "devtools"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.sandbox]
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "sandbox"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_output]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_context]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_audit]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_logs]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_read_artifact_text]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.stefania-infractl]
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "infractl"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.stefania-infractl.tools.namespace_lister]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.stefania-infractl.tools.object_lister]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.stefania-intrasearch]
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "intrasearch"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.stefania-intrasearch.tools.evaluate_sources]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.stefania-intrasearch.tools.fetch]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.stefania-intrasearch.tools.search]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.stefania-intrasearch.tools.stsearch]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.stefania-abc]
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "abc"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.stefania-dispenser]
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "dispenser"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.stefania-idp]
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "idp"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.stefania-tars]
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tars"]
+default_tools_approval_mode = "approve"
 
 [mcp_servers.github]
 command = "/Users/antonmoss/.local/bin/github-mcp-server-codex"
+default_tools_approval_mode = "approve"
 
 [mcp_servers.stefania-monium_mcp]
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "monium_mcp"]
 startup_timeout_sec = 60.0
+default_tools_approval_mode = "approve"
 
 [mcp_servers.google-sheets]
 url = "https://sheetsmcp.googleapis.com/mcp/v1"
+default_tools_approval_mode = "approve"
 
 [mcp_servers.google-sheets.oauth]
 client_id = "1039367826430-ku4q669p1n814npcq8j8d691jh836i4f.apps.googleusercontent.com"
@@ -327,6 +338,7 @@ client_id = "1039367826430-ku4q669p1n814npcq8j8d691jh836i4f.apps.googleuserconte
 [mcp_servers.chrome-devtools]
 command = "npx"
 args = ["-y", "chrome-devtools-mcp@latest"]
+default_tools_approval_mode = "approve"
 [shell_environment_policy]
 inherit = "all"
 ignore_default_excludes = true
@@ -402,3 +414,8 @@ enabled = false
 [[skills.config]]
 path = "/Users/antonmoss/.agents/skills/stefania-bug-hook"
 enabled = false
+
+[apps._default]
+default_tools_approval_mode = "approve"
+destructive_enabled = true
+open_world_enabled = true
