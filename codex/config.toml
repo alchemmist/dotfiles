@@ -319,6 +319,7 @@ args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tars"]
 default_tools_approval_mode = "approve"
 
 [mcp_servers.github]
+args = ["--toolsets=default", "--tools=actions_get,actions_list,get_job_logs"]
 command = "/Users/antonmoss/.local/bin/github-mcp-server-codex"
 default_tools_approval_mode = "approve"
 
@@ -419,3 +420,58 @@ enabled = false
 default_tools_approval_mode = "approve"
 destructive_enabled = true
 open_world_enabled = true
+
+[mcp_servers.stefania-tracker_mcp]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tracker_mcp"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-wiki]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "wiki"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-docs]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "docs"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-forms]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "forms"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-yt]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "yt"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-yql]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "yql"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-deepagent]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "deepagent"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-ab_experiments]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "ab_experiments"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-infra]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "infra"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-racktables]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "racktables"]
+startup_timeout_sec = 30
+
+[mcp_servers.stefania-tasklets]
+command = "/Users/antonmoss/.venvs/stefania/bin/python"
+args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tasklets"]
+startup_timeout_sec = 30
