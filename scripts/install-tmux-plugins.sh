@@ -14,5 +14,5 @@ install_plugin() {
     fi
 }
 
-install_plugin https://github.com/alchemmist/tmux-flash.git tmux-flash
+install_plugin https://github.com/and-rs/flash.tmux.git flash.tmux
 install_plugin https://github.com/alchemmist/tmux-claude-usage.git tmux-claude-usage
