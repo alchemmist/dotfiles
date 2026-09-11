@@ -168,7 +168,6 @@ alias gac="git add . && git commit --amend --no-edit"
 alias pptx2pdf='libreoffice --headless --convert-to pdf'
 alias mp42gif='~/scripts/mp42gif.sh'
 alias cat='mycat'
-alias cmatrix="unimatrix -n -s 97 -l o"
 alias ad="arc diff | lumen diff --stdin"
 alias ndiff="nvimdiv"
 
