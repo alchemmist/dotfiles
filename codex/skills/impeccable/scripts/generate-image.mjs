@@ -256,7 +256,8 @@ if (refs.length) {
   });
 }
 if (!response.ok) {
-  console.error(`generate-image: API error ${response.status}: ${(await response.text()).slice(0, 300)}`);
+  const body = (await response.text()).replaceAll(key, '***REDACTED***').slice(0, 300);
+  console.error(`generate-image: API error ${response.status}: ${body}`);
   process.exit(1);
 }
 const json = await response.json();
