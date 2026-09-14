@@ -7,7 +7,7 @@ skills_root="$HOME/.agents/skills"
 
 /bin/mkdir -p "$skills_root"
 
-for skill in arc-worktrees grill-me grilling impeccable rebase; do
+for skill in arc-worktrees grill-me grilling impeccable performance-profiler rebase; do
     source="$repo_root/codex/skills/$skill"
     if [ ! -f "$source/SKILL.md" ]; then
         echo "Missing skill source: $source/SKILL.md" >&2
@@ -15,7 +15,7 @@ for skill in arc-worktrees grill-me grilling impeccable rebase; do
     fi
 done
 
-for skill in arc-worktrees grill-me grilling impeccable rebase; do
+for skill in arc-worktrees grill-me grilling impeccable performance-profiler rebase; do
     source="$repo_root/codex/skills/$skill"
     target="$skills_root/$skill"
     if [ -L "$target" ]; then
