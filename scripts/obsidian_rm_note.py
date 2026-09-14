@@ -62,6 +62,14 @@ def delete_note_by_number(vault_path, target_number):
 
 if __name__ == "__main__":
     # Запрашиваем номер заметки для удаления
-    number_to_delete = int(input("Введите номер заметки, которую нужно удалить: "))
-    delete_note_by_number(VAULT_PATH, number_to_delete)
+    raw_number_to_delete = input("Введите номер заметки, которую нужно удалить: ")
+    try:
+        number_to_delete = int(raw_number_to_delete)
+    except ValueError:
+        print("Ошибка: номер заметки должен быть целым числом.")
+    else:
+        if number_to_delete <= 0:
+            print("Ошибка: номер заметки должен быть положительным числом.")
+        else:
+            delete_note_by_number(VAULT_PATH, number_to_delete)
 
