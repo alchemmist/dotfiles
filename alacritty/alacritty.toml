@@ -51,3 +51,8 @@ chars = "\u001B[23~"
 key = "K"
 mods = "Command"
 chars = "\u001B[24~"
+
+[[keyboard.bindings]]
+key = "S"
+mods = "Command"
+chars = "\u001B[28~"

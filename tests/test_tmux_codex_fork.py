@@ -1,4 +1,8 @@
-import importlib.util, pathlib, subprocess, tempfile, unittest, os
+import importlib.util
+import pathlib
+import subprocess
+import tempfile
+import unittest
 
 spec = importlib.util.spec_from_file_location(
     "fork", pathlib.Path(__file__).resolve().parents[1] / "scripts/tmux-codex-fork.py"
@@ -78,6 +82,7 @@ class Tests(unittest.TestCase):
             finally:
                 subprocess.run(
                     [*tmux, "kill-server"],
+                    check=False,
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                 )
