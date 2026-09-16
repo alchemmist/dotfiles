@@ -475,10 +475,3 @@ startup_timeout_sec = 30
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tasklets"]
 startup_timeout_sec = 30
-
-[mcp_servers.yandex-messenger]
-command = "/opt/homebrew/bin/npx"
-args = ["-y", "mcp-remote@0.14.2", "https://apigw-mcp.disk.yandex.net/sse?server=messenger", "--transport", "sse-only", "--header", "Authorization:${YANDEX_MESSENGER_AUTHORIZATION}"]
-env_vars = ["YANDEX_MESSENGER_AUTHORIZATION"]
-startup_timeout_sec = 60
-enabled = true
