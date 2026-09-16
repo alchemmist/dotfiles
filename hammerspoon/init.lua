@@ -35,6 +35,29 @@ hs.hotkey.bind({"cmd"}, "delete", function()
     hs.eventtap.keyStroke({"alt"}, "delete", 0)
 end)
 
+local function switchDesktop(offset)
+    local current = hs.spaces.focusedSpace()
+    local spaces = hs.spaces.spacesForScreen(hs.screen.mainScreen()) or {}
+
+    for index, space in ipairs(spaces) do
+        if space == current then
+            local target = spaces[index + offset]
+            if target then
+                hs.spaces.gotoSpace(target)
+            end
+            return
+        end
+    end
+end
+
+hs.hotkey.bind({"ctrl", "cmd"}, "h", function()
+    switchDesktop(-1)
+end)
+
+hs.hotkey.bind({"ctrl", "cmd"}, "l", function()
+    switchDesktop(1)
+end)
+
 local tmuxPreviousWindow = hs.hotkey.new({"cmd"}, "h", function()
     hs.eventtap.keyStroke({}, "f13", 0)
 end)
