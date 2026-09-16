@@ -20,7 +20,7 @@ depends = []
 "helix" = "~/.config/helix"
 "starship" = "~/.config/starship"
 "yazi" = "~/.config/yazi"
-"codex/AGENTS.md" = { target = "~/.codex/AGENTS.md", type = "symbolic" }
+"antex/AGENTS.md" = { target = "~/.antex/AGENTS.md", type = "symbolic" }
 "hammerspoon/init.lua" = { target = "~/.hammerspoon/init.lua", type = "symbolic" }
 "hammerspoon/startup-layout.lua" = { target = "~/.hammerspoon/startup-layout.lua", type = "symbolic" }
 
@@ -30,7 +30,8 @@ depends = []
 depends = ["shared"]
 
 [default.files]
-"codex/config.toml" = { target = "~/.codex/config.toml", type = "symbolic" }
+"antex/config.toml" = { target = "~/.antex/config.toml", type = "symbolic" }
+"antex/github-mcp-server-antex" = { target = "~/.local/bin/github-mcp-server-antex", type = "symbolic" }
 
 [linux]
 depends = ["shared"]
