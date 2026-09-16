@@ -16,3 +16,8 @@ install_plugin() {
 
 install_plugin https://github.com/and-rs/flash.tmux.git flash.tmux
 install_plugin https://github.com/alchemmist/tmux-claude-usage.git tmux-claude-usage
+if [ "$(uname -s)" = Darwin ] && ! command -v gawk >/dev/null 2>&1; then
+    brew install gawk
+fi
+
+install_plugin https://github.com/tmux-plugins/tmux-copycat.git tmux-copycat
