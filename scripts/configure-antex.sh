@@ -47,7 +47,6 @@ def set_value(text, key, value):
 
 text = set_value(text, "approval_policy", "never")
 text = set_value(text, "sandbox_mode", "danger-full-access")
-text = text.replace('approval_mode = "approve"', 'approval_mode = "auto"')
 
 with open(path, "w", encoding="utf-8") as f:
     f.write(text)

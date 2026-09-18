@@ -253,22 +253,76 @@ args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "sandbox"]
 default_tools_approval_mode = "auto"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_output]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_context]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_audit]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_get_task_logs]
-approval_mode = "auto"
+approval_mode = "approve"
 
 [mcp_servers.sandbox.tools.sandbox_read_artifact_text]
-approval_mode = "auto"
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_count_resources]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_resource]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_resource_attributes]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_resource_data_links]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_resource_meta]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_resource_releases]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_audit_hosts]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_hosts]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_release]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_report]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_get_task_triggers]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_list_artifact_directory]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_list_related_tasks]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_list_resources]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_list_task_directory]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_list_tasks]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_read_last_resource_text]
+approval_mode = "approve"
+
+[mcp_servers.sandbox.tools.sandbox_read_task_directory_text]
+approval_mode = "approve"
 
 [mcp_servers.stefania-infractl]
 command = "/opt/homebrew/bin/python3"
