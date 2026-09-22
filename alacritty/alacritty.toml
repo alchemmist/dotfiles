@@ -38,6 +38,11 @@ mods = "Command"
 action = "Paste"
 
 [[keyboard.bindings]]
+key = "М"
+mods = "Command"
+action = "Paste"
+
+[[keyboard.bindings]]
 key = "V"
 mods = "Alt"
 action = "Paste"
