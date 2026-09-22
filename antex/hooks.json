@@ -1,0 +1,51 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/homebrew/bin/python3 /Users/antonmoss/.antex/hooks/arcadia_search_guard.py",
+            "timeout": 3
+          }
+        ],
+        "matcher": "^(?:Bash|(?:functions\\.)?exec)$"
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.agents/skills/stefania-memory/hooks/pre-compact.py --agent codex",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.agents/skills/stefania-memory/hooks/stop.py --agent codex",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{\n  /Users/antonmoss/.local/share/yandex-aisuite/runner hook run --type session_start --name session_state_gc --agent codex\n} || true",
+            "__generator": "ya_tool_aisuite_meta",
+            "timeout": 30
+          }
+        ],
+        "matcher": "startup|resume|clear|compact"
+      }
+    ]
+  }
+}
