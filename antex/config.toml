@@ -2,7 +2,6 @@ model = "gpt-6-astra"
 model_context_window = 1000000
 model_reasoning_effort = "low"
 suppress_unstable_features_warning = true
-approval_mode = "never"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 service_tier = "default"

@@ -65,7 +65,7 @@ local function launchAlacritty()
         return
     end
 
-    local command = "/Users/antonmoss/go/bin/lazy-tmux wakeup -session tmp >/dev/null 2>&1 || true; exec /opt/homebrew/bin/tmux new-session -A -s tmp"
+    local command = "exec /opt/homebrew/bin/tmux new-session -A -s tmp"
     hs.task.new("/usr/bin/open", nil, {
         "-na",
         "/Applications/Alacritty.app",
