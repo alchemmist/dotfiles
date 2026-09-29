@@ -32,13 +32,17 @@ def fork_plan(tmux, pane, antex):
     if "antex" not in command.lower():
         raise ValueError("The source pane is not running Antex")
     result = subprocess.run(
-        [*tmux, "show-options", "-p", "-v", "-t", pane, "@antex_thread_id"],
+        [*tmux, "show-options", "-p", "-v", "-t", pane, "@antex_binding"],
         capture_output=True,
         text=True,
         check=False,
     )
-    thread = result.stdout.strip()
-    if result.returncode or not thread:
+    try:
+        binding = json.loads(result.stdout) if result.returncode == 0 else {}
+    except json.JSONDecodeError:
+        binding = {}
+    thread = binding.get("thread_id", "")
+    if not isinstance(thread, str) or not thread:
         raise ValueError(
             "This pane has no Antex thread ID; refusing to guess from its directory"
         )
