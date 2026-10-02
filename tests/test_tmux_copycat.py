@@ -55,7 +55,13 @@ class CopycatUrlTest(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which('tmux') and PLUGIN.is_dir(), 'tmux-copycat is not installed')
     def test_url_selection(self):
+        long_url = 'https://example.com/' + 'segment/' * 50 + '?q=value#end'
         cases = [
+            ('Ссылка: ' + long_url, long_url),
+            ('Текст ' * 35 + long_url, long_url),
+            ('🚀 链接 ' + long_url, long_url),
+            ('https://example.com/first\nnext-line', 'https://example.com/first'),
+            (' ' * 145 + long_url, long_url),
             ('• Реализовано: PR 15780004 (https://a.yandex-team.ru/review/15780004).', 'https://a.yandex-team.ru/review/15780004'),
             ('Ссылка: https://example.com/path.', 'https://example.com/path'),
             ('🚀 链接 https://example.com/unicode', 'https://example.com/unicode'),
@@ -81,7 +87,7 @@ class CopycatUrlTest(unittest.TestCase):
                     tm('run-shell', str(PLUGIN / 'copycat.tmux'))
                     tm('send-keys', 'cat ' + shlex.quote(str(fixture)), 'Enter')
                     for attempt in range(100):
-                        if line in tm('capture-pane', '-p'):
+                        if line in tm('capture-pane', '-p', '-J'):
                             break
                         time.sleep(.05)
                     else:
