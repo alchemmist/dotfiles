@@ -1,0 +1,159 @@
+{
+  "skillListingBudgetFraction": 0.05,
+  "env": {
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "ANTHROPIC_BASE_URL": "https://api.eliza.yandex.net/raw/anthropic"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python3 /tmp/fq_sync.py:*)",
+      "Read",
+      "Glob",
+      "Grep"
+    ]
+  },
+  "model": "sonnet",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME\"/.claude/hooks/notify.sh Glass"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME\"/.claude/hooks/notify.sh Ping"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/zsh /Users/antonmoss/.stefania/hooks/session-start-env.zsh",
+            "timeout": 30,
+            "statusMessage": "Подтягиваю окружение из ~/.zshrc"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/runner hook run --type session_start --name session_state_gc --agent claude",
+            "async": true,
+            "__generator": "ya_tool_aisuite_meta"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.claude/skills/stefania-memory/hooks/user-prompt-submit.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.claude/skills/stefania-memory/hooks/pre-compact.py",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.claude/skills/stefania-memory/hooks/session-end.py",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/antonmoss/.stefania/statusline-with-tip.sh"
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true
+  },
+  "language": "Russian",
+  "spinnerVerbs": {
+    "mode": "append",
+    "verbs": [
+      "Танцую с задачей 💃",
+      "Точу когти 🐅",
+      "Прячусь в базе знаний",
+      "Рычу про себя",
+      "Не отвлекай — работаю",
+      "Мне не нравится 🐅",
+      "Не галлюцинирую (вроде)",
+      "Делаю вид, что вспомнила",
+      "Только проснулась",
+      "Печатаю медленно для драматизма",
+      "Дайте минутку, я красивая",
+      "Сейчас придумаю отмазку",
+      "Спугнула баг 🐅",
+      "Танцпол в голове 💃",
+      "Сейчас разберусь, я ж умная",
+      "Делаю умное лицо",
+      "Изображаю занятость",
+      "Притворяюсь занятой",
+      "Спрашиваю у вселенной",
+      "Это вопрос или ловушка",
+      "Пудрю носик",
+      "Сейчас изобрету колесо",
+      "Стеша танцует 💃",
+      "Хотела как лучше, вышло как всегда",
+      "Пишу костыль",
+      "Закатываю глаза"
+    ]
+  },
+  "effortLevel": "medium",
+  "remote": {
+    "defaultEnvironmentId": "env_017HnkYb5LwYSTPeZFQZY5gC"
+  },
+  "voice": {
+    "enabled": true,
+    "mode": "tap"
+  },
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "switchModelsOnFlag": false,
+  "voiceEnabled": true,
+  "hasCompletedOnboarding": true
+}

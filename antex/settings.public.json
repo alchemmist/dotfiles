@@ -1,0 +1,5 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.eliza.yandex.net/raw/anthropic"
+  }
+}

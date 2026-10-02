@@ -65,15 +65,9 @@ local function launchAlacritty()
         return
     end
 
-    local command = "exec /opt/homebrew/bin/tmux new-session -A -s tmp"
     hs.task.new("/usr/bin/open", nil, {
         "-na",
         "/Applications/Alacritty.app",
-        "--args",
-        "-e",
-        "/bin/zsh",
-        "-lc",
-        command,
     }):start()
 end
 

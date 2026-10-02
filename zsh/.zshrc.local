@@ -1,0 +1,19 @@
+export PODMAN_COMPOSE_WARNING_LOGS=false
+export ARCADIA_ROOT="$HOME/arcadia"
+export DISABLE_BUG_COMMAND=1
+export DISABLE_ERROR_REPORTING=1
+export DISABLE_TELEMETRY=1
+export STEFANIA_PYTHON=/opt/homebrew/bin/python3
+export YT_CLUSTER=seneka
+
+if [ -f "$HOME/.config/shell/secrets.zsh" ]; then
+    source "$HOME/.config/shell/secrets.zsh"
+fi
+
+[ -f "${STEFANIA_HOME:-$HOME/.stefania}/customize.env" ] && source "${STEFANIA_HOME:-$HOME/.stefania}/customize.env"
+if [ -f "$HOME/.config/shell/secrets-after-customize.zsh" ]; then
+    source "$HOME/.config/shell/secrets-after-customize.zsh"
+fi
+
+unset ANTHROPIC_AUTH_TOKEN
+unset ANTHROPIC_BASE_URL
