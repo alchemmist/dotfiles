@@ -24,3 +24,8 @@ fingerprint-install:
 
 fingerprint-uninstall:
 	@./fingerprint/uninstall.sh
+
+.PHONY: test-agent-settings
+
+test-agent-settings:
+	python3 -m unittest discover -s tests -p 'test_agent_settings.py'

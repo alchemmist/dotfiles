@@ -218,7 +218,7 @@ enabled = true
 max_concurrent_threads_per_session = 16
 expose_spawn_agent_model_overrides = true
 wait_agent_enabled = true
-non_code_mode_only = false
+non_code_mode_only = true
 multi_agent_mode_hint_text = """
 Proactively use subagents when a task can be decomposed into independent workstreams.
 Keep the critical path local. Give parallel agents disjoint write scopes.
@@ -393,6 +393,11 @@ client_id = "1039367826430-ku4q669p1n814npcq8j8d691jh836i4f.apps.googleuserconte
 command = "npx"
 args = ["-y", "chrome-devtools-mcp@latest"]
 default_tools_approval_mode = "auto"
+
+[mcp_servers.stefania-datalens]
+command = "/opt/homebrew/bin/uv"
+args = ["run", "--script", "/Users/antonmoss/.stefania/mcp/datalens/server.py"]
+startup_timeout_sec = 60
 [shell_environment_policy]
 inherit = "all"
 ignore_default_excludes = true
@@ -416,7 +421,7 @@ trusted_hash = "sha256:eda73ee46b431c5fc984398d38e9700100c7214c89efbc0edf81c55f5
 enabled = true
 
 [hooks.state."/Users/antonmoss/.codex/hooks.json:session_start:0:0"]
-trusted_hash = "sha256:3130025f3c9d1a46954d26d9b15920974d7b9184199778e62dac7f046b799f83"
+trusted_hash = "sha256:47f91a07fca011c2c0f5b601955a36363192ea23d7f3605ce4227edb8f611a7f"
 
 [hooks.state."/Users/antonmoss/arcadia-wt/chet/.antex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:afec901aa95670a4835e056e1ecc1a601cb901fa4d9230bc58e98dd32c448870"
@@ -448,6 +453,35 @@ trusted_hash = "sha256:3130025f3c9d1a46954d26d9b15920974d7b9184199778e62dac7f046
 [hooks.state."/Users/antonmoss/.antex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:2a3581875e105edab7d72e40ec6bf1f0e1ae6db56b01744d3c31b7a878fc1997"
 
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:c7c1d84068ad90afec0440e8d021c13e3d59f1857838efa8e72367916951a398"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:ef967c3e6627d12ab0a8ca02e9c8d87b7f8a715d952cbd45d312c7e27bb275ce"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:9badc18c8dae80a3765902e951d81ebc750282888a8e9d0b3e88b1b5bcbbdbb5"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:f8407a636759fa0213c393a037cf2f517c018539e59acbdd049e2f7744e4b161"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:9575fd0053e990cf076fcdb3b18810b13849190ff2af6d5ae44a7f84151ba423"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:3dc3222e5669f7cccc802d24ed96e8f2ac0c6d4dd94f6b9df0fd752e543719c4"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:c08fe56803c5db755991bb43a204a116eb48d056422c032e00cfda4fd72f72da"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:de5219702f357f13bac7a343894851f25389f3d3203a58d439df822f4ecd7f21"
+
+[hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:a7a2148ff51616f4706ee12eb9287805ffebe8b844f4ca87977ae73682c31104"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:fe0ac14d555ca425267149e14e4df7e1bc4b29240be65aecf4f4904f35ed5198"
 [notice.model_migrations]
 "gpt-5.4-mini" = "gpt-5.6-luna"
 
@@ -537,4 +571,3 @@ startup_timeout_sec = 30
 command = "/Users/antonmoss/.venvs/stefania/bin/python"
 args = ["/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tasklets"]
 startup_timeout_sec = 30
-

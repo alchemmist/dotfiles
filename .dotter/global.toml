@@ -33,6 +33,22 @@ depends = ["shared"]
 "antex/config.toml" = { target = "~/.antex/config.toml", type = "symbolic" }
 "antex/github-mcp-server-antex" = { target = "~/.local/bin/github-mcp-server-antex", type = "symbolic" }
 
+"antex/hooks.json" = { target = "~/.antex/hooks.json", type = "symbolic" }
+"antex/hooks" = { target = "~/.antex/hooks", type = "symbolic", recurse = false }
+"antex/workflows/github-bot-pr-maintenance.py" = { target = "~/.antex/workflows/github-bot-pr-maintenance.py", type = "symbolic" }
+"antex/workflows/pr-babysitter.py" = { target = "~/.antex/workflows/pr-babysitter.py", type = "symbolic" }
+".private/agent-settings/antex/settings.json" = { target = "~/.antex/settings.json", type = "symbolic" }
+"codex/AGENTS.md" = { target = "~/.codex/AGENTS.md", type = "symbolic" }
+"codex/config.toml" = { target = "~/.codex/config.toml", type = "symbolic" }
+"codex/hooks.json" = { target = "~/.codex/hooks.json", type = "symbolic" }
+"codex/workflows/github-bot-pr-maintenance.py" = { target = "~/.codex/workflows/github-bot-pr-maintenance.py", type = "symbolic" }
+"codex/workflows/pr-babysitter.py" = { target = "~/.codex/workflows/pr-babysitter.py", type = "symbolic" }
+".private/agent-settings/codex/settings.json" = { target = "~/.codex/settings.json", type = "symbolic" }
+"claude/CLAUDE.md" = { target = "~/.claude/CLAUDE.md", type = "symbolic" }
+"claude/hooks/notify.sh" = { target = "~/.claude/hooks/notify.sh", type = "symbolic" }
+"claude/commands/stefania-memory-now.md" = { target = "~/.claude/commands/stefania-memory-now.md", type = "symbolic" }
+".private/agent-settings/claude/settings.json" = { target = "~/.claude/settings.json", type = "symbolic" }
+
 [linux]
 depends = ["shared"]
 
@@ -50,6 +66,30 @@ depends = ["shared"]
 
 [macos]
 depends = ["default"]
+
+[macos.files]
+"macos/.zprofile" = { target = "~/.zprofile", type = "symbolic" }
+"macos/.bashrc" = { target = "~/.bashrc", type = "symbolic" }
+"macos/.profile" = { target = "~/.profile", type = "symbolic" }
+"macos/.zshenv" = { target = "~/.zshenv", type = "symbolic" }
+"zsh/.zshrc.local" = { target = "~/.zshrc.local", type = "symbolic" }
+"macos/config/claude-usage/original-statusline.json" = { target = "~/.config/claude-usage/original-statusline.json", type = "symbolic" }
+"macos/config/containers/enable-rosetta" = { target = "~/.config/containers/enable-rosetta", type = "symbolic" }
+"macos/config/containers/registries.conf" = { target = "~/.config/containers/registries.conf", type = "symbolic" }
+"macos/config/fish/conf.d/00_fig_pre.fish" = { target = "~/.config/fish/conf.d/00_fig_pre.fish", type = "symbolic" }
+"macos/config/fish/conf.d/99_fig_post.fish" = { target = "~/.config/fish/conf.d/99_fig_post.fish", type = "symbolic" }
+"macos/config/gh/config.yml" = { target = "~/.config/gh/config.yml", type = "symbolic" }
+"macos/config/git/ignore" = { target = "~/.config/git/ignore", type = "symbolic" }
+"macos/config/graphite/aliases" = { target = "~/.config/graphite/aliases", type = "symbolic" }
+"macos/config/graphite/user_config" = { target = "~/.config/graphite/user_config", type = "symbolic" }
+"macos/config/htop/htoprc" = { target = "~/.config/htop/htoprc", type = "symbolic" }
+"macos/config/karabiner/assets/complex_modifications/cmd_delete_word.json" = { target = "~/.config/karabiner/assets/complex_modifications/cmd_delete_word.json", type = "symbolic" }
+"macos/config/karabiner/karabiner.json" = { target = "~/.config/karabiner/karabiner.json", type = "symbolic" }
+"macos/config/opencode/opencode.jsonc" = { target = "~/.config/opencode/opencode.jsonc", type = "symbolic" }
+"macos/config/opencode/package-lock.json" = { target = "~/.config/opencode/package-lock.json", type = "symbolic" }
+"macos/config/opencode/package.json" = { target = "~/.config/opencode/package.json", type = "symbolic" }
+"macos/config/opencode/plugins/aisuite-hooks.mjs" = { target = "~/.config/opencode/plugins/aisuite-hooks.mjs", type = "symbolic" }
+"macos/config/opencode/plugins/opencode-session-journal.mjs" = { target = "~/.config/opencode/plugins/opencode-session-journal.mjs", type = "symbolic" }
 
 [settings]
 default_target_type = "automatic"

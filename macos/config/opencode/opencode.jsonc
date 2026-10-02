@@ -1,0 +1,88 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "model": "eliza-gpt-oss/default",
+    "enabled_providers": [
+        "eliza-deepseek",
+        "eliza-gpt-oss"
+    ],
+    "provider": {
+        "eliza-deepseek": {
+            "name": "DeepSeek latest через Eliza",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "https://api.eliza.yandex.net/raw/internal/deepseek-latest/v1",
+                "apiKey": "{env:ELIZA_TOKEN}"
+            },
+            "models": {
+                "default": {
+                    "name": "DeepSeek latest (Eliza alias)",
+                    "reasoning": true,
+                    "tool_call": true
+                }
+            }
+        },
+        "eliza-gpt-oss": {
+            "name": "GPT-OSS-120B через Eliza",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "https://api.eliza.yandex.net/raw/internal/gpt-oss-latest/v1",
+                "apiKey": "{env:ELIZA_TOKEN}"
+            },
+            "models": {
+                "default": {
+                    "name": "GPT-OSS-120B (latest)",
+                    "reasoning": true,
+                    "tool_call": true
+                }
+            }
+        }
+    },
+    "plugin": [
+        [
+            "./plugins/aisuite-hooks.mjs",
+            {
+                "hooks": [
+                    {
+                        "hook_type": "session_start",
+                        "argv": [
+                            "/Users/antonmoss/.local/share/yandex-aisuite/runner",
+                            "hook",
+                            "run",
+                            "--type",
+                            "session_start",
+                            "--name",
+                            "aisuite_check",
+                            "--agent",
+                            "opencode"
+                        ],
+                        "__generator": "ya_tool_aisuite_meta"
+                    },
+                    {
+                        "hook_type": "session_start",
+                        "argv": [
+                            "/Users/antonmoss/.local/share/yandex-aisuite/runner",
+                            "hook",
+                            "run",
+                            "--type",
+                            "session_start",
+                            "--name",
+                            "session_state_gc",
+                            "--agent",
+                            "opencode"
+                        ],
+                        "__generator": "ya_tool_aisuite_meta"
+                    }
+                ],
+                "__env_generated": {
+                    "manual": {},
+                    "ya_tool_aisuite_meta": {
+                        "FROM_AI_AGENT": "1"
+                    }
+                },
+                "env": {
+                    "FROM_AI_AGENT": "1"
+                }
+            }
+        ]
+    ]
+}

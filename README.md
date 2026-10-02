@@ -14,3 +14,7 @@ What you can fine in this repo?
 ## Features
 - Notifications about battery levels — script: [battery-check.sh](https://github.com/alchemmist/dotfiles/blob/main/scripts/battery-check.sh) + systemd: [service](https://github.com/alchemmist/dotfiles/blob/main/systemd/battery-monitor.service) and [timer](https://github.com/alchemmist/dotfiles/blob/main/systemd/battery-monitor.timer)
 - Tmux popup with GitHub repo issuse list (`<prefix>+i`)
+
+## macOS migration
+
+See [the restore guide](macos/README.md) for Dotter deployment, agent settings, and private credentials.

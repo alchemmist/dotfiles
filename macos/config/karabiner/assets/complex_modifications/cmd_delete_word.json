@@ -1,0 +1,41 @@
+{
+  "title": "Custom keyboard mappings",
+  "rules": [
+    {
+      "description": "Cmd+Delete to Option+Delete",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "delete_or_backspace",
+            "modifiers": {
+              "mandatory": ["command"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace",
+              "modifiers": ["option"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Caps Lock to Left Control",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock"
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

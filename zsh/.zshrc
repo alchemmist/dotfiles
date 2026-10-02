@@ -487,8 +487,6 @@ if command -v brew >/dev/null 2>&1; then
   export PATH="$(brew --prefix llvm)/bin:$PATH"
 fi
 
-# Machine-local secrets / env (tokens, LMS, Stefania) — kept OUT of the repo so
-# they survive `dotter deploy`. The actual values live in ~/.zshrc.local (0600).
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 # >>> stefania-customize >>>

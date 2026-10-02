@@ -1,0 +1,4 @@
+{
+  "type": "command",
+  "command": "bash /Users/antonmoss/.stefania/statusline-default.sh"
+}
