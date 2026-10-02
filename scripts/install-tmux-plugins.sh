@@ -26,3 +26,5 @@ if [ "$(uname -s)" = Darwin ] && ! command -v gawk >/dev/null 2>&1; then
 fi
 
 install_plugin https://github.com/alchemmist/tmux-copycat.git tmux-copycat main
+
+cp "$(dirname "${BASH_SOURCE[0]}")/tmux-copycat-fast.py" "$plugins_dir/tmux-copycat/scripts/tmux-copycat-fast.py"
