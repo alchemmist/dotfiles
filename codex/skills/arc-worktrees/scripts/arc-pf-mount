@@ -31,4 +31,7 @@ case "${1:-}" in --) shift ;; esac
 filters=( $("$here/resolve-path-filter" $force) )
 
 echo "+ arc mount $* ${filters[*]}" >&2
-exec arc mount "$@" "${filters[@]}"
+arc mount "$@" "${filters[@]}"
+if [[ -x "$HOME/scripts/ensure-kit-aisuite.py" ]]; then
+    /usr/bin/python3 "$HOME/scripts/ensure-kit-aisuite.py"
+fi

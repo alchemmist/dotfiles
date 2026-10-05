@@ -27,6 +27,17 @@
         "hooks": [
           {
             "type": "command",
+            "command": "{\n  /Users/antonmoss/.local/share/yandex-aisuite/runner hook run --type session_start --name aisuite_check --agent codex\n} || true",
+            "async": true,
+            "__generator": "ya_tool_aisuite_meta"
+          }
+        ],
+        "matcher": "startup|resume|clear|compact"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
             "command": "{\n  /Users/antonmoss/.local/share/yandex-aisuite/runner hook run --type session_start --name session_state_gc --agent codex\n} || true",
             "async": true,
             "__generator": "ya_tool_aisuite_meta"
