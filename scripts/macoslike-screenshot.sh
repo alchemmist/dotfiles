@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 
 # macOS-версия macos-screenshot.sh: выделение области через flameshot
 # (по умолчанию) или нативный screencapture, закругление углов + тень через
@@ -14,12 +15,15 @@ TIMESTAMP="$(date +%Y-%m-%d_%H-%M-%S)"
 FINAL="$OUT_DIR/$TIMESTAMP.png"
 
 # Временные файлы
-TMP1="$(mktemp -t shot_raw).png"
-TMP2="$(mktemp -t shot_rounded).png"
+TMP_DIR="$(mktemp -d -t macoslike-shot)"
+TMP1="$TMP_DIR/raw.png"
+TMP2="$TMP_DIR/rounded.png"
+CAPTURE_LOG="$TMP_DIR/flameshot.log"
 
 # Очистка временных файлов
 cleanup() {
-    rm -f "$TMP1" "$TMP2"
+    rm -f "$TMP1" "$TMP2" "$CAPTURE_LOG"
+    rmdir "$TMP_DIR"
 }
 trap cleanup EXIT
 
@@ -47,13 +51,23 @@ done
 
 # flameshot может лежать внутри .app-бандла, не будучи в PATH
 FLAMESHOT="$(command -v flameshot || true)"
-if [[ -z "$FLAMESHOT" && -x "/Applications/flameshot.app/Contents/MacOS/flameshot" ]]; then
-    FLAMESHOT="/Applications/flameshot.app/Contents/MacOS/flameshot"
+if [[ -z "$FLAMESHOT" ]]; then
+    for candidate in "/Applications/Flameshot.app/Contents/MacOS/flameshot" "$HOME/Applications/Flameshot.app/Contents/MacOS/flameshot"; do
+        if [[ -x "$candidate" ]]; then
+            FLAMESHOT="$candidate"
+            break
+        fi
+    done
 fi
 # Резолвим симлинки (на PATH обычно лежит симлинк на бинарник внутри бандла),
 # чтобы корректно вычислить путь к Qt-плагинам бандла.
 while [[ -L "$FLAMESHOT" ]]; do
-    FLAMESHOT="$(readlink "$FLAMESHOT")"
+    LINK_TARGET="$(readlink "$FLAMESHOT")"
+    if [[ "$LINK_TARGET" == /* ]]; then
+        FLAMESHOT="$LINK_TARGET"
+    else
+        FLAMESHOT="$(dirname "$FLAMESHOT")/$LINK_TARGET"
+    fi
 done
 
 # Снятие скриншота
@@ -72,9 +86,12 @@ if [[ "$TOOL" == "flameshot" ]]; then
     # cocoa-плагин не находится. --raw выводит область PNG-ом в stdout,
     # -d задерживает заморозку экрана.
     QT_PLUGINS_DIR="$(cd "$(dirname "$FLAMESHOT")/../PlugIns/platforms" && pwd)"
-    QT_QPA_PLATFORM=cocoa \
-    QT_QPA_PLATFORM_PLUGIN_PATH="$QT_PLUGINS_DIR" \
-        "$FLAMESHOT" gui -d "$DELAY_MS" --raw > "$TMP1" || true
+    APP_BUNDLE="$(cd "$(dirname "$FLAMESHOT")/../.." && pwd)"
+    /usr/bin/open -g -n -W -a "$APP_BUNDLE" \
+        --stdout "$TMP1" --stderr "$CAPTURE_LOG" \
+        --env QT_QPA_PLATFORM=cocoa \
+        --env QT_QPA_PLATFORM_PLUGIN_PATH="$QT_PLUGINS_DIR" \
+        --args gui -d "$DELAY_MS" --raw
 else
     # Нативный путь: -i интерактивно, -o без тени окна
     screencapture -i -o "$TMP1" || true
