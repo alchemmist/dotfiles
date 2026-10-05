@@ -48,6 +48,16 @@ mods = "Alt"
 action = "Paste"
 
 [[keyboard.bindings]]
+key = "H"
+mods = "Command"
+chars = "\u001B[25~"
+
+[[keyboard.bindings]]
+key = "L"
+mods = "Command"
+chars = "\u001B[26~"
+
+[[keyboard.bindings]]
 key = "J"
 mods = "Command"
 chars = "\u001B[23~"

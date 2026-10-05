@@ -132,11 +132,18 @@ end)
 
 -- macoslike-screenshot по Cmd+Shift+3 (системный хоткей надо отключить в
 -- System Settings → Keyboard → Keyboard Shortcuts → Screenshots).
-hs.hotkey.bind({"cmd", "shift"}, "3", function()
-    hs.task.new("/bin/zsh", nil, {"-lc", os.getenv("HOME") .. "/scripts/macoslike-screenshot.sh --no-delay"}):start()
-    -- ВАЖНО: Hammerspoon должен иметь разрешение Screen Recording
-    -- (System Settings → Privacy & Security → Screen Recording),
-    -- иначе flameshot захватит только обои без окон.
+hs.hotkey.bind({"cmd", "shift"}, "3", nil, function()
+    if hs.screenshotTask and hs.screenshotTask:isRunning() then return end
+    hs.screenshotTask = hs.task.new("/bin/bash", function(exitCode, stdOut, stdErr)
+        hs.screenshotTask = nil
+        if exitCode ~= 0 then
+            hs.notify.new(nil, {
+                title = "Ошибка скриншота",
+                informativeText = (stdErr or stdOut or ""):sub(-1000),
+            }):send()
+        end
+    end, {os.getenv("HOME") .. "/scripts/macoslike-screenshot.sh", "--flameshot", "--no-delay"})
+    hs.screenshotTask:start()
 end)
 
 -- Авто-перезагрузка конфига при изменении init.lua

@@ -1,149 +1,255 @@
 local M = {}
-
 local spaces = require("hs.spaces")
+local settingsKey = "savedWorkspaceLayoutV1"
+local processKey = "savedWorkspaceLayoutRestoredProcess"
+local log = hs.logger.new("workspace", "info")
 
-local targets = {
-    ["org.alacritty"] = {desktop = 2, frame = "max"},
-    ["com.google.Chrome"] = {desktop = 3, frame = "max"},
-    ["ru.yandex.yamb"] = {desktop = 4, frame = "left"},
-    ["ru.keepcoder.Telegram"] = {desktop = 4, frame = "right"},
-    ["md.obsidian"] = {desktop = 5, frame = "max"},
-}
-
-local function desktopSpace(index)
-    local screen = hs.screen.primaryScreen()
-    local screenSpaces = spaces.allSpaces()[screen:getUUID()]
-    return screenSpaces and screenSpaces[index]
+local function bootTime()
+    return hs.execute("/usr/sbin/sysctl -n kern.boottime"):match("sec%s*=%s*(%d+)")
 end
 
-local function frameFor(screen, layout)
-    local frame = screen:frame()
-    if layout == "left" then
-        frame.w = math.floor(frame.w / 2)
-    elseif layout == "right" then
-        local half = math.floor(frame.w / 2)
-        frame.x = frame.x + half
-        frame.w = frame.w - half
-    end
-    return frame
+local function rectangle(frame)
+    return {x = frame.x, y = frame.y, w = frame.w, h = frame.h}
 end
 
-local function placeApplication(bundleID)
-    local target = targets[bundleID]
-    local app = hs.application.get(bundleID)
-    local space = target and desktopSpace(target.desktop)
-    if not target or not app or not space then
-        return
-    end
-
-    for _, window in ipairs(app:allWindows()) do
-        if window:isStandard() then
-            if window:isFullScreen() then
-                window:setFullScreen(false)
-            end
-            window:setFrame(frameFor(hs.screen.primaryScreen(), target.frame), 0)
-            spaces.moveWindowToSpace(window, space)
+local function desktops(screen)
+    local result = {}
+    for _, id in ipairs(spaces.spacesForScreen(screen) or {}) do
+        if spaces.spaceType(id) == "user" then
+            table.insert(result, id)
         end
     end
+    return result
 end
 
-local function hideHandyWindow()
-    local app = hs.application.get("com.pais.handy")
-    if not app then
-        return
+local function windows()
+    local result = {}
+    for _, window in ipairs(M.filter:getWindows()) do
+        local app = window:application()
+        if window:isStandard() and app and app:bundleID()
+            and app:bundleID() ~= "org.hammerspoon.Hammerspoon" and window:screen() then
+            table.insert(result, window)
+        end
     end
-    for _, window in ipairs(app:allWindows()) do
-        window:close()
-    end
-    app:hide()
+    table.sort(result, function(a, b) return a:id() < b:id() end)
+    return result
 end
 
-local function launchAlacritty()
-    local app = hs.application.get("org.alacritty")
-    if app and #app:allWindows() > 0 then
-        placeApplication("org.alacritty")
-        return
+local function desktopIndex(window, screen)
+    local membership = {}
+    for _, id in ipairs(spaces.windowSpaces(window) or {}) do
+        membership[id] = true
     end
-
-    hs.task.new("/usr/bin/open", nil, {
-        "-na",
-        "/Applications/Alacritty.app",
-    }):start()
+    local index = 0
+    for _, id in ipairs(spaces.spacesForScreen(screen) or {}) do
+        if spaces.spaceType(id) == "user" then
+            index = index + 1
+        end
+        if membership[id] then
+            return math.max(index, 1)
+        end
+    end
+    return 1
 end
 
-local function openApplication(bundleID, applicationPath)
-    local app = hs.application.get(bundleID)
-    if app and #app:allWindows() > 0 then
-        app:activate(true)
-        return
+function M.save()
+    if M.restoring then
+        return nil, "Дождись завершения восстановления"
     end
-    hs.task.new("/usr/bin/open", nil, {"-a", applicationPath}):start()
+    local snapshot = {version = 1, savedAt = os.time(), boot = bootTime(), windows = {}}
+    for _, window in ipairs(windows()) do
+        local app = window:application()
+        local screen = window:screen()
+        table.insert(snapshot.windows, {
+            bundleID = app:bundleID(), appName = app:name(), appPath = app:path(),
+            title = window:title() or "", windowID = window:id(),
+            screenUUID = screen:getUUID(), screenName = screen:name(),
+            desktop = desktopIndex(window, screen), frame = rectangle(window:frame()),
+            screenFrame = rectangle(screen:frame()), fullscreen = window:isFullScreen(),
+            minimized = window:isMinimized(), hidden = app:isHidden(),
+        })
+    end
+    if #snapshot.windows == 0 then
+        return nil, "Нет доступных окон; прежняя раскладка сохранена"
+    end
+    hs.settings.set(settingsKey, snapshot)
+    hs.settings.set(processKey, hs.processInfo.processID)
+    M.lastResult = {saved = #snapshot.windows, savedAt = snapshot.savedAt}
+    return #snapshot.windows
 end
 
-local function reopenWindow(bundleID, prefix)
-    local app = hs.application.get(bundleID)
-    if not app or #app:allWindows() > 0 then
-        return
-    end
-    for _, top in ipairs(app:getMenuItems()) do
-        if top.AXTitle == "Window" and top.AXChildren and top.AXChildren[1] then
-            for _, item in ipairs(top.AXChildren[1]) do
-                local title = item.AXTitle or ""
-                if item.AXEnabled and title:sub(1, #prefix) == prefix then
-                    app:selectMenuItem({"Window", title})
-                    return
+local function matchingWindows(snapshot)
+    local available = windows()
+    local matches, used = {}, {}
+    local sameBoot = snapshot.boot == bootTime()
+    local predicates = {
+        function(record, window)
+            return sameBoot and record.windowID == window:id()
+        end,
+        function(record, window)
+            return record.title ~= "" and record.title == window:title()
+        end,
+        function() return true end,
+    }
+    for _, predicate in ipairs(predicates) do
+        for index, record in ipairs(snapshot.windows) do
+            if not matches[index] then
+                for _, window in ipairs(available) do
+                    if not used[window:id()] and window:application():bundleID() == record.bundleID
+                        and predicate(record, window) then
+                        matches[index] = window
+                        used[window:id()] = true
+                        break
+                    end
                 end
             end
         end
     end
+    return matches
 end
 
-local function launchApplications()
-    launchAlacritty()
-    openApplication("com.google.Chrome", "/Applications/Google Chrome.app")
-    openApplication("ru.yandex.yamb", "/Applications/Yandex Messenger.app")
-    openApplication("ru.keepcoder.Telegram", "/Applications/Telegram.app")
-    openApplication("md.obsidian", "/Applications/Obsidian.app")
-    hs.timer.doAfter(1, function()
-        reopenWindow("ru.yandex.yamb", "Yandex Messenger")
-        reopenWindow("ru.keepcoder.Telegram", "Telegram @")
-        local obsidian = hs.application.get("md.obsidian")
-        if obsidian and #obsidian:allWindows() == 0 then
-            obsidian:selectMenuItem({"File", "New Window"})
-        end
-    end)
+local function targetScreen(record)
+    for _, screen in ipairs(hs.screen.allScreens()) do
+        if screen:getUUID() == record.screenUUID then return screen end
+    end
+    for _, screen in ipairs(hs.screen.allScreens()) do
+        if screen:name() == record.screenName then return screen end
+    end
+    return hs.screen.primaryScreen()
+end
+
+local function targetFrame(record, screen)
+    local old, current = record.screenFrame, screen:frame()
+    local frame = record.frame
+    if old.w == current.w and old.h == current.h then
+        return {x = current.x + frame.x - old.x, y = current.y + frame.y - old.y, w = frame.w, h = frame.h}
+    end
+    return {
+        x = current.x + (frame.x - old.x) * current.w / old.w,
+        y = current.y + (frame.y - old.y) * current.h / old.h,
+        w = math.min(frame.w * current.w / old.w, current.w),
+        h = math.min(frame.h * current.h / old.h, current.h),
+    }
+end
+
+local function place(window, record)
+    local screen = targetScreen(record)
+    local space = desktops(screen)[record.desktop]
+    if not space then return false, "Рабочий стол ещё недоступен" end
+    if window:isFullScreen() then
+        if record.fullscreen and window:screen():getUUID() == screen:getUUID() then return true end
+        window:setFullScreen(false)
+        return false, "Выход из полноэкранного режима"
+    end
+    if window:isMinimized() then window:unminimize() end
+    local frame = targetFrame(record, screen)
+    window:setFrame(frame, 0)
+    local onTarget = false
+    for _, id in ipairs(spaces.windowSpaces(window) or {}) do
+        if id == space then onTarget = true end
+    end
+    if not onTarget then
+        local ok, err = spaces.moveWindowToSpace(window, space)
+        if not ok then return false, err end
+    end
+    window:setFrame(frame, 0)
+    local actual = window:frame()
+    if math.abs(actual.x - frame.x) > 3 or math.abs(actual.y - frame.y) > 3
+        or math.abs(actual.w - frame.w) > 3 or math.abs(actual.h - frame.h) > 3 then
+        return false, "Приложение пока не применило размер окна"
+    end
+    if record.fullscreen then window:setFullScreen(true) end
+    if record.minimized then window:minimize() end
+    return true
+end
+
+local function stopRestore(pending)
+    if M.restoreTimer then M.restoreTimer:stop(); M.restoreTimer = nil end
+    M.restoring = false
+    M.lastResult = {restored = M.total - #pending, pending = pending, finishedAt = os.time()}
+    for bundleID in pairs(M.hiddenApps or {}) do
+        local app = hs.application.get(bundleID)
+        if app then app:hide() end
+    end
+    if #pending > 0 then
+        log.w("Unrestored windows: " .. hs.json.encode(pending))
+        hs.notify.new(nil, {title = "Расположение окон", informativeText = "Часть окон ещё не открыта. Раскладка сохранена; восстановление можно повторить из меню ▦."}):send()
+    else
+        hs.settings.set(processKey, hs.processInfo.processID)
+        log.i("Restored " .. M.total .. " windows")
+    end
 end
 
 function M.run()
-    launchApplications()
-    hs.timer.doAfter(2, hideHandyWindow)
-    for delay = 1, 12 do
-        hs.timer.doAfter(delay, function()
-            for bundleID in pairs(targets) do
-                placeApplication(bundleID)
-            end
-            hideHandyWindow()
-        end)
+    local snapshot = hs.settings.get(settingsKey)
+    if not snapshot or #snapshot.windows == 0 then return nil, "Сначала сохрани раскладку" end
+    if M.restoreTimer then M.restoreTimer:stop() end
+    M.restoring, M.total, M.hiddenApps, M.tasks = true, #snapshot.windows, {}, {}
+    local counts, apps = {}, {}
+    for _, record in ipairs(snapshot.windows) do
+        local screen = targetScreen(record)
+        local uuid = screen:getUUID()
+        counts[uuid] = math.max(counts[uuid] or 0, record.desktop)
+        apps[record.bundleID] = record.appPath
+        if record.hidden then M.hiddenApps[record.bundleID] = true end
     end
-end
-
-M.watcher = hs.application.watcher.new(function(_, event, app)
-    if event == hs.application.watcher.launched then
-        local bundleID = app:bundleID()
-        if targets[bundleID] then
-            hs.timer.doAfter(1, function() placeApplication(bundleID) end)
-        elseif bundleID == "com.pais.handy" then
-            hs.timer.doAfter(1, hideHandyWindow)
+    for uuid, count in pairs(counts) do
+        while #desktops(uuid) < count do
+            local ok, err = spaces.addSpaceToScreen(uuid)
+            if not ok then log.e(tostring(err)); break end
         end
     end
-end)
+    local current = windows()
+    for bundleID, path in pairs(apps) do
+        local hasWindow = false
+        for _, window in ipairs(current) do
+            if window:application():bundleID() == bundleID then hasWindow = true; break end
+        end
+        if not hasWindow then
+            local task = hs.task.new("/usr/bin/open", function() end, {"-g", "-a", path})
+            table.insert(M.tasks, task)
+            task:start()
+        end
+    end
+    local deadline, stable = os.time() + 120, 0
+    local function attempt()
+        local matches, pending = matchingWindows(snapshot), {}
+        for index, record in ipairs(snapshot.windows) do
+            local window = matches[index]
+            local ok, placed, err = false, false, "Окно ещё не открыто"
+            if window then ok, placed, err = pcall(place, window, record) end
+            if not ok or not placed then
+                table.insert(pending, {app = record.appName, desktop = record.desktop, reason = tostring(err or placed)})
+            end
+        end
+        stable = #pending == 0 and stable + 1 or 0
+        if stable >= 3 or os.time() >= deadline then stopRestore(pending) end
+    end
+    M.restoreTimer = hs.timer.doEvery(2, attempt)
+    attempt()
+    return M.total
+end
+
+function M.status()
+    local snapshot = hs.settings.get(settingsKey)
+    return {restoring = M.restoring or false, saved = snapshot and #snapshot.windows or 0, lastResult = M.lastResult}
+end
 
 function M.start()
-    M.watcher:start()
-    local bootTime = hs.execute("/usr/sbin/sysctl -n kern.boottime"):match("sec%s*=%s*(%d+)")
-    if bootTime and hs.settings.get("startupLayoutBootTime") ~= bootTime then
-        hs.settings.set("startupLayoutBootTime", bootTime)
-        hs.timer.doAfter(4, M.run)
+    M.filter = hs.window.filter.new(true)
+    M.menu = hs.menubar.new():setTitle("▦")
+    M.menu:setMenu({
+        {title = "Восстановить расположение окон", fn = M.run},
+        {title = "Запомнить нынешнее расположение", fn = function()
+            local count, err = M.save()
+            hs.alert.show(count and ("Сохранено окон: " .. count) or err)
+        end},
+    })
+    local snapshot = hs.settings.get(settingsKey)
+    if not snapshot then
+        M.save()
+    elseif hs.settings.get(processKey) ~= hs.processInfo.processID then
+        M.startTimer = hs.timer.doAfter(5, M.run)
     end
 end
 
