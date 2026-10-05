@@ -210,8 +210,10 @@ eval "$(starship init zsh)"
 source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
 
 # SSH-agent
-if ! pgrep -u "$USER" ssh-agent >/dev/null; then
-    eval "$(ssh-agent -s >/dev/null)"
+if [[ -S "$HOME/.skotty/sock/default.sock" ]]; then
+    export SSH_AUTH_SOCK="$HOME/.skotty/sock/default.sock"
+elif [[ ! -S "${SSH_AUTH_SOCK:-}" ]]; then
+    eval "$(ssh-agent -s)" >/dev/null
 fi
 
 if [ "$(tty)" = "/dev/tty1" -o "$(tty)" = "/dev/tty2" ] && [ -z "$(printenv HYPRLAND_INSTANCE_SIGNATURE)" ]; then

@@ -7,7 +7,7 @@ depends = []
 "zsh/.zshrc" = "~/.zshrc"
 "tmux/.tmux.conf" = "~/.tmux.conf"
 "lazy-tmux/lazy-tmux.toml" = "~/.config/lazy-tmux/lazy-tmux.toml"
-"neovim" = "~/.config/nvim"
+"neovim" = { target = "~/.config/nvim", type = "symbolic" }
 "kitty" = "~/.config/kitty"
 "git/.gitconfig" = "~/.gitconfig"
 "git/.gitignore_global" = "~/.gitignore_global"
@@ -68,6 +68,10 @@ depends = ["shared"]
 depends = ["default"]
 
 [macos.files]
+"macos/arc" = { target = "~/.local/bin/arc", type = "symbolic" }
+"macos/ya" = { target = "~/.local/bin/ya", type = "symbolic" }
+"macos/org.alchemmist.syncthing.plist" = { target = "~/Library/LaunchAgents/org.alchemmist.syncthing.plist", type = "symbolic" }
+"hammerspoon/org.alchemmist.hammerspoon.plist" = { target = "~/Library/LaunchAgents/org.alchemmist.hammerspoon.plist", type = "symbolic" }
 "macos/.zprofile" = { target = "~/.zprofile", type = "symbolic" }
 "macos/.bashrc" = { target = "~/.bashrc", type = "symbolic" }
 "macos/.profile" = { target = "~/.profile", type = "symbolic" }
