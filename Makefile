@@ -24,3 +24,11 @@ fingerprint-install:
 
 fingerprint-uninstall:
 	@./fingerprint/uninstall.sh
+
+.PHONY: test-session-migration test-session-migration-smoke
+
+test-session-migration:
+	python3 -m unittest discover -s tests -p 'test_session_migration.py'
+
+test-session-migration-smoke:
+	python3 migration/tmux-antex/smoke-test.py
