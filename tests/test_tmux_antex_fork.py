@@ -1,7 +1,11 @@
-import importlib.util, pathlib, subprocess, tempfile, unittest, os
+import importlib.util
+import pathlib
+import subprocess
+import tempfile
+import unittest
 
 spec = importlib.util.spec_from_file_location(
-    "fork", pathlib.Path(__file__).resolve().parents[1] / "scripts/tmux-codex-fork.py"
+    "fork", pathlib.Path(__file__).resolve().parents[1] / "scripts/tmux-antex-fork.py"
 )
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
@@ -35,7 +39,7 @@ class Tests(unittest.TestCase):
                     "-p",
                     "-t",
                     pilot,
-                    "@codex_thread_id",
+                    "@antex_thread_id",
                     "11111111-1111-4111-8111-111111111111",
                 )
                 tm(
@@ -43,41 +47,42 @@ class Tests(unittest.TestCase):
                     "-p",
                     "-t",
                     cpu,
-                    "@codex_thread_id",
+                    "@antex_thread_id",
                     "22222222-2222-4222-8222-222222222222",
                 )
-                wrapper = pathlib.Path(tmp) / "tmux-codex"
+                wrapper = pathlib.Path(tmp) / "tmux-antex"
                 wrapper.write_text(
-                    '#!/bin/sh\nif [ "$3" = "display-message" ]; then\n tmux "$@" | sed "s/^sleep$/codex/"\nelse\n exec tmux "$@"\nfi\n'
+                    '#!/bin/sh\nif [ "$3" = "display-message" ]; then\n tmux "$@" | sed "s/^sleep$/antex/"\nelse\n exec tmux "$@"\nfi\n'
                 )
                 wrapper.chmod(0o700)
                 wrapped = [str(wrapper), "-S", tmp + "/socket"]
-                plan = module.fork_plan(wrapped, cpu, "/tmp/codex test")
+                plan = module.fork_plan(wrapped, cpu, "/tmp/antex test")
                 self.assertEqual(
                     plan[-1],
-                    "'/tmp/codex test' fork 22222222-2222-4222-8222-222222222222",
+                    "'/tmp/antex test' fork 22222222-2222-4222-8222-222222222222",
                 )
                 self.assertEqual(
                     plan[plan.index("-t") + 1],
                     tm("display-message", "-p", "-t", cpu, "#{session_id}") + ":",
                 )
                 before = tm("list-windows", "-t", "arcadia", "-F", "#{window_id}")
-                tm("set-option", "-pu", "-t", cpu, "@codex_thread_id")
+                tm("set-option", "-pu", "-t", cpu, "@antex_thread_id")
                 tm(
                     "set-option",
                     "-t",
                     "arcadia",
-                    "@codex_thread_id",
+                    "@antex_thread_id",
                     "11111111-1111-4111-8111-111111111111",
                 )
                 with self.assertRaisesRegex(ValueError, "refusing to guess"):
-                    module.fork_plan(wrapped, cpu, "codex")
+                    module.fork_plan(wrapped, cpu, "antex")
                 self.assertEqual(
                     tm("list-windows", "-t", "arcadia", "-F", "#{window_id}"), before
                 )
             finally:
                 subprocess.run(
                     [*tmux, "kill-server"],
+                    check=False,
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                 )

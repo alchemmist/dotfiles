@@ -320,7 +320,7 @@ default_tools_approval_mode = "approve"
 
 [mcp_servers.github]
 args = ["--toolsets=default", "--tools=actions_get,actions_list,get_job_logs"]
-command = "/Users/antonmoss/.local/bin/github-mcp-server-codex"
+command = "/Users/antonmoss/.local/bin/github-mcp-server-antex"
 default_tools_approval_mode = "approve"
 
 [mcp_servers.stefania-monium_mcp]
@@ -346,44 +346,44 @@ ignore_default_excludes = true
 
 [hooks.state]
 
-[hooks.state."/Users/antonmoss/.codex/hooks.json:pre_compact:0:0"]
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_compact:0:0"]
 trusted_hash = "sha256:41d80596600537a3e07f489d70d2c0d78d85a51735cda4913aa5f5741a9469cd"
 
-[hooks.state."/Users/antonmoss/.codex/hooks.json:user_prompt_submit:0:0"]
+[hooks.state."/Users/antonmoss/.antex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:35b9bd33f0e4b62c61aa1e780fce826c910177b9a493956692a7ca007b76253b"
 
-[hooks.state."/Users/antonmoss/.codex/hooks.json:user_prompt_submit:1:0"]
+[hooks.state."/Users/antonmoss/.antex/hooks.json:user_prompt_submit:1:0"]
 trusted_hash = "sha256:d54043780acb61d1dbabd63a995018791acbb76becfdd764d69d2dd66e412d01"
 
-[hooks.state."/Users/antonmoss/.codex/hooks.json:stop:0:0"]
+[hooks.state."/Users/antonmoss/.antex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:2a3581875e105edab7d72e40ec6bf1f0e1ae6db56b01744d3c31b7a878fc1997"
 
 [hooks.state."/Users/antonmoss/arcadia-turbo/quality/user_sessions/.codex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:eda73ee46b431c5fc984398d38e9700100c7214c89efbc0edf81c55f54363d60"
 enabled = true
 
-[hooks.state."/Users/antonmoss/.codex/hooks.json:session_start:0:0"]
+[hooks.state."/Users/antonmoss/.antex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:3130025f3c9d1a46954d26d9b15920974d7b9184199778e62dac7f046b799f83"
 
-[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:session_start:0:0"]
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.antex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:afec901aa95670a4835e056e1ecc1a601cb901fa4d9230bc58e98dd32c448870"
 
-[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:pre_tool_use:0:0"]
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.antex/hooks.json:pre_tool_use:0:0"]
 trusted_hash = "sha256:48bef8fb2b482134dbfb1a7622be1dc346d9ead9311df8f8be96a39793df9afb"
 
-[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:pre_tool_use:1:0"]
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.antex/hooks.json:pre_tool_use:1:0"]
 trusted_hash = "sha256:51d6ffa574dd974e12c67e327c44d544d0de64406962dbda45fabcf01ab15519"
 
-[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:pre_tool_use:2:0"]
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.antex/hooks.json:pre_tool_use:2:0"]
 trusted_hash = "sha256:f2bd7e67eb58c88dbfd4566a943046bb89ee9aea6d867bb4451e427fedf222e1"
 
-[hooks.state."/Users/antonmoss/arcadia-wt/chet/.codex/hooks.json:session_start:1:0"]
+[hooks.state."/Users/antonmoss/arcadia-wt/chet/.antex/hooks.json:session_start:1:0"]
 trusted_hash = "sha256:bc72e7db6d2fed08dbb3d991c50ae9c605bd715b17e926d79ddd8e0363ff75d8"
 
-[hooks.state."/Users/antonmoss/code/quality-graph/.codex/hooks.json:post_tool_use:0:0"]
+[hooks.state."/Users/antonmoss/code/quality-graph/.antex/hooks.json:post_tool_use:0:0"]
 trusted_hash = "sha256:12efdd54b3c8a0778d63d1056073a7cbeec09518b5bfd46e2893c96b2292af7f"
 
-[hooks.state."/Users/antonmoss/code/quality-graph/.codex/hooks.json:stop:0:0"]
+[hooks.state."/Users/antonmoss/code/quality-graph/.antex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:15e2e58db3e02eb8b44667e15b8ae7c28d08178d5dd1c1ed4b9369ef3ecf56d9"
 
 [notice.model_migrations]
@@ -393,7 +393,7 @@ trusted_hash = "sha256:15e2e58db3e02eb8b44667e15b8ae7c28d08178d5dd1c1ed4b9369ef3
 enabled = false
 
 [[skills.config]]
-path = "/Users/antonmoss/.codex/skills/.system/imagegen"
+path = "/Users/antonmoss/.antex/skills/.system/imagegen"
 enabled = false
 
 [[skills.config]]

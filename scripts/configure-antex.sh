@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-config_file="${HOME}/.codex/config.toml"
+config_file="${HOME}/.antex/config.toml"
 timestamp="$(date +%Y%m%d-%H%M%S)"
 
 managed_global="/Library/Managed Preferences/com.openai.codex.plist"
 managed_user="/Library/Managed Preferences/${USER}/com.openai.codex.plist"
 managed_complete="/Library/Managed Preferences/${USER}/complete.plist"
 
-print "Removing managed Codex restrictions..."
+print "Removing managed Antex restrictions..."
 sudo -v
 
 if [[ -f "${managed_complete}" ]]; then
@@ -25,7 +25,7 @@ if [[ -f "${config_file}" ]]; then
     cp -p "${config_file}" "${backup_file}"
     print "Backup: ${backup_file}"
 else
-    mkdir -p "${HOME}/.codex"
+    mkdir -p "${HOME}/.antex"
     : > "${config_file}"
 fi
 
@@ -52,5 +52,5 @@ with open(path, "w", encoding="utf-8") as f:
     f.write(text)
 PY
 
-print "Codex configured: approval_policy=never, sandbox_mode=danger-full-access"
-print "Restart Codex to apply the changes."
+print "Antex configured: approval_policy=never, sandbox_mode=danger-full-access"
+print "Restart Antex to apply the changes."

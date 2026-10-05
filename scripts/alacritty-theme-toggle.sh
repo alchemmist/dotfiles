@@ -9,7 +9,7 @@ set -euo pipefail
 CONFIG="${ALACRITTY_CONFIG:-$HOME/.config/alacritty/alacritty.toml}"
 THEME_DIR="${ALACRITTY_THEME_DIR:-$HOME/.config/alacritty/themes}"
 STATE_FILE="${MOSS_THEME_STATE:-$HOME/.local/share/nvim/last_theme.txt}"
-CODEX_CONFIG="${CODEX_CONFIG:-$HOME/.codex/config.toml}"
+ANTEX_CONFIG="${ANTEX_CONFIG:-$HOME/.antex/config.toml}"
 DARK_IMPORT='"~/.config/alacritty/themes/moss-dark.toml"'
 LIGHT_IMPORT='"~/.config/alacritty/themes/moss-light.toml"'
 
@@ -82,15 +82,15 @@ set_tmux_theme() {
     "$tmux_bin" refresh-client -S 2>/dev/null || true
 }
 
-set_codex_terminal_palette() {
-    [[ -f "$CODEX_CONFIG" ]] || return 0
-    grep -Eq '^[[:space:]]*theme[[:space:]]*=[[:space:]]*"ansi"[[:space:]]*$' "$CODEX_CONFIG" \
+set_antex_terminal_palette() {
+    [[ -f "$ANTEX_CONFIG" ]] || return 0
+    grep -Eq '^[[:space:]]*theme[[:space:]]*=[[:space:]]*"ansi"[[:space:]]*$' "$ANTEX_CONFIG" \
         && return 0
 
-    if grep -Eq '^[[:space:]]*theme[[:space:]]*=' "$CODEX_CONFIG"; then
-        perl -pi -e 's/^\s*theme\s*=.*/theme = "ansi"/' "$CODEX_CONFIG"
+    if grep -Eq '^[[:space:]]*theme[[:space:]]*=' "$ANTEX_CONFIG"; then
+        perl -pi -e 's/^\s*theme\s*=.*/theme = "ansi"/' "$ANTEX_CONFIG"
     else
-        perl -0pi -e 's/(\[tui\]\n)/$1theme = "ansi"\n/' "$CODEX_CONFIG"
+        perl -0pi -e 's/(\[tui\]\n)/$1theme = "ansi"\n/' "$ANTEX_CONFIG"
     fi
 }
 
@@ -195,7 +195,7 @@ esac
 set_alacritty_theme "$theme"
 mkdir -p "${STATE_FILE:h}"
 print -r -- "$theme" > "$STATE_FILE"
-set_codex_terminal_palette
+set_antex_terminal_palette
 /Users/antonmoss/go/bin/lazy-tmux hook theme "$theme"
 set_tmux_theme "$theme"
     send_nvim_theme "colorscheme koda-${theme}"
