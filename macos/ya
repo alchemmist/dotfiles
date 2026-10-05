@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+if [ -S "$HOME/.skotty/sock/default.sock" ]; then
+    export SSH_AUTH_SOCK="$HOME/.skotty/sock/default.sock"
+fi
+
+arcadia_root="${ARCADIA_ROOT:-$HOME/arcadia}"
+if [ ! -x "$arcadia_root/ya" ]; then
+    printf 'Arcadia ya is unavailable at %s/ya; mount Arcadia first.\n' "$arcadia_root" >&2
+    exit 1
+fi
+exec "$arcadia_root/ya" "$@"

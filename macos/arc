@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+
+if [ "${1:-}" != mount ]; then
+    exec /usr/local/bin/arc "$@"
+fi
+
+for argument in "$@"; do
+    case "$argument" in
+        --list|-l|--help|-h)
+            exec /usr/local/bin/arc "$@"
+            ;;
+    esac
+done
+
+/usr/local/bin/arc "$@"
+if [ -x "$HOME/scripts/ensure-kit-aisuite.py" ]; then
+    if ! /usr/bin/python3 "$HOME/scripts/ensure-kit-aisuite.py" >&2; then
+        printf 'Arc mounted, but KIT AISuite setup needs attention.\n' >&2
+    fi
+fi
