@@ -504,14 +504,6 @@ enabled = false
 path = "/Users/antonmoss/.agents/skills/stefania-goliath-skills"
 enabled = false
 
-[[skills.config]]
-path = "/Users/antonmoss/.agents/skills/stefania-bug"
-enabled = false
-
-[[skills.config]]
-path = "/Users/antonmoss/.agents/skills/stefania-bug-hook"
-enabled = false
-
 [apps._default]
 default_tools_approval_mode = "auto"
 destructive_enabled = true
