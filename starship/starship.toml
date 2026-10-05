@@ -97,7 +97,7 @@ format = ""
 shell = ["/bin/sh"]
 symbol = ""
 style = "($fg)"
-format = "[$symbol ]($style)"
+format = "[$symbol]($style)  "
 when = """
 command -v docker >/dev/null 2>&1 &&
 { [ -f Dockerfile ] || [ -f docker-compose.yml ] || [ -f docker-compose.yaml ]; }
