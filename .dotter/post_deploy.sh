@@ -5,6 +5,12 @@ set -eu
 repo_root=$(git -C "$PWD" rev-parse --show-toplevel)
 skills_root="$HOME/.agents/skills"
 
+for agent in antex codex claude; do
+    if [ -f "$HOME/.$agent/settings.json" ]; then
+        chmod 600 "$HOME/.$agent/settings.json"
+    fi
+done
+
 /bin/mkdir -p "$skills_root"
 
 for skill in arc-worktrees grill-me grilling impeccable performance-profiler rebase; do
@@ -26,3 +32,7 @@ for skill in arc-worktrees grill-me grilling impeccable performance-profiler reb
     fi
     /bin/ln -s "$source" "$target"
 done
+
+if [ "$(uname -s)" = Darwin ] && [ -f "$HOME/Library/LaunchAgents/org.alchemmist.arcadia-mount.plist" ]; then
+    /bin/zsh -f "$repo_root/scripts/bootstrap-macos.zsh"
+fi

@@ -4,7 +4,7 @@
 depends = []
 
 [shared.files]
-"zsh/.zshrc" = "~/.zshrc"
+"zsh/.zshrc" = { target = "~/.zshrc", type = "symbolic" }
 "tmux/.tmux.conf" = "~/.tmux.conf"
 "lazy-tmux/lazy-tmux.toml" = "~/.config/lazy-tmux/lazy-tmux.toml"
 "neovim" = { target = "~/.config/nvim", type = "symbolic" }
@@ -12,10 +12,10 @@ depends = []
 "git/.gitconfig" = "~/.gitconfig"
 "git/.gitignore_global" = "~/.gitignore_global"
 "ssh/config" = "~/.ssh/config"
-"scripts" = "~/scripts"
+"scripts" = { target = "~/scripts", type = "symbolic" }
 "alacritty" = "~/.config/alacritty"
 "fastfetch" = "~/.config/fastfetch"
-"wallpapers" = "~/Pictures/wallpapers"
+"wallpapers" = { target = "~/Pictures/wallpapers", type = "symbolic" }
 "vim/.vimrc" = "~/.vimrc"
 "helix" = "~/.config/helix"
 "starship" = "~/.config/starship"
@@ -37,17 +37,17 @@ depends = ["shared"]
 "antex/hooks" = { target = "~/.antex/hooks", type = "symbolic", recurse = false }
 "antex/workflows/github-bot-pr-maintenance.py" = { target = "~/.antex/workflows/github-bot-pr-maintenance.py", type = "symbolic" }
 "antex/workflows/pr-babysitter.py" = { target = "~/.antex/workflows/pr-babysitter.py", type = "symbolic" }
-".private/agent-settings/antex/settings.json" = { target = "~/.antex/settings.json", type = "symbolic" }
+".dotter/templates/antex-settings.json.hbs" = { target = "~/.antex/settings.json", type = "template" }
 "codex/AGENTS.md" = { target = "~/.codex/AGENTS.md", type = "symbolic" }
 "codex/config.toml" = { target = "~/.codex/config.toml", type = "symbolic" }
 "codex/hooks.json" = { target = "~/.codex/hooks.json", type = "symbolic" }
 "codex/workflows/github-bot-pr-maintenance.py" = { target = "~/.codex/workflows/github-bot-pr-maintenance.py", type = "symbolic" }
 "codex/workflows/pr-babysitter.py" = { target = "~/.codex/workflows/pr-babysitter.py", type = "symbolic" }
-".private/agent-settings/codex/settings.json" = { target = "~/.codex/settings.json", type = "symbolic" }
+".dotter/templates/codex-settings.json.hbs" = { target = "~/.codex/settings.json", type = "template" }
 "claude/CLAUDE.md" = { target = "~/.claude/CLAUDE.md", type = "symbolic" }
 "claude/hooks/notify.sh" = { target = "~/.claude/hooks/notify.sh", type = "symbolic" }
 "claude/commands/stefania-memory-now.md" = { target = "~/.claude/commands/stefania-memory-now.md", type = "symbolic" }
-".private/agent-settings/claude/settings.json" = { target = "~/.claude/settings.json", type = "symbolic" }
+".dotter/templates/claude-settings.json.hbs" = { target = "~/.claude/settings.json", type = "template" }
 
 [linux]
 depends = ["shared"]
@@ -70,8 +70,9 @@ depends = ["default"]
 [macos.files]
 "macos/arc" = { target = "~/.local/bin/arc", type = "symbolic" }
 "macos/ya" = { target = "~/.local/bin/ya", type = "symbolic" }
-"macos/org.alchemmist.syncthing.plist" = { target = "~/Library/LaunchAgents/org.alchemmist.syncthing.plist", type = "symbolic" }
-"hammerspoon/org.alchemmist.hammerspoon.plist" = { target = "~/Library/LaunchAgents/org.alchemmist.hammerspoon.plist", type = "symbolic" }
+".dotter/templates/arcadia-mount.plist.hbs" = { target = "~/Library/LaunchAgents/org.alchemmist.arcadia-mount.plist", type = "template" }
+".dotter/templates/syncthing.plist.hbs" = { target = "~/Library/LaunchAgents/org.alchemmist.syncthing.plist", type = "template" }
+".dotter/templates/hammerspoon.plist.hbs" = { target = "~/Library/LaunchAgents/org.alchemmist.hammerspoon.plist", type = "template" }
 "macos/.zprofile" = { target = "~/.zprofile", type = "symbolic" }
 "macos/.bashrc" = { target = "~/.bashrc", type = "symbolic" }
 "macos/.profile" = { target = "~/.profile", type = "symbolic" }

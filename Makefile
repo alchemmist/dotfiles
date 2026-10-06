@@ -45,3 +45,8 @@ test-session-migration-smoke:
 
 test-kit-aisuite:
 	$(HOME)/.venvs/stefania/bin/python -m unittest discover -s tests -p 'test_kit_aisuite.py'
+
+.PHONY: test-macos-deploy
+
+test-macos-deploy:
+	python3 -m unittest discover -s tests -p 'test_macos_deploy.py'

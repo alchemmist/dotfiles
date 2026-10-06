@@ -396,7 +396,11 @@ zle -N tmux-safe-clear
 bindkey '^L' tmux-safe-clear
 
 export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+    source "$NVM_DIR/nvm.sh"
+elif [[ -s /opt/homebrew/opt/nvm/nvm.sh ]]; then
+    source /opt/homebrew/opt/nvm/nvm.sh
+fi
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
 [[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"
 
@@ -519,4 +523,23 @@ if command -v zoxide >/dev/null 2>&1; then
   bindkey -M emacs '^J' zi-widget
   bindkey -M viins '^J' zi-widget
   bindkey -M vicmd '^J' zi-widget
+fi
+
+if command -v podman >/dev/null 2>&1; then
+  if podman_socket=$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}' 2>/dev/null) && [ -n "$podman_socket" ]; then
+    export DOCKER_HOST="unix://$podman_socket"
+  fi
+  unset podman_socket
+fi
+
+if [ -f "$HOME/.config/yastore/tvmtool.env" ]; then
+  source "$HOME/.config/yastore/tvmtool.env"
+fi
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
+export TESTCONTAINERS_RYUK_DISABLED=true
+export YASTORE_USE_TESTCONTAINERS=true
+
+# Managed by adv/frontend/scripts/install-internal-root-ca.sh
+if [ -f "$HOME/.ssl/certs/YandexInternalRootCA.pem" ]; then
+  export NODE_EXTRA_CA_CERTS="$HOME/.ssl/certs/YandexInternalRootCA.pem"
 fi

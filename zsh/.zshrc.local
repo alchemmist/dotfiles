@@ -3,7 +3,11 @@ export ARCADIA_ROOT="$HOME/arcadia"
 export DISABLE_BUG_COMMAND=1
 export DISABLE_ERROR_REPORTING=1
 export DISABLE_TELEMETRY=1
-export STEFANIA_PYTHON=/opt/homebrew/bin/python3
+if [ -x "$HOME/.venvs/stefania/bin/python" ]; then
+    export STEFANIA_PYTHON="$HOME/.venvs/stefania/bin/python"
+else
+    export STEFANIA_PYTHON=/opt/homebrew/bin/python3
+fi
 export YT_CLUSTER=seneka
 
 if [ -f "$HOME/.config/shell/secrets.zsh" ]; then

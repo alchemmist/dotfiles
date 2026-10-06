@@ -1,0 +1,55 @@
+brew "bat"
+brew "beautysh"
+brew "docker"
+brew "docker-compose"
+brew "dotter"
+brew "fastfetch"
+brew "fd"
+brew "fzf"
+brew "fzf-tab"
+brew "gawk"
+brew "gh"
+brew "git-lfs"
+brew "github-mcp-server"
+brew "go"
+brew "helix"
+brew "htop"
+brew "imagemagick"
+brew "jq"
+brew "llvm"
+brew "neovim"
+brew "node"
+brew "nvm"
+brew "pgcli"
+brew "podman"
+brew "prettier"
+brew "ripgrep"
+brew "ruff"
+brew "rust"
+brew "shfmt"
+brew "starship"
+brew "stylua"
+brew "taplo"
+brew "tex-fmt"
+brew "tmux"
+brew "uv"
+brew "yazi"
+brew "zoxide"
+brew "zsh"
+brew "zsh-you-should-use"
+
+cask "font-fira-code-nerd-font"
+cask "alacritty" unless File.directory?("/Applications/Alacritty.app")
+cask "blink" unless File.directory?("/Applications/Blink.app")
+cask "flameshot" unless File.directory?("/Applications/Flameshot.app")
+cask "google-chrome" unless File.directory?("/Applications/Google Chrome.app")
+cask "hammerspoon" unless File.directory?("/Applications/Hammerspoon.app")
+cask "handy" unless File.directory?("/Applications/Handy.app")
+cask "happ" unless File.directory?("/Applications/Happ.app")
+cask "maccy" unless File.directory?("/Applications/Maccy.app")
+cask "macfuse" unless File.directory?("/Library/Filesystems/macfuse.fs")
+cask "obsidian" unless File.directory?("/Applications/Obsidian.app")
+cask "podman-desktop" unless File.directory?("/Applications/Podman Desktop.app")
+cask "rectangle" unless File.directory?("/Applications/Rectangle.app")
+cask "syncthing-app" unless File.directory?("/Applications/Syncthing.app")
+cask "telegram" unless File.directory?("/Applications/Telegram.app")
