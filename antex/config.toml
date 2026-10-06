@@ -7,6 +7,7 @@ sandbox_mode = "danger-full-access"
 service_tier = "default"
 
 model_auto_compact_token_limit = 750000
+developer_instructions = "<!-- kit-aisuite:start -->\nFor KIT / yastore tasks in any Arcadia mount or worktree, read and follow the KIT preset rules in `/Users/antonmoss/.antex/aisuite/kit/rules.md`. Apply these rules only to KIT / yastore work in Arcadia.\n<!-- kit-aisuite:end -->"
 
 [projects."/Users/antonmoss"]
 trust_level = "trusted"
@@ -207,6 +208,18 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/antonmoss/arcadia/quality/user_sessions/rt/infractl"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-worktrees/echo-review"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia/yastore"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/arcadia-worktrees/echo-timeout-only"]
 trust_level = "trusted"
 
 [features]
@@ -415,12 +428,55 @@ default_tools_approval_mode = "auto"
 command = "/Users/antonmoss/scripts/datalens-mcp.sh"
 env_vars = ["DATALENS_OAUTH_TOKEN", "DATALENS_TOKEN", "YA_TOKEN"]
 startup_timeout_sec = 60
+
+[mcp_servers.tracker_mcp]
+command = "/Users/antonmoss/arcadia/ya"
+args = ["tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=tracker_mcp,GetIssue,GetIssues,GetIssueLinks,GetIssueChangeLog,GetComment,GetAttachment,GetAttachmentContent,SearchEntities,CreateIssue,UpdateIssue,ChangeIssueStatus,CreateComment,UpdateComment,CreateIssueLink"]
+enabled_tools = ["GetIssue", "GetIssues", "GetIssueLinks", "GetIssueChangeLog", "GetComment", "GetAttachment", "GetAttachmentContent", "SearchEntities", "CreateIssue", "UpdateIssue", "ChangeIssueStatus", "CreateComment", "UpdateComment", "CreateIssueLink"]
+
+[mcp_servers.devtools]
+command = "/Users/antonmoss/arcadia/ya"
+args = ["tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=devtools,arcanum_usage_guide,arcanum_pr_data,arcanum_list_changed_files_in_pr,arcanum_get_changes_in_file,arcanum_get_file_content,arcanum_post_comment,arcanum_reply_to_comment,arcanum_update_comment,arcanum_close_issue"]
+enabled_tools = ["arcanum_usage_guide", "arcanum_pr_data", "arcanum_list_changed_files_in_pr", "arcanum_get_changes_in_file", "arcanum_get_file_content", "arcanum_post_comment", "arcanum_reply_to_comment", "arcanum_update_comment", "arcanum_close_issue"]
+
+[mcp_servers.cirp]
+command = "/Users/antonmoss/arcadia/ya"
+args = ["tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=cirp,ci_storage_usage_guide,get_pull_request_checks,get_pull_request_badge_status,get_pull_request_test_statistics,get_badge_summary,get_badge_failures"]
+enabled_tools = ["ci_storage_usage_guide", "get_pull_request_checks", "get_pull_request_badge_status", "get_pull_request_test_statistics", "get_badge_summary", "get_badge_failures"]
+
+[mcp_servers.ci]
+command = "/Users/antonmoss/arcadia/ya"
+args = ["tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=ci,search_action_launches,get_action_launch"]
+enabled_tools = ["search_action_launches", "get_action_launch"]
+
+[mcp_servers.monium_mcp]
+command = "/Users/antonmoss/arcadia/ya"
+args = ["tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=monium_mcp,read_trace,read_span,search_traces,search_spans,read_logs,query_logs_stats,read_metrics,read_widget,get_widget,get_dashboard,list_dashboards,list_label_keys,list_label_values,list_metric_functions,get_alert,list_alerts,get_subalert,list_subalerts,summarize_alert_evaluation_histories,get_current_time"]
+enabled_tools = ["read_trace", "read_span", "search_traces", "search_spans", "read_logs", "query_logs_stats", "read_metrics", "read_widget", "get_widget", "get_dashboard", "list_dashboards", "list_label_keys", "list_label_values", "list_metric_functions", "get_alert", "list_alerts", "get_subalert", "list_subalerts", "summarize_alert_evaluation_histories", "get_current_time"]
+
+[mcp_servers.intrasearch]
+command = "/Users/antonmoss/arcadia/ya"
+args = ["tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=intrasearch,search,list_verticals,stsearch,semantic_code_search,arcanum_search,fetch"]
+enabled_tools = ["search", "list_verticals", "stsearch", "semantic_code_search", "arcanum_search", "fetch"]
+
+[mcp_servers.yql]
+command = "/Users/antonmoss/arcadia/ya"
+args = ["tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=yql,validate_query,execute_query,check_status,wait_for_results,get_results,abort_operation,share_operation"]
+enabled_tools = ["validate_query", "execute_query", "check_status", "wait_for_results", "get_results", "abort_operation", "share_operation"]
+
+[mcp_servers.kitsql]
+command = "/Users/antonmoss/arcadia/yastore/mcp/kitsql/kitsql"
+args = ["-F", "/Users/antonmoss/.mcp/token"]
 [shell_environment_policy]
 inherit = "all"
 ignore_default_excludes = true
 
-[hooks.state]
-
+[shell_environment_policy.set]
+FROM_AI_AGENT = "1"
+BASH_ENV = "/Users/antonmoss/.local/share/yandex-aisuite/statham/command-shadows.sh"
+ENV = "/Users/antonmoss/.local/share/yandex-aisuite/statham/command-shadows.sh"
+ZDOTDIR = "/Users/antonmoss/.local/share/yandex-aisuite/statham/zdotdir"
+AISUITE_SEARCH_SCOPE = "{\"additional_directories\":[]}"
 [hooks.state."/Users/antonmoss/.codex/hooks.json:pre_compact:0:0"]
 trusted_hash = "sha256:41d80596600537a3e07f489d70d2c0d78d85a51735cda4913aa5f5741a9469cd"
 
@@ -458,15 +514,6 @@ trusted_hash = "sha256:12efdd54b3c8a0778d63d1056073a7cbeec09518b5bfd46e2893c96b2
 [hooks.state."/Users/antonmoss/code/quality-graph/.antex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:15e2e58db3e02eb8b44667e15b8ae7c28d08178d5dd1c1ed4b9369ef3ecf56d9"
 
-[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_compact:0:0"]
-trusted_hash = "sha256:41d80596600537a3e07f489d70d2c0d78d85a51735cda4913aa5f5741a9469cd"
-
-[hooks.state."/Users/antonmoss/.antex/hooks.json:session_start:0:0"]
-trusted_hash = "sha256:3130025f3c9d1a46954d26d9b15920974d7b9184199778e62dac7f046b799f83"
-
-[hooks.state."/Users/antonmoss/.antex/hooks.json:stop:0:0"]
-trusted_hash = "sha256:2a3581875e105edab7d72e40ec6bf1f0e1ae6db56b01744d3c31b7a878fc1997"
-
 [hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:pre_tool_use:0:0"]
 trusted_hash = "sha256:c7c1d84068ad90afec0440e8d021c13e3d59f1857838efa8e72367916951a398"
 
@@ -493,9 +540,6 @@ trusted_hash = "sha256:de5219702f357f13bac7a343894851f25389f3d3203a58d439df822f4
 
 [hooks.state."/Users/antonmoss/arcadia/quality/user_sessions/.codex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:a7a2148ff51616f4706ee12eb9287805ffebe8b844f4ca87977ae73682c31104"
-
-[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_tool_use:0:0"]
-trusted_hash = "sha256:fe0ac14d555ca425267149e14e4df7e1bc4b29240be65aecf4f4904f35ed5198"
 
 [hooks.state."/Users/antonmoss/arcadia/.codex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:c8538a27ba8b0edc058247ca61452510fc538312448daa2aed18514a4252002a"
@@ -668,6 +712,143 @@ trusted_hash = "sha256:5437fc573a1f5efdc60c11b4bdcde80bd50d020435b53a6166f3c21c3
 [hooks.state."/Users/antonmoss/arcadia/.antex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:870f15b569375cd84f932c0d6d797af226e51dbe3cbf81f20df94704c5c873a2"
 
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:c8538a27ba8b0edc058247ca61452510fc538312448daa2aed18514a4252002a"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:66150b8d3b7026a780de090339338cac2136ac3902fa25c0723fa142ef74c6dc"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:15f9d99030572825ad363b53bc144891c799334d092a1c2f6ed05360ac5ac246"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:session_start:3:0"]
+trusted_hash = "sha256:3dc3222e5669f7cccc802d24ed96e8f2ac0c6d4dd94f6b9df0fd752e543719c4"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:a2d2d131e17ece48ab8ae965cdef47f84a086ad45ada573b9651cc8bfe05e23c"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:d08e75ad3af80e39bcfcac46c02c990015c90ce5fa9658655178d058d9260e9c"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:547577bf4b2ddfb1ebc5e5956a8be7dc34fe955e1efc92c2a6315d34b219989e"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:pre_tool_use:3:0"]
+trusted_hash = "sha256:1383596d53b592ec782239e9a5339560323098ca059191a91c2e1c407aeae28d"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:5437fc573a1f5efdc60c11b4bdcde80bd50d020435b53a6166f3c21c3e8b5e4c"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:51a548433815f6a0a56f0fe82abf68e6ae9a0237c17dab8b581e5a0a1cd7ed7a"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/DUTYLOGS-5032/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:870f15b569375cd84f932c0d6d797af226e51dbe3cbf81f20df94704c5c873a2"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:c8538a27ba8b0edc058247ca61452510fc538312448daa2aed18514a4252002a"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:97b7e1166445e8e52e4ccd6549661d25692de93858185d1172f67defd269f28a"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:15f9d99030572825ad363b53bc144891c799334d092a1c2f6ed05360ac5ac246"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:session_start:3:0"]
+trusted_hash = "sha256:3dc3222e5669f7cccc802d24ed96e8f2ac0c6d4dd94f6b9df0fd752e543719c4"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:a2d2d131e17ece48ab8ae965cdef47f84a086ad45ada573b9651cc8bfe05e23c"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:1c802e1ec07219d20108433bc660d7cf4376dfcf2459d6df99302de6a89f5661"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:2dbb10147b89f5a4ea4c600f00e69c6812bea9c2d643ddbb58ddb5da694d4735"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:pre_tool_use:3:0"]
+trusted_hash = "sha256:899df6e7963311fe1a79680f2cddc6825719a08c449934d8bb9aec5c4389af92"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:5437fc573a1f5efdc60c11b4bdcde80bd50d020435b53a6166f3c21c3e8b5e4c"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:51a548433815f6a0a56f0fe82abf68e6ae9a0237c17dab8b581e5a0a1cd7ed7a"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-review/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:870f15b569375cd84f932c0d6d797af226e51dbe3cbf81f20df94704c5c873a2"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:c8538a27ba8b0edc058247ca61452510fc538312448daa2aed18514a4252002a"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:670269d947e01f82dfadd2834a01d4849386e74ee4d9f680961b219e47075e96"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:15f9d99030572825ad363b53bc144891c799334d092a1c2f6ed05360ac5ac246"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:session_start:3:0"]
+trusted_hash = "sha256:3dc3222e5669f7cccc802d24ed96e8f2ac0c6d4dd94f6b9df0fd752e543719c4"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:a2d2d131e17ece48ab8ae965cdef47f84a086ad45ada573b9651cc8bfe05e23c"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:0bc8721141c25a2cfe4df822c9c1b3946f7af2282d27e3801d00f219150fa94b"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:34c06f2c5a30a19bef74364ee1fefbf2a0b953c11b7062f644a575a175e2cd50"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:pre_tool_use:3:0"]
+trusted_hash = "sha256:60b6174fb163a17e5b54d4e25d917ea99d9a500b5e794adcc6d88b5df2f975ae"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:5437fc573a1f5efdc60c11b4bdcde80bd50d020435b53a6166f3c21c3e8b5e4c"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:51a548433815f6a0a56f0fe82abf68e6ae9a0237c17dab8b581e5a0a1cd7ed7a"
+
+[hooks.state."/Users/antonmoss/arcadia-worktrees/echo-timeout-only/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:870f15b569375cd84f932c0d6d797af226e51dbe3cbf81f20df94704c5c873a2"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:fe0ac14d555ca425267149e14e4df7e1bc4b29240be65aecf4f4904f35ed5198"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:a2d2d131e17ece48ab8ae965cdef47f84a086ad45ada573b9651cc8bfe05e23c"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:81c45e1bc87c5c6b7ddf179261485915094246afe976555e248b2f4efaadea71"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_tool_use:3:0"]
+trusted_hash = "sha256:f0d2a3fbfd52a8fb77c97b3940730a0846abd4470d5f9ec483ac18d3ca62cb97"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_tool_use:4:0"]
+trusted_hash = "sha256:aeea29feb601a45cafdd7af396e4cb0345a7232036266f37e96b648968952a52"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:41d80596600537a3e07f489d70d2c0d78d85a51735cda4913aa5f5741a9469cd"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:pre_compact:1:0"]
+trusted_hash = "sha256:51a548433815f6a0a56f0fe82abf68e6ae9a0237c17dab8b581e5a0a1cd7ed7a"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:2a3581875e105edab7d72e40ec6bf1f0e1ae6db56b01744d3c31b7a878fc1997"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:stop:1:0"]
+trusted_hash = "sha256:870f15b569375cd84f932c0d6d797af226e51dbe3cbf81f20df94704c5c873a2"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:5c006f4ffba1ba39ebcb1eff2f22221fc156e31b7c66eec31760b2777fbbb98c"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:15f9d99030572825ad363b53bc144891c799334d092a1c2f6ed05360ac5ac246"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:3dc3222e5669f7cccc802d24ed96e8f2ac0c6d4dd94f6b9df0fd752e543719c4"
+
+[hooks.state."/Users/antonmoss/.antex/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:5437fc573a1f5efdc60c11b4bdcde80bd50d020435b53a6166f3c21c3e8b5e4c"
 [notice.model_migrations]
 "gpt-5.4-mini" = "gpt-5.6-luna"
 
