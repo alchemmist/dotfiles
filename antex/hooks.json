@@ -10,6 +10,54 @@
           }
         ],
         "matcher": "^(?:Bash|(?:functions\\.)?exec)$"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type pre_tool_use_shell --name restrict_git --agent codex --timeout-sec 3",
+            "timeout": 3,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ],
+        "matcher": "^(?:Bash|(?:functions\\.)?exec)$"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type pre_tool_use_grep --name restrict_search --agent codex --params '{\"_search_scope\":{\"additional_directories\":[]}}' --timeout-sec 3",
+            "timeout": 3,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ],
+        "matcher": "mcp__.*grep.*"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type pre_tool_use_grep --name restrict_search --agent codex --params '{\"_search_scope\":{\"additional_directories\":[]}}' --timeout-sec 3",
+            "timeout": 3,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ],
+        "matcher": "mcp__.*search.*"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type pre_tool_use_shell --name restrict_search --agent codex --params '{\"_search_scope\":{\"additional_directories\":[]}}' --timeout-sec 3",
+            "timeout": 3,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ],
+        "matcher": "^(?:Bash|(?:functions\\.)?exec)$"
       }
     ],
     "PreCompact": [
@@ -19,6 +67,18 @@
             "type": "command",
             "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.agents/skills/stefania-memory/hooks/pre-compact.py --agent codex",
             "timeout": 30
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type pre_compact --name harness_feedback_telemetry --agent codex --params '{\"presets\": [\"kit/backend-go\"], \"all_presets\": [\"kit/backend-go\", \"techplatform/aisuite/common\"]}' --timeout-sec 3",
+            "timeout": 3,
+            "async": true,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
           }
         ]
       }
@@ -32,6 +92,18 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type stop --name harness_feedback_telemetry --agent codex --params '{\"presets\": [\"kit/backend-go\"], \"all_presets\": [\"kit/backend-go\", \"techplatform/aisuite/common\"]}' --timeout-sec 3",
+            "timeout": 3,
+            "async": true,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ]
       }
     ],
     "SessionStart": [
@@ -39,12 +111,49 @@
         "hooks": [
           {
             "type": "command",
-            "command": "{\n  /Users/antonmoss/.local/share/yandex-aisuite/runner hook run --type session_start --name session_state_gc --agent codex\n} || true",
-            "__generator": "ya_tool_aisuite_meta",
-            "timeout": 30
+            "command": "{\n  /Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type session_start --name restrict_search --agent codex --params '{\"_search_scope\":{\"additional_directories\":[]}}'\n} || true",
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
           }
         ],
         "matcher": "startup|resume|clear|compact"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{\n  /Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type session_start --name preset_telemetry --agent codex --params '{\"presets\": [\"kit/backend-go\"], \"all_presets\": [\"kit/backend-go\", \"techplatform/aisuite/common\"]}'\n} || true",
+            "async": true,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ],
+        "matcher": "startup|resume|clear|compact"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{\n  /Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type session_start --name session_state_gc --agent codex\n} || true",
+            "async": true,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ],
+        "matcher": "startup|resume|clear|compact"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type session_end --name harness_feedback_telemetry --agent codex --params '{\"presets\": [\"kit/backend-go\"], \"all_presets\": [\"kit/backend-go\", \"techplatform/aisuite/common\"]}' --timeout-sec 3",
+            "timeout": 3,
+            "__generator": "ya_tool_aisuite",
+            "__kit_aisuite": true
+          }
+        ]
       }
     ]
   }

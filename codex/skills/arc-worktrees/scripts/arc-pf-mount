@@ -32,6 +32,3 @@ filters=( $("$here/resolve-path-filter" $force) )
 
 echo "+ arc mount $* ${filters[*]}" >&2
 arc mount "$@" "${filters[@]}"
-if [[ -x "$HOME/scripts/ensure-kit-aisuite.py" ]]; then
-    /usr/bin/python3 "$HOME/scripts/ensure-kit-aisuite.py"
-fi

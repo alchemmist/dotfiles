@@ -1,5 +1,6 @@
 PRECOMMIT_SCRIPT := scripts/backup-packages.sh
 HOOK_PATH := .git/hooks/pre-commit
+export PYTHONDONTWRITEBYTECODE := 1
 
 .PHONY: install-precommit uninstall-precommit precommit fingerprint-install fingerprint-uninstall
 
@@ -39,3 +40,8 @@ test-session-migration:
 
 test-session-migration-smoke:
 	python3 migration/tmux-antex/smoke-test.py
+
+.PHONY: test-kit-aisuite
+
+test-kit-aisuite:
+	$(HOME)/.venvs/stefania/bin/python -m unittest discover -s tests -p 'test_kit_aisuite.py'
