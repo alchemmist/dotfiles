@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>org.alchemmist.arcadia-mount</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>-f</string>
+        <string>/Users/antonmoss/scripts/mount-arcadia-at-login.zsh</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/antonmoss</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/antonmoss/.local/state/arcadia-mount/stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/antonmoss/.local/state/arcadia-mount/stderr.log</string>
+</dict>
+</plist>
