@@ -32,6 +32,7 @@ depends = ["shared"]
 [default.files]
 "antex/config.toml" = { target = "~/.antex/config.toml", type = "symbolic" }
 "antex/github-mcp-server-antex" = { target = "~/.local/bin/github-mcp-server-antex", type = "symbolic" }
+"antex/arcadia-mcp-gate.py" = { target = "~/.antex/bin/arcadia-mcp-gate.py", type = "symbolic" }
 
 "antex/hooks.json" = { target = "~/.antex/hooks.json", type = "symbolic" }
 "antex/hooks" = { target = "~/.antex/hooks", type = "symbolic", recurse = false }

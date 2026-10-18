@@ -50,3 +50,8 @@ test-kit-aisuite:
 
 test-macos-deploy:
 	python3 -m unittest discover -s tests -p 'test_macos_deploy.py'
+
+.PHONY: test-arcadia-mcp
+
+test-arcadia-mcp:
+	python3 -m unittest discover -s tests -p 'test_arcadia_mcp_gate.py'
