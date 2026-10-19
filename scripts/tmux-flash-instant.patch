@@ -1,0 +1,66 @@
+diff --git a/src/flash.zig b/src/flash.zig
+index cd9f2df..a16f9aa 100644
+--- a/src/flash.zig
++++ b/src/flash.zig
+@@ -172,7 +172,7 @@ pub const State = struct {
+             self.aborted = true;
+             return false;
+         }
+-        if (ch == CR) {
++        if (ch == CR or ch == '\n') {
+             _ = self.jump(null);
+             return false;
+         }
+diff --git a/src/main.zig b/src/main.zig
+index 2cc9391..771f122 100644
+--- a/src/main.zig
++++ b/src/main.zig
+@@ -23,6 +23,7 @@ pub fn main(init: std.process.Init) !void {
+         .init = init,
+         .source = source,
+         .session = opts.session.?,
++        .shown = opts.pre_swapped,
+     };
+     defer overlay.close();
+ 
+@@ -140,6 +141,7 @@ const Args = struct {
+     pane: ?[]const u8 = null,
+     session: ?[]const u8 = null,
+     inspect: bool = false,
++    pre_swapped: bool = false,
+ };
+ 
+ fn parseArgs(args: []const []const u8) !Args {
+@@ -147,7 +149,9 @@ fn parseArgs(args: []const []const u8) !Args {
+     var i: usize = 1;
+     while (i < args.len) : (i += 1) {
+         const a = args[i];
+-        if (std.mem.eql(u8, a, "--inspect")) {
++        if (std.mem.eql(u8, a, "--pre-swapped")) {
++            out.pre_swapped = true;
++        } else if (std.mem.eql(u8, a, "--inspect")) {
+             out.inspect = true;
+         } else if (std.mem.startsWith(u8, a, "--pane=")) {
+             const v = a["--pane=".len..];
+diff --git a/src/tty.zig b/src/tty.zig
+index d0037cc..aa7aca6 100644
+--- a/src/tty.zig
++++ b/src/tty.zig
+@@ -27,7 +27,7 @@ pub const Screen = struct {
+         raw.iflag.ICRNL = false;
+         raw.cc[@intFromEnum(posix.V.MIN)] = 1;
+         raw.cc[@intFromEnum(posix.V.TIME)] = 0;
+-        try posix.tcsetattr(stdin.handle, .FLUSH, raw);
++        try posix.tcsetattr(stdin.handle, .NOW, raw);
+ 
+         var screen: Screen = .{
+             .io = io,
+@@ -61,7 +61,7 @@ pub const Screen = struct {
+ 
+     pub fn readByte(self: *Screen) !u8 {
+         try self.flush();
+-        var buf: [64]u8 = undefined;
++        var buf: [1]u8 = undefined;
+         var reader = Io.File.Reader.initStreaming(self.stdin, self.io, &buf);
+         return reader.interface.takeByte();
+     }
