@@ -1,0 +1,23 @@
+diff --git a/src/tmux.zig b/src/tmux.zig
+index 9dfe19d..0f46dbd 100644
+--- a/src/tmux.zig
++++ b/src/tmux.zig
+@@ -2,7 +2,7 @@ const std = @import("std");
+ const Io = std.Io;
+ const flash = @import("flash.zig");
+ 
+-const query_format = "#{pane_id}|#{pane_width}|#{pane_height}|#{cursor_x}|#{cursor_y}|#{?pane_in_mode,1,0}|#{copy_cursor_x}|#{copy_cursor_y}|#{?selection_present,1,0}|#{scroll_position}";
++const query_format = "#{pane_id}|#{pane_width}|#{pane_height}|#{cursor_x}|#{cursor_y}|#{?pane_in_mode,1,0}|#{copy_cursor_x}|#{copy_cursor_y}|#{||:#{selection_active},#{selection_present}}|#{scroll_position}";
+ 
+ pub const PaneQuery = struct {
+     pane_id: []const u8,
+@@ -141,6 +141,9 @@ pub fn jump(
+             try moveDelta(allocator, io, pane_id, snap.copy_cursor_y, row, to);
+         },
+     }
++    if (!snap.selection_present) {
++        try sendX(allocator, io, pane_id, &.{ "begin-selection" });
++    }
+ }
+ 
+ fn lineAt(lines: []const []const u8, row: u32) []const u8 {
