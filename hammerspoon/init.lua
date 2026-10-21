@@ -85,6 +85,18 @@ end):start()
 
 updateTmuxWindowHotkeys(hs.application.frontmostApplication())
 
+-- Disk used/total in macOS menu bar.
+hs.diskSpaceMenubar = hs.menubar.new()
+local function updateDiskSpaceMenubar()
+    local title = hs.execute("/bin/df -k / | /usr/bin/awk 'NR==2 {printf \"%.1f/%.1f GB\", ($2-$4)/1024/1024, $2/1024/1024}'")
+    title = (title or ""):gsub("%s+$", "")
+    if title == "" then title = "disk ?" end
+    hs.diskSpaceMenubar:setTitle("◒ " .. title)
+    hs.diskSpaceMenubar:setTooltip("Used / total disk space on /")
+end
+updateDiskSpaceMenubar()
+hs.diskSpaceMenubarTimer = hs.timer.doEvery(60, updateDiskSpaceMenubar)
+
 -- Keep Alacritty, tmux, Neovim and terminal TUIs (including Codex) on one
 -- palette.  Alacritty live-reloads the import; tmux and running nvim sessions
 -- are updated by the script.  New nvim instances read the shared state file.

@@ -171,6 +171,7 @@ alias mov2mp4='~/scripts/mov2mp4.sh'
 alias cat='mycat'
 alias ad="arc diff | lumen diff --stdin"
 alias ndiff="nvimdiv"
+alias python="python3"
 
 
 hp-scan() {
@@ -543,3 +544,5 @@ export YASTORE_USE_TESTCONTAINERS=true
 if [ -f "$HOME/.ssl/certs/YandexInternalRootCA.pem" ]; then
   export NODE_EXTRA_CA_CERTS="$HOME/.ssl/certs/YandexInternalRootCA.pem"
 fi
+
+# alias antex='antex --no-daemon --dangerously-bypass-approvals-and-sandbox'

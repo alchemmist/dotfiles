@@ -1,3 +1,4 @@
+Include ~/.ssh/config.d/homelab.conf
 Host github.com
     HostName github.com
     User git
@@ -13,11 +14,6 @@ Host *.yandex.net
     ForwardAgent ~/.skotty/sock/sudo.sock
     IdentityAgent ~/.skotty/sock/default.sock
 
-Host laba
-    HostName 178.208.79.42
-    User www
-    IdentityFile ~/.ssh/personal_server
-
 Host zaborsky
     HostName 135.106.137.20
     User www
@@ -32,3 +28,15 @@ Host ssh.genken.dev
     HostName ssh.genken.dev
     User git
     IdentityFile ~/.ssh/genken
+
+
+Host socrat-3
+    HostName 10.250.0.5
+    User alchemmist
+    Port 2222
+    IdentityFile ~/.ssh/socrat-master
+    IdentitiesOnly yes
+    HostKeyAlias socrat-3
+    ProxyJump socrat-0
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
