@@ -222,6 +222,15 @@ trust_level = "trusted"
 [projects."/Users/antonmoss/arcadia-worktrees/echo-timeout-only"]
 trust_level = "trusted"
 
+[projects."/Users/antonmoss/code/antex"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/homelab"]
+trust_level = "trusted"
+
+[projects."/Users/antonmoss/code/alchemmist-docs"]
+trust_level = "trusted"
+
 [features]
 realtime_conversation = true
 hooks = true
@@ -243,16 +252,19 @@ default_subagent_model = "gpt-5.6-luna"
 default_subagent_reasoning_effort = "medium"
 
 [tui]
+fullscreen_transcript = false
 theme = "ansi"
 vim_mode_default = true
 vim_mode_start = "insert"
 status_line = ["current-dir", "model"]
 status_line_use_colors = true
 tmux_command_log = false
+screen_reader_detection_done = true
 
 [tui.model_availability_nux]
 "gpt-5.6-sol" = 2
 gpt-6-astra = 4
+"gpt-6.1-sol" = 4
 
 [mcp_servers.stefania-devtools]
 command = "/opt/homebrew/bin/python3"
@@ -468,6 +480,12 @@ enabled_tools = ["validate_query", "execute_query", "check_status", "wait_for_re
 [mcp_servers.kitsql]
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/yastore/mcp/kitsql/kitsql", "-F", "/Users/antonmoss/.mcp/token"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["--yes", "@playwright/mcp@0.0.83", "--browser", "chrome", "--isolated", "--output-dir", "/Users/antonmoss/.antex/playwright-artifacts"]
+startup_timeout_sec = 60
+
 [shell_environment_policy]
 inherit = "all"
 ignore_default_excludes = true

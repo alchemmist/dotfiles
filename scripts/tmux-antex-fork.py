@@ -1,5 +1,6 @@
 import argparse
 import json
+from pathlib import Path
 import shlex
 import subprocess
 import sys
@@ -56,7 +57,7 @@ def fork_plan(tmux, pane, antex):
         "fork-" + thread[:8],
         "-c",
         cwd,
-        shlex.join([antex, "fork", thread]),
+        shlex.join([antex, "fork", thread, "--no-daemon"]),
     ]
 
 
@@ -64,7 +65,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--pane", required=True)
     parser.add_argument("--socket", required=True)
-    parser.add_argument("--antex-bin", default="antex")
+    parser.add_argument("--antex-bin", default=str(Path.home() / ".local/bin/antex"))
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     tmux = ["tmux", "-S", args.socket]
