@@ -65,15 +65,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.agents/skills/stefania-memory/hooks/pre-compact.py --agent codex",
-            "timeout": 30
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
             "command": "/Users/antonmoss/.local/share/yandex-aisuite/aisuite-tool hook run --type pre_compact --name harness_feedback_telemetry --agent codex --params '{\"presets\": [\"kit/backend-go\"], \"all_presets\": [\"kit/backend-go\", \"techplatform/aisuite/common\"]}' --timeout-sec 3",
             "timeout": 3,
             "async": true,
@@ -84,15 +75,6 @@
       }
     ],
     "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.agents/skills/stefania-memory/hooks/stop.py --agent codex",
-            "timeout": 30
-          }
-        ]
-      },
       {
         "hooks": [
           {
