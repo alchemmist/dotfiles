@@ -8,6 +8,7 @@ service_tier = "default"
 
 model_auto_compact_token_limit = 750000
 developer_instructions = "<!-- kit-aisuite:start -->\nFor KIT / yastore tasks in any Arcadia mount or worktree, read and follow the KIT preset rules in `/Users/antonmoss/.antex/aisuite/kit/rules.md`. Apply these rules only to KIT / yastore work in Arcadia.\n<!-- kit-aisuite:end -->"
+model_instructions_file = "/Users/antonmoss/.antex/prompts/base-pi.md"
 
 [projects."/Users/antonmoss"]
 trust_level = "trusted"
@@ -231,6 +232,9 @@ trust_level = "trusted"
 [projects."/Users/antonmoss/code/alchemmist-docs"]
 trust_level = "trusted"
 
+[projects."/Users/antonmoss/arcadia-worktrees/SS-21365/yastore"]
+trust_level = "trusted"
+
 [features]
 realtime_conversation = true
 hooks = true
@@ -266,14 +270,8 @@ screen_reader_detection_done = true
 gpt-6-astra = 4
 "gpt-6.1-sol" = 4
 
-[mcp_servers.stefania-devtools]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "devtools"]
-default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-startup_timeout_sec = 60
-
 [mcp_servers.sandbox]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "sandbox"]
 default_tools_approval_mode = "auto"
@@ -352,132 +350,61 @@ approval_mode = "approve"
 [mcp_servers.sandbox.tools.sandbox_read_task_directory_text]
 approval_mode = "approve"
 
-[mcp_servers.stefania-infractl]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "infractl"]
-default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-startup_timeout_sec = 60
-
-[mcp_servers.stefania-infractl.tools.namespace_lister]
-approval_mode = "auto"
-
-[mcp_servers.stefania-infractl.tools.object_lister]
-approval_mode = "auto"
-
-[mcp_servers.stefania-intrasearch]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "intrasearch"]
-default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-startup_timeout_sec = 60
-
-[mcp_servers.stefania-intrasearch.tools.evaluate_sources]
-approval_mode = "auto"
-
-[mcp_servers.stefania-intrasearch.tools.fetch]
-approval_mode = "auto"
-
-[mcp_servers.stefania-intrasearch.tools.search]
-approval_mode = "auto"
-
-[mcp_servers.stefania-intrasearch.tools.stsearch]
-approval_mode = "auto"
-
-[mcp_servers.stefania-abc]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "abc"]
-default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-startup_timeout_sec = 60
-
-[mcp_servers.stefania-dispenser]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "dispenser"]
-default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-startup_timeout_sec = 60
-
-[mcp_servers.stefania-idp]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "idp"]
-default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-startup_timeout_sec = 60
-
-[mcp_servers.stefania-tars]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tars"]
-default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-startup_timeout_sec = 60
-
 [mcp_servers.github]
-args = ["--toolsets=default", "--tools=actions_get,actions_list,get_job_logs"]
-command = "/Users/antonmoss/.local/bin/github-mcp-server-antex"
-default_tools_approval_mode = "auto"
-
-[mcp_servers.stefania-monium_mcp]
+activation = { type = "directories", roots = ["/Users/antonmoss/code"] }
+args = ["/Users/antonmoss/.antex/bin/code-github-mcp-gate.py", "/Users/antonmoss/.local/bin/github-mcp-server-antex", "--toolsets=default", "--tools=actions_get,actions_list,get_job_logs"]
 command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "monium_mcp"]
-startup_timeout_sec = 60
 default_tools_approval_mode = "auto"
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.google-sheets]
-url = "https://sheetsmcp.googleapis.com/mcp/v1"
-default_tools_approval_mode = "auto"
-
-[mcp_servers.google-sheets.oauth]
-client_id = "1039367826430-ku4q669p1n814npcq8j8d691jh836i4f.apps.googleusercontent.com"
 
 [mcp_servers.chrome-devtools]
 command = "npx"
 args = ["-y", "chrome-devtools-mcp@latest"]
 default_tools_approval_mode = "auto"
 
-[mcp_servers.stefania-datalens]
-command = "/opt/homebrew/bin/python3"
-env_vars = ["DATALENS_OAUTH_TOKEN", "DATALENS_TOKEN", "YA_TOKEN"]
-startup_timeout_sec = 60
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/scripts/datalens-mcp.sh"]
-
 [mcp_servers.tracker_mcp]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=tracker_mcp,GetIssue,GetIssues,GetIssueLinks,GetIssueChangeLog,GetComment,GetAttachment,GetAttachmentContent,SearchEntities,CreateIssue,UpdateIssue,ChangeIssueStatus,CreateComment,UpdateComment,CreateIssueLink"]
-enabled_tools = ["GetIssue", "GetIssues", "GetIssueLinks", "GetIssueChangeLog", "GetComment", "GetAttachment", "GetAttachmentContent", "SearchEntities", "CreateIssue", "UpdateIssue", "ChangeIssueStatus", "CreateComment", "UpdateComment", "CreateIssueLink"]
+args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=tracker,search_issues,get_issue,list_issue_links,get_issue_changelog,get_comment,get_attachment,search_entities,create_issue,update_issue,transition_issue,add_comment,update_comment,create_issue_link"]
+enabled_tools = ["search_issues", "get_issue", "list_issue_links", "get_issue_changelog", "get_comment", "get_attachment", "search_entities", "create_issue", "update_issue", "transition_issue", "add_comment", "update_comment", "create_issue_link"]
 
 [mcp_servers.devtools]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=devtools,arcanum_usage_guide,arcanum_pr_data,arcanum_list_changed_files_in_pr,arcanum_get_changes_in_file,arcanum_get_file_content,arcanum_post_comment,arcanum_reply_to_comment,arcanum_update_comment,arcanum_close_issue"]
 enabled_tools = ["arcanum_usage_guide", "arcanum_pr_data", "arcanum_list_changed_files_in_pr", "arcanum_get_changes_in_file", "arcanum_get_file_content", "arcanum_post_comment", "arcanum_reply_to_comment", "arcanum_update_comment", "arcanum_close_issue"]
 
 [mcp_servers.cirp]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=cirp,ci_storage_usage_guide,get_pull_request_checks,get_pull_request_badge_status,get_pull_request_test_statistics,get_badge_summary,get_badge_failures"]
 enabled_tools = ["ci_storage_usage_guide", "get_pull_request_checks", "get_pull_request_badge_status", "get_pull_request_test_statistics", "get_badge_summary", "get_badge_failures"]
 
 [mcp_servers.ci]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=ci,search_action_launches,get_action_launch"]
 enabled_tools = ["search_action_launches", "get_action_launch"]
 
 [mcp_servers.monium_mcp]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=monium_mcp,read_trace,read_span,search_traces,search_spans,read_logs,query_logs_stats,read_metrics,read_widget,get_widget,get_dashboard,list_dashboards,list_label_keys,list_label_values,list_metric_functions,get_alert,list_alerts,get_subalert,list_subalerts,summarize_alert_evaluation_histories,get_current_time"]
 enabled_tools = ["read_trace", "read_span", "search_traces", "search_spans", "read_logs", "query_logs_stats", "read_metrics", "read_widget", "get_widget", "get_dashboard", "list_dashboards", "list_label_keys", "list_label_values", "list_metric_functions", "get_alert", "list_alerts", "get_subalert", "list_subalerts", "summarize_alert_evaluation_histories", "get_current_time"]
 
 [mcp_servers.intrasearch]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=intrasearch,search,list_verticals,stsearch,semantic_code_search,arcanum_search,fetch"]
 enabled_tools = ["search", "list_verticals", "stsearch", "semantic_code_search", "arcanum_search", "fetch"]
 
 [mcp_servers.yql]
+activation = { type = "arcadia" }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/ya", "tool", "mcp", "connect", "wss://mcp.yandex.net/ws?servers=yql,validate_query,execute_query,check_status,wait_for_results,get_results,abort_operation,share_operation"]
 enabled_tools = ["validate_query", "execute_query", "check_status", "wait_for_results", "get_results", "abort_operation", "share_operation"]
 
 [mcp_servers.kitsql]
+activation = { type = "directories", roots = ["/Users/antonmoss/arcadia/yastore"] }
 command = "/opt/homebrew/bin/python3"
 args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/arcadia/yastore/mcp/kitsql/kitsql", "-F", "/Users/antonmoss/.mcp/token"]
 
@@ -486,9 +413,29 @@ command = "npx"
 args = ["--yes", "@playwright/mcp@0.0.83", "--browser", "chrome", "--isolated", "--output-dir", "/Users/antonmoss/.antex/playwright-artifacts"]
 startup_timeout_sec = 60
 
+[mcp_servers.socrat-grafana]
+activation = { type = "directories", roots = ["/Users/antonmoss/code/homelab"] }
+command = "/Users/antonmoss/.antex/venvs/grafana-mcp/bin/python"
+args = ["/Users/antonmoss/.antex/bin/homelab-grafana-mcp.py"]
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+
+[mcp_servers.socrat-grafana.env]
+API_ACCESS_TOKEN = "R_A_ceZU9uB6V4Sj7lztHZducZW3LrJ3YYr5Dra5wjYAsG38EJppz5SvVopjMaZH"
+
+[mcp_servers.homelab-wiki]
+activation = { type = "directories", roots = ["/Users/antonmoss/code/homelab"] }
+command = "/Users/antonmoss/.antex/venvs/grafana-mcp/bin/python"
+args = ["/Users/antonmoss/.antex/bin/homelab-wiki-mcp.py"]
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+
+[mcp_servers.homelab-wiki.env]
+API_ACCESS_TOKEN = "wiki_o79beQf3aZMFehAmpqf6HXnhV7kVsEJX0JBTs22HB-L0ojVq3Nj6-pRJgDdGKPKP"
+
 [shell_environment_policy]
-inherit = "all"
-ignore_default_excludes = true
+# inherit = "all"
+# ignore_default_excludes = true
 
 [shell_environment_policy.set]
 FROM_AI_AGENT = "1"
@@ -496,6 +443,8 @@ BASH_ENV = "/Users/antonmoss/.local/share/yandex-aisuite/statham/command-shadows
 ENV = "/Users/antonmoss/.local/share/yandex-aisuite/statham/command-shadows.sh"
 ZDOTDIR = "/Users/antonmoss/.local/share/yandex-aisuite/statham/zdotdir"
 AISUITE_SEARCH_SCOPE = "{\"additional_directories\":[]}"
+
+[hooks.state]
 [hooks.state."/Users/antonmoss/.codex/hooks.json:pre_compact:0:0"]
 trusted_hash = "sha256:41d80596600537a3e07f489d70d2c0d78d85a51735cda4913aa5f5741a9469cd"
 
@@ -846,13 +795,13 @@ trusted_hash = "sha256:f0d2a3fbfd52a8fb77c97b3940730a0846abd4470d5f9ec483ac18d3c
 trusted_hash = "sha256:aeea29feb601a45cafdd7af396e4cb0345a7232036266f37e96b648968952a52"
 
 [hooks.state."/Users/antonmoss/.antex/hooks.json:pre_compact:0:0"]
-trusted_hash = "sha256:41d80596600537a3e07f489d70d2c0d78d85a51735cda4913aa5f5741a9469cd"
+trusted_hash = "sha256:51a548433815f6a0a56f0fe82abf68e6ae9a0237c17dab8b581e5a0a1cd7ed7a"
 
 [hooks.state."/Users/antonmoss/.antex/hooks.json:pre_compact:1:0"]
 trusted_hash = "sha256:51a548433815f6a0a56f0fe82abf68e6ae9a0237c17dab8b581e5a0a1cd7ed7a"
 
 [hooks.state."/Users/antonmoss/.antex/hooks.json:stop:0:0"]
-trusted_hash = "sha256:2a3581875e105edab7d72e40ec6bf1f0e1ae6db56b01744d3c31b7a878fc1997"
+trusted_hash = "sha256:870f15b569375cd84f932c0d6d797af226e51dbe3cbf81f20df94704c5c873a2"
 
 [hooks.state."/Users/antonmoss/.antex/hooks.json:stop:1:0"]
 trusted_hash = "sha256:870f15b569375cd84f932c0d6d797af226e51dbe3cbf81f20df94704c5c873a2"
@@ -886,78 +835,14 @@ enabled = false
 path = "/Users/antonmoss/.agents/skills/scaffold-exercises"
 enabled = false
 
-[[skills.config]]
-path = "/Users/antonmoss/.agents/skills/stefania-goliath-skills"
-enabled = false
 
 [apps._default]
 default_tools_approval_mode = "auto"
 destructive_enabled = true
 open_world_enabled = true
 
-[mcp_servers.stefania-tracker_mcp]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tracker_mcp"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-wiki]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "wiki"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-docs]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "docs"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-forms]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "forms"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-yt]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "yt"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-yql]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "yql"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-deepagent]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "deepagent"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-ab_experiments]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "ab_experiments"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
+[apps.connector_openai_pages]
 enabled = false
 
-[mcp_servers.stefania-infra]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "infra"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-racktables]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "racktables"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
-
-[mcp_servers.stefania-tasklets]
-command = "/opt/homebrew/bin/python3"
-args = ["/Users/antonmoss/.antex/bin/arcadia-mcp-gate.py", "/Users/antonmoss/.venvs/stefania/bin/python", "/Users/antonmoss/.stefania/mcp/proxy.py", "--server", "tasklets"]
-startup_timeout_sec = 60
-env_vars = ["IDP_MCP_TOKEN"]
+[apps.connector_20205bf7d4e99a89d7154bb849718324]
+enabled = false
