@@ -35,6 +35,18 @@ hs.hotkey.bind({"cmd"}, "delete", function()
     hs.eventtap.keyStroke({"alt"}, "delete", 0)
 end)
 
+-- Cmd+Enter toggles Alacritty: launch if not running, hide when focused.
+hs.hotkey.bind({"cmd"}, "return", function()
+    local alacritty = hs.application.get("org.alacritty")
+    if alacritty == nil then
+        hs.application.launchOrFocusByBundleID("org.alacritty")
+    elseif alacritty:isFrontmost() then
+        alacritty:hide()
+    else
+        alacritty:activate()
+    end
+end)
+
 local function switchDesktop(offset)
     local current = hs.spaces.focusedSpace()
     local spaces = hs.spaces.spacesForScreen(hs.screen.mainScreen()) or {}
