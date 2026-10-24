@@ -21,6 +21,18 @@ depends = []
 "starship" = "~/.config/starship"
 "yazi" = "~/.config/yazi"
 "antex/AGENTS.md" = { target = "~/.antex/AGENTS.md", type = "symbolic" }
+"pi/settings.json" = { target = "~/.pi/agent/settings.json", type = "symbolic" }
+"pi/models.json" = { target = "~/.pi/agent/models.json", type = "symbolic" }
+"pi/mcp.json" = { target = "~/.pi/agent/mcp.json", type = "symbolic" }
+"pi/arcadia-mcp.json" = { target = "~/.pi/agent/arcadia-mcp.json", type = "symbolic" }
+"pi/keybindings.json" = { target = "~/.pi/agent/keybindings.json", type = "symbolic" }
+"pi/extensions" = { target = "~/.pi/agent/extensions", type = "symbolic" }
+"pi/themes" = { target = "~/.pi/agent/themes", type = "symbolic" }
+"pi/pi-prompt-stash-status.json" = { target = "~/.pi/agent/pi-prompt-stash-status/config.json", type = "symbolic" }
+"pi/tool-display.json" = { target = "~/.pi/agent/extensions/pi-tool-display/config.json", type = "symbolic" }
+"pi/homelab-wiki-mcp.py" = { target = "~/.pi/agent/bin/homelab-wiki-mcp.py", type = "symbolic" }
+"pi/projects/code/mcp.json" = { target = "~/code/.pi/mcp.json", type = "symbolic" }
+"pi/projects/homelab/mcp.json" = { target = "~/code/homelab/.pi/mcp.json", type = "symbolic" }
 "hammerspoon/init.lua" = { target = "~/.hammerspoon/init.lua", type = "symbolic" }
 "hammerspoon/startup-layout.lua" = { target = "~/.hammerspoon/startup-layout.lua", type = "symbolic" }
 

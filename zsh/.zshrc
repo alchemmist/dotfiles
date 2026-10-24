@@ -546,3 +546,9 @@ if [ -f "$HOME/.ssl/certs/YandexInternalRootCA.pem" ]; then
 fi
 
 # alias antex='antex --no-daemon --dangerously-bypass-approvals-and-sandbox'
+function pi() {
+  if [ -n "$TMUX" ] && command -v tmux >/dev/null 2>&1; then
+    tmux rename-window pi >/dev/null 2>&1 || true
+  fi
+  command "$HOME/.local/bin/pi" "$@"
+}

@@ -1,0 +1,38 @@
+{
+  "tuiMode": "regular",
+  "quietStartup": true,
+  "theme": "antex-terminal",
+  "steeringMode": "one-at-a-time",
+  "followUpMode": "one-at-a-time",
+  "defaultProvider": "litellm",
+  "defaultModel": "qwen3.8-27b",
+  "hideThinkingBlock": true,
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 12000,
+    "keepRecentTokens": 20000,
+    "modelOverrides": {
+      "litellm/qwen3.8-27b": {
+        "reserveTokens": 12000
+      },
+      "ollama/qwen3.8:27b": {
+        "reserveTokens": 12000
+      }
+    }
+  },
+  "packages": [
+    "npm:@ollama/pi-web-search",
+    "npm:pi-subagents",
+    "npm:pi-tmux-subagents",
+    "npm:@narumitw/pi-plan-mode",
+    "npm:pi-vim",
+    "npm:pi-fast-mode",
+    "npm:pi-terminal-theme",
+    "git:github.com/alchemmist/pi-prompt-stash-status",
+    "npm:@estebanforge/pi-tool-display"
+  ],
+  "extensions": [
+    "extensions/arcadia-mcp-gate.ts"
+  ],
+  "lastChangelogVersion": "1.4.0"
+}

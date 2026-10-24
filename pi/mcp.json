@@ -1,0 +1,36 @@
+{
+  "mcpServers": {
+    "github": {
+      "args": [
+        "~/.antex/bin/code-github-mcp-gate.py",
+        "~/.local/bin/github-mcp-server-antex",
+        "--toolsets=default",
+        "--tools=actions_get,actions_list,get_job_logs"
+      ],
+      "command": "python3",
+      "enabled": false
+    },
+    "socrat-grafana": {
+      "command": "~/.antex/venvs/grafana-mcp/bin/python",
+      "args": [
+        "~/.antex/bin/homelab-grafana-mcp.py"
+      ],
+      "startup_timeout_sec": 30,
+      "env": {
+        "API_ACCESS_TOKEN": "$GRAFANA_API_TOKEN"
+      },
+      "enabled": false
+    },
+    "homelab-wiki": {
+      "command": "python3",
+      "args": [
+        "~/.pi/agent/bin/homelab-wiki-mcp.py"
+      ],
+      "startup_timeout_sec": 30,
+      "env": {
+        "API_ACCESS_TOKEN": "$HOMELAB_WIKI_API_TOKEN"
+      },
+      "enabled": false
+    }
+  }
+}
