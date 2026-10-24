@@ -29,7 +29,6 @@ depends = []
 "pi/extensions" = { target = "~/.pi/agent/extensions", type = "symbolic" }
 "pi/themes" = { target = "~/.pi/agent/themes", type = "symbolic" }
 "pi/pi-prompt-stash-status.json" = { target = "~/.pi/agent/pi-prompt-stash-status/config.json", type = "symbolic" }
-"pi/tool-display.json" = { target = "~/.pi/agent/extensions/pi-tool-display/config.json", type = "symbolic" }
 "pi/homelab-wiki-mcp.py" = { target = "~/.pi/agent/bin/homelab-wiki-mcp.py", type = "symbolic" }
 "pi/projects/code/mcp.json" = { target = "~/code/.pi/mcp.json", type = "symbolic" }
 "pi/projects/homelab/mcp.json" = { target = "~/code/homelab/.pi/mcp.json", type = "symbolic" }
