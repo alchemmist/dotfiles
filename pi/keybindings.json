@@ -1,0 +1,10 @@
+{
+  "$schema": "https://pi.dev/schemas/keybindings.schema.json",
+  "app.session.toggleSort": [],
+  "app.models.save": [],
+  "app.thinking.save": [],
+  "tui.input.tab": [],
+  "tui.input.newLine": ["shift+enter", "ctrl+j"],
+  "app.message.followUp": "tab",
+  "tui.altScreen.search": "ctrl+shift+alt+f"
+}

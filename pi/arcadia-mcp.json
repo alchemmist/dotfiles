@@ -1,0 +1,132 @@
+{
+  "mcpServers": {
+    "sandbox": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/.venvs/stefania/bin/python",
+        "~/.stefania/mcp/proxy.py",
+        "--server",
+        "sandbox"
+      ],
+      "startup_timeout_sec": 60,
+      "enabled": false
+    },
+    "tracker_mcp": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/ya",
+        "tool",
+        "mcp",
+        "connect",
+        "wss://mcp.yandex.net/ws?servers=tracker,search_issues,get_issue,list_issue_links,get_issue_changelog,get_comment,get_attachment,search_entities,create_issue,update_issue,transition_issue,add_comment,update_comment,create_issue_link"
+      ],
+      "enabled": false
+    },
+    "devtools": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/ya",
+        "tool",
+        "mcp",
+        "connect",
+        "wss://mcp.yandex.net/ws?servers=devtools,arcanum_usage_guide,arcanum_pr_data,arcanum_list_changed_files_in_pr,arcanum_get_changes_in_file,arcanum_get_file_content,arcanum_post_comment,arcanum_reply_to_comment,arcanum_update_comment,arcanum_close_issue"
+      ],
+      "enabled": false
+    },
+    "cirp": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/ya",
+        "tool",
+        "mcp",
+        "connect",
+        "wss://mcp.yandex.net/ws?servers=cirp,ci_storage_usage_guide,get_pull_request_checks,get_pull_request_badge_status,get_pull_request_test_statistics,get_badge_summary,get_badge_failures"
+      ],
+      "enabled": false
+    },
+    "ci": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/ya",
+        "tool",
+        "mcp",
+        "connect",
+        "wss://mcp.yandex.net/ws?servers=ci,search_action_launches,get_action_launch"
+      ],
+      "enabled": false
+    },
+    "monium_mcp": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/ya",
+        "tool",
+        "mcp",
+        "connect",
+        "wss://mcp.yandex.net/ws?servers=monium_mcp,read_trace,read_span,search_traces,search_spans,read_logs,query_logs_stats,read_metrics,read_widget,get_widget,get_dashboard,list_dashboards,list_label_keys,list_label_values,list_metric_functions,get_alert,list_alerts,get_subalert,list_subalerts,summarize_alert_evaluation_histories,get_current_time"
+      ],
+      "enabled": false
+    },
+    "intrasearch": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/ya",
+        "tool",
+        "mcp",
+        "connect",
+        "wss://mcp.yandex.net/ws?servers=intrasearch,search,list_verticals,stsearch,semantic_code_search,arcanum_search,fetch"
+      ],
+      "enabled": false
+    },
+    "yql": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/ya",
+        "tool",
+        "mcp",
+        "connect",
+        "wss://mcp.yandex.net/ws?servers=yql,validate_query,execute_query,check_status,wait_for_results,get_results,abort_operation,share_operation"
+      ],
+      "enabled": false
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "@playwright/mcp@0.0.83",
+        "--browser",
+        "chrome",
+        "--isolated",
+        "--output-dir",
+        "~/.antex/playwright-artifacts"
+      ],
+      "startup_timeout_sec": 60,
+      "enabled": false
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ],
+      "enabled": false
+    },
+    "kitsql": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/arcadia/yastore/mcp/kitsql/kitsql",
+        "-F",
+        "~/.mcp/token"
+      ],
+      "enabled": false
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "github": {"enabled": true},
+    "sandbox": {"enabled": false},
+    "tracker_mcp": {"enabled": false},
+    "devtools": {"enabled": false},
+    "cirp": {"enabled": false},
+    "ci": {"enabled": false},
+    "monium_mcp": {"enabled": false},
+    "intrasearch": {"enabled": false},
+    "yql": {"enabled": false},
+    "kitsql": {"enabled": false},
+    "socrat-grafana": {"enabled": false},
+    "homelab-wiki": {"enabled": false}
+  }
+}

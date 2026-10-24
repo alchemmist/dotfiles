@@ -1,0 +1,155 @@
+{
+  "providers": {
+    "ollama": {
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "baseUrl": "http://127.0.0.1:11434/v1",
+      "models": [
+        {
+          "id": "qwen3.8:27b",
+          "name": "Qwen 3.8 27B",
+          "input": [
+            "text",
+            "image"
+          ],
+          "reasoning": true,
+          "contextWindow": 114688,
+          "maxTokens": 16384
+        }
+      ]
+    },
+    "litellm": {
+      "api": "openai-responses",
+      "apiKey": "$LITELLM_API_KEY",
+      "baseUrl": "https://llm.alchemmist.xyz/v1",
+      "models": [
+        {
+          "id": "qwen3.8-27b",
+          "name": "qwen3.8-27b",
+          "input": [
+            "text"
+          ],
+          "reasoning": false,
+          "contextWindow": 114688,
+          "maxTokens": 16384
+        },
+        {
+          "id": "qwen3.8-flash-next",
+          "name": "qwen3.8-flash-next",
+          "input": [
+            "text"
+          ],
+          "reasoning": false,
+          "contextWindow": 114688,
+          "maxTokens": 16384
+        },
+        {
+          "id": "qwen38-flash-next-nvfp4",
+          "name": "qwen38-flash-next-nvfp4",
+          "input": [
+            "text"
+          ],
+          "reasoning": false,
+          "contextWindow": 114688,
+          "maxTokens": 16384
+        },
+        {
+          "id": "glm-5-3",
+          "name": "glm-5-3",
+          "input": [
+            "text"
+          ],
+          "reasoning": false,
+          "contextWindow": 114688,
+          "maxTokens": 16384
+        }
+      ]
+    },
+    "cursor": {
+      "api": "openai-responses",
+      "apiKey": "$CURSOR_API_KEY",
+      "baseUrl": "http://127.0.0.1:8765/v1",
+      "models": [
+        {
+          "id": "gpt-6-astra",
+          "name": "gpt-6-astra",
+          "input": [
+            "text"
+          ],
+          "reasoning": true,
+          "contextWindow": 272000,
+          "maxTokens": 32768
+        },
+        {
+          "id": "gpt-6.1-sol",
+          "name": "gpt-6.1-sol",
+          "input": [
+            "text"
+          ],
+          "reasoning": true,
+          "contextWindow": 272000,
+          "maxTokens": 32768
+        },
+        {
+          "id": "gpt-5.6-luna",
+          "name": "gpt-5.6-luna",
+          "input": [
+            "text"
+          ],
+          "reasoning": true,
+          "contextWindow": 272000,
+          "maxTokens": 32768
+        },
+        {
+          "id": "gpt-5.6-sol",
+          "name": "gpt-5.6-sol",
+          "input": [
+            "text"
+          ],
+          "reasoning": true,
+          "contextWindow": 272000,
+          "maxTokens": 32768
+        },
+        {
+          "id": "grok-4.7",
+          "name": "grok-4.7",
+          "input": [
+            "text"
+          ],
+          "reasoning": true,
+          "contextWindow": 272000,
+          "maxTokens": 32768
+        }
+      ]
+    },
+    "eliza": {
+      "api": "openai-completions",
+      "apiKey": "$ELIZA_API_KEY",
+      "baseUrl": "https://api.eliza.yandex.net/v1",
+      "models": [
+        {
+          "id": "qwen3.8-flash-next",
+          "name": "qwen3.8-flash-next",
+          "input": [
+            "text"
+          ],
+          "reasoning": false,
+          "contextWindow": 131072,
+          "maxTokens": 16384,
+          "baseUrl": "https://api.eliza.yandex.net/raw/internal/qwen3.8-flash-next/v1"
+        },
+        {
+          "id": "glm-5-3",
+          "name": "glm-5-3",
+          "input": [
+            "text"
+          ],
+          "reasoning": false,
+          "contextWindow": 131072,
+          "maxTokens": 16384,
+          "baseUrl": "https://api.eliza.yandex.net/raw/internal/glm-5-3/v1"
+        }
+      ]
+    }
+  }
+}

@@ -30,7 +30,7 @@ import = [
 [[keyboard.bindings]]
 key = "Return"
 mods = "Shift"
-chars = "\u001B\r"
+chars = "\u001B[13;2u"
 
 [[keyboard.bindings]]
 key = "V"
