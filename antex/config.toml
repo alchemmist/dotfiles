@@ -846,3 +846,28 @@ enabled = false
 
 [apps.connector_20205bf7d4e99a89d7154bb849718324]
 enabled = false
+[model_providers.litellm]
+name = "LiteLLM"
+base_url = "https://llm.alchemmist.xyz/v1"
+experimental_bearer_token = "sk-g0ZhtBCp04B7IuZCJRN3Pg"
+wire_api = "responses"
+requires_openai_auth = false
+supports_websockets = false
+
+
+[model_providers.cursor]
+name = "Cursor subscription"
+base_url = "http://127.0.0.1:8765/v1"
+wire_api = "responses"
+requires_openai_auth = false
+supports_websockets = false
+experimental_bearer_token = "r92ChgUbSCde3tp8rrd1f6EhFNzXxYuFFU6EgB9Nr24"
+stream_idle_timeout_ms = 300000
+
+[model_providers.eliza]
+name = "Yandex Internal"
+base_url = "https://api.eliza.yandex.net/v1"
+wire_api = "eliza"
+requires_openai_auth = false
+experimental_bearer_token = "y1__xDd0O6RpdT-ARiuKyCC27QDTuZw4M1j5TlvaTuub3cHJUHv52k"
+

@@ -1,27 +1,5 @@
 {
   "hooks": {
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.agents/skills/stefania-memory/hooks/pre-compact.py --agent codex",
-            "timeout": 30
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/antonmoss/.venvs/stefania/bin/python /Users/antonmoss/.agents/skills/stefania-memory/hooks/stop.py --agent codex",
-            "timeout": 30
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "hooks": [
