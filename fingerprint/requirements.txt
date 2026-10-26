@@ -10,7 +10,7 @@ itsdangerous==2.2.0
 Jinja2==3.1.6
 ldap3==2.9.1
 ldapdomaindump==0.10.0
-MarkupSafe==3.0.3
+MarkupSafe==3.0.4
 pyasn1==0.6.4
 pyasn1_modules==0.4.2
 pycparser==3.0
