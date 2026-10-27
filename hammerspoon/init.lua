@@ -35,8 +35,8 @@ hs.hotkey.bind({"cmd"}, "delete", function()
     hs.eventtap.keyStroke({"alt"}, "delete", 0)
 end)
 
--- Cmd+Enter toggles Alacritty: launch if not running, hide when focused.
-hs.hotkey.bind({"cmd"}, "return", function()
+-- Option+Enter toggles Alacritty: launch if not running, hide when focused.
+hs.hotkey.bind({"alt"}, "return", function()
     local alacritty = hs.application.get("org.alacritty")
     if alacritty == nil then
         hs.application.launchOrFocusByBundleID("org.alacritty")
