@@ -36,3 +36,7 @@ done
 if [ "$(uname -s)" = Darwin ] && [ -f "$HOME/Library/LaunchAgents/org.alchemmist.arcadia-mount.plist" ]; then
     /bin/zsh -f "$repo_root/scripts/bootstrap-macos.zsh"
 fi
+
+if [ "$(uname -s)" = Darwin ]; then
+    /bin/zsh -f "$repo_root/macos/nightnode/install-macos.zsh"
+fi

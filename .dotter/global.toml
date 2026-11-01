@@ -81,6 +81,8 @@ depends = ["default"]
 
 [macos.files]
 "macos/arc" = { target = "~/.local/bin/arc", type = "symbolic" }
+"macos/nightnode" = { target = "~/.local/lib/nightnode", type = "symbolic" }
+"macos/nightnode/nightnode" = { target = "~/.local/bin/nightnode", type = "symbolic" }
 "macos/ya" = { target = "~/.local/bin/ya", type = "symbolic" }
 ".dotter/templates/arcadia-mount.plist.hbs" = { target = "~/Library/LaunchAgents/org.alchemmist.arcadia-mount.plist", type = "template" }
 ".dotter/templates/syncthing.plist.hbs" = { target = "~/Library/LaunchAgents/org.alchemmist.syncthing.plist", type = "template" }

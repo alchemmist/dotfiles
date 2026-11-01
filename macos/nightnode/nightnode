@@ -1,0 +1,180 @@
+#!/bin/bash
+# Night worker for this Mac: a small Lima Linux VM that can later join k3s.
+export PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+# Defaults stay tiny so a test cannot crowd out an active desktop session.
+# Cluster join is refused until ~/.config/homelab/nightnode/config.env exists
+# and NIGHTNODE_ALLOW_JOIN=1 is set in that file.
+set -euo pipefail
+
+NAME="${NIGHTNODE_NAME:-socrat-mac}"
+CONFIG_DIR="${NIGHTNODE_CONFIG_DIR:-${HOME}/.config/homelab/nightnode}"
+CONFIG_FILE="${CONFIG_DIR}/config.env"
+LIMA_YAML="${CONFIG_DIR}/lima.yaml"
+TEMPLATE="$(cd "$(dirname "$0")" && pwd)/lima.yaml.tmpl"
+
+# Safe caps while the desktop is in use. Full night sizing is a later step.
+MAX_CPUS="${NIGHTNODE_MAX_CPUS:-2}"
+MAX_MEMORY_GIB="${NIGHTNODE_MAX_MEMORY_GIB:-4}"
+CPUS="${NIGHTNODE_CPUS:-1}"
+MEMORY="${NIGHTNODE_MEMORY:-2GiB}"
+DISK="${NIGHTNODE_DISK:-10GiB}"
+
+log() { printf '%s\n' "$*"; }
+die() { printf 'nightnode: %s\n' "$*" >&2; exit 1; }
+
+load_config() {
+  if [[ -f "$CONFIG_FILE" ]]; then
+    # shellcheck disable=SC1090
+    source "$CONFIG_FILE"
+  fi
+}
+
+memory_gib() {
+  local raw="$1"
+  raw="${raw%GiB}"
+  raw="${raw%G}"
+  printf '%s' "$raw"
+}
+
+enforce_caps() {
+  local mem
+  mem="$(memory_gib "$MEMORY")"
+  [[ "$mem" =~ ^[0-9]+$ ]] || die "memory must look like 2GiB, got ${MEMORY}"
+  [[ "$CPUS" =~ ^[0-9]+$ ]] || die "cpus must be an integer, got ${CPUS}"
+  if (( CPUS > MAX_CPUS || mem > MAX_MEMORY_GIB )); then
+    die "refusing ${CPUS} cpus / ${MEMORY}: cap is ${MAX_CPUS} cpus / ${MAX_MEMORY_GIB}GiB (set NIGHTNODE_MAX_* to raise it)"
+  fi
+}
+
+need_lima() {
+  command -v limactl >/dev/null 2>&1 || die "limactl is not installed (brew install lima)"
+}
+
+write_lima_yaml() {
+  mkdir -p "$CONFIG_DIR"
+  chmod 700 "$CONFIG_DIR"
+  sed \
+    -e "s/__CPUS__/${CPUS}/" \
+    -e "s/__MEMORY__/${MEMORY}/" \
+    -e "s/__DISK__/${DISK}/" \
+    "$TEMPLATE" > "${LIMA_YAML}.tmp"
+  mv "${LIMA_YAML}.tmp" "$LIMA_YAML"
+}
+
+vm_status() {
+  limactl list --format '{{.Name}} {{.Status}}' 2>/dev/null | awk -v n="$NAME" '$1==n { print $2 }'
+}
+
+cmd_status() {
+  need_lima
+  local st
+  st="$(vm_status || true)"
+  if [[ -z "$st" ]]; then
+    log "vm: absent"
+  else
+    log "vm: ${st} cpus=${CPUS} memory=${MEMORY} disk=${DISK}"
+  fi
+  if [[ "${NIGHTNODE_ALLOW_JOIN:-0}" == "1" && -n "${K3S_URL:-}" ]]; then
+    log "join: allowed (${K3S_URL})"
+  else
+    log "join: disabled"
+  fi
+}
+
+cmd_up() {
+  need_lima
+  enforce_caps
+  local free_gib
+  free_gib="$(df -g / | awk 'NR==2 { print $4 }')"
+  if (( free_gib < 40 )); then
+    die "only ${free_gib}GiB free on /; need 40GiB"
+  fi
+  write_lima_yaml
+  local st
+  st="$(vm_status || true)"
+  if [[ "$st" == "Running" ]]; then
+    log "vm already running"
+    return 0
+  fi
+  log "starting ${NAME} with ${CPUS} cpu and ${MEMORY}"
+  if [[ -z "$st" ]]; then
+    limactl create --name="$NAME" --tty=false "$LIMA_YAML"
+  fi
+  limactl start "$NAME"
+  log "vm is up; cluster join was not attempted"
+}
+
+cmd_down() {
+  need_lima
+  local st
+  st="$(vm_status || true)"
+  if command -v kubectl >/dev/null 2>&1 && kubectl get node "$NAME" >/dev/null 2>&1; then
+    log "cordon ${NAME}"
+    kubectl cordon "$NAME" || true
+    log "drain ${NAME}"
+    kubectl drain "$NAME" --ignore-daemonsets --delete-emptydir-data --force --grace-period=30 --timeout=60s || true
+  fi
+  if [[ -n "$st" && "$st" != "Stopped" ]]; then
+    log "stopping ${NAME}"
+    limactl stop "$NAME"
+  else
+    log "vm already stopped"
+  fi
+  if command -v kubectl >/dev/null 2>&1; then
+    kubectl delete node "$NAME" --wait=false || true
+  fi
+}
+
+
+cmd_menu() {
+  local st resources node ip pods
+  st="$(vm_status || true)"
+  [[ -n "$st" ]] || st="absent"
+  resources=""
+  if [[ "$st" != "absent" ]]; then
+    read -r cpus mem < <(limactl list --format '{{.Name}} {{.CPUs}} {{.Memory}}' 2>/dev/null | awk -v n="$NAME" '$1==n { print $2, $3 }')
+    if [[ "${mem:-}" =~ ^[0-9]+$ ]] && (( mem >= 1073741824 )); then
+      mem="$(( mem / 1073741824 ))GiB"
+    fi
+    resources="${cpus:-?} cpu, ${mem:-?}"
+  fi
+  node="down"
+  ip=""
+  pods="0"
+  if command -v kubectl >/dev/null 2>&1; then
+    node="$(kubectl get node "$NAME" --no-headers 2>/dev/null | awk '{ print $2 }')"
+    [[ -n "$node" ]] || node="absent"
+    ip="$(kubectl get node "$NAME" -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}' 2>/dev/null || true)"
+    pods="$(kubectl get pods -A --field-selector spec.nodeName="$NAME" --no-headers 2>/dev/null | wc -l | tr -d ' ')"
+  fi
+  printf 'vm=%s
+resources=%s
+node=%s
+ip=%s
+pods=%s
+' "$st" "$resources" "$node" "$ip" "$pods"
+}
+
+cmd_join() {
+  die "join is not implemented in this pass; the VM stays off the cluster"
+}
+
+usage() {
+  cat <<EOF
+usage: nightnode <up|down|status|menu|join>
+
+Defaults: ${CPUS} cpu, ${MEMORY}, join disabled.
+Config: ${CONFIG_FILE}
+EOF
+}
+
+load_config
+cmd="${1:-}"
+case "$cmd" in
+  up) cmd_up ;;
+  down) cmd_down ;;
+  status) cmd_status ;;
+  menu) cmd_menu ;;
+  join) cmd_join ;;
+  *) usage; exit 2 ;;
+esac
