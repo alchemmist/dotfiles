@@ -74,15 +74,31 @@ final class App: NSObject, NSApplicationDelegate {
     func render() {
         let running = snapshot.vm == "Running"
         let ready = snapshot.node == "Ready"
+        let color: NSColor
+        let status: String
         if busy {
-            item.button?.title = "night ..."
+            color = .systemYellow
+            status = "Выполняется операция"
+        } else if !running {
+            color = .systemGray
+            status = "VM выключена"
         } else if ready {
-            item.button?.title = "night Ready"
-        } else if running {
-            item.button?.title = "night " + snapshot.node
+            color = .systemGreen
+            status = "Нода Ready"
         } else {
-            item.button?.title = "night off"
+            color = .systemRed
+            status = "Нода: " + snapshot.node
         }
+        let dot = NSImage(size: NSSize(width: 18, height: 18), flipped: false) { rect in
+            color.setFill()
+            NSBezierPath(ovalIn: NSRect(x: 5, y: 5, width: 8, height: 8)).fill()
+            return true
+        }
+        dot.isTemplate = false
+        item.button?.title = ""
+        item.button?.image = dot
+        item.button?.toolTip = "Socrat Night — " + status
+        item.button?.setAccessibilityLabel("Socrat Night: " + status)
 
         let menu = NSMenu()
         let headline = NSMenuItem(
@@ -102,6 +118,11 @@ final class App: NSObject, NSApplicationDelegate {
         info("Node: " + snapshot.node + " " + snapshot.ip)
         info("Pods: " + snapshot.pods)
         menu.addItem(.separator())
+
+        let resources = NSMenuItem(title: "CPU и память следующего запуска…", action: #selector(configureResources), keyEquivalent: "")
+        resources.target = self
+        resources.isEnabled = !busy
+        menu.addItem(resources)
 
         let start = NSMenuItem(title: "Запустить VM", action: #selector(startVM), keyEquivalent: "")
         start.target = self
@@ -126,6 +147,36 @@ final class App: NSObject, NSApplicationDelegate {
     @objc func refreshNow() { refresh() }
 
     @objc func startVM() { operate(["up"]) }
+
+    @objc func configureResources() {
+        let current = runNightnode(["resources"]).split(separator: " ").compactMap { Int($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
+        let maxCPU = max(1, ProcessInfo.processInfo.processorCount - 2)
+        let maxRAM = max(2, Int(ProcessInfo.processInfo.physicalMemory / 1073741824) - 8)
+        let cpu = NSPopUpButton(frame: NSRect(x: 180, y: 48, width: 100, height: 26))
+        cpu.addItems(withTitles: (1...maxCPU).map(String.init))
+        cpu.selectItem(withTitle: String(current.first ?? 1))
+        let ram = NSPopUpButton(frame: NSRect(x: 180, y: 8, width: 100, height: 26))
+        ram.addItems(withTitles: (2...maxRAM).map(String.init))
+        ram.selectItem(withTitle: String(current.count > 1 ? current[1] : 2))
+        let view = NSView(frame: NSRect(x: 0, y: 0, width: 300, height: 84))
+        for (text, y) in [("CPU (ядра)", 52), ("Память (ГБ)", 12)] {
+            let label = NSTextField(labelWithString: text)
+            label.frame = NSRect(x: 0, y: y, width: 160, height: 22)
+            view.addSubview(label)
+        }
+        view.addSubview(cpu)
+        view.addSubview(ram)
+        let alert = NSAlert()
+        alert.messageText = "Ресурсы виртуалки"
+        alert.informativeText = "Применятся при следующем запуске. Текущая VM не изменится. Mac остаются минимум 2 ядра и 8 ГБ RAM."
+        alert.accessoryView = view
+        alert.addButton(withTitle: "Сохранить")
+        alert.addButton(withTitle: "Отмена")
+        NSApp.activate(ignoringOtherApps: true)
+        if alert.runModal() == .alertFirstButtonReturn {
+            operate(["resources", cpu.titleOfSelectedItem ?? "1", ram.titleOfSelectedItem ?? "2"])
+        }
+    }
 
     @objc func stopVM() {
         let alert = NSAlert()
