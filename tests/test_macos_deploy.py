@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import plistlib
 import shutil
 import subprocess
@@ -79,6 +80,26 @@ class MacosDeployTests(unittest.TestCase):
             self.assertTrue(any(command[:3] == ['/usr/bin/defaults', 'write', 'com.apple.finder'] for command in calls))
             self.assertFalse(any('bootstrap' in command or 'bootout' in command or 'kill' in command for command in calls))
             self.assertEqual((home / '.local/state/arcadia-mount/stderr.log').stat().st_mode & 0o777, 0o600)
+
+    def test_cursor_attribution_overlay_preserves_existing_cli_config(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            home = root / 'home'
+            (root / 'cursor').mkdir()
+            (root / 'cursor/cli-config.json').write_text(
+                '{"attribution": {"attributeCommitsToAgent": false, "attributePRsToAgent": false}}\n'
+            )
+            config = home / '.cursor/cli-config.json'
+            config.parent.mkdir(parents=True)
+            config.write_text('{"authInfo": {"email": "kept@example.com"}, "attribution": {"attributeCommitsToAgent": true}}\n')
+            MACOS.apply_cursor_attribution(root, home)
+            stored = json.loads(config.read_text())
+            self.assertEqual(stored['authInfo']['email'], 'kept@example.com')
+            self.assertFalse(stored['attribution']['attributeCommitsToAgent'])
+            self.assertFalse(stored['attribution']['attributePRsToAgent'])
+            before = config.read_text()
+            MACOS.apply_cursor_attribution(root, home)
+            self.assertEqual(config.read_text(), before)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import os
 import plistlib
 import shlex
@@ -94,6 +95,17 @@ def configure_agents():
     run(setup)
 
 
+def apply_cursor_attribution(root=REPO_ROOT, home=HOME_DIR):
+    overlay = json.loads((root / 'cursor/cli-config.json').read_text())
+    target = home / '.cursor/cli-config.json'
+    current = json.loads(target.read_text()) if target.is_file() else {}
+    current['attribution'] = overlay['attribution']
+    target.parent.mkdir(parents=True, exist_ok=True)
+    encoded = json.dumps(current, indent=2) + '\n'
+    if not target.exists() or target.read_text() != encoded:
+        target.write_text(encoded)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=('render', 'apply'))
@@ -104,6 +116,7 @@ def main():
         render()
         return 0
     try:
+        apply_cursor_attribution()
         configure_desktop()
         configure_agents()
     except (OSError, RuntimeError, subprocess.SubprocessError) as error:
