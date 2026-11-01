@@ -10,11 +10,18 @@ NAME="${NIGHTNODE_NAME:-socrat-mac}"
 CONFIG_DIR="${NIGHTNODE_CONFIG_DIR:-${HOME}/.config/homelab/nightnode}"
 CONFIG_FILE="${CONFIG_DIR}/config.env"
 LIMA_YAML="${CONFIG_DIR}/lima.yaml"
-TEMPLATE="$(cd "$(dirname "$0")" && pwd)/lima.yaml.tmpl"
+resolve_self() {
+  local self="$0"
+  if [[ -L "$self" ]]; then
+    self="$(readlink "$self")"
+  fi
+  printf '%s' "$self"
+}
+TEMPLATE="$(cd "$(dirname "$(resolve_self)")" && pwd)/lima.yaml.tmpl"
 
 # Safe caps while the desktop is in use. Full night sizing is a later step.
-MAX_CPUS="${NIGHTNODE_MAX_CPUS:-2}"
-MAX_MEMORY_GIB="${NIGHTNODE_MAX_MEMORY_GIB:-4}"
+MAX_CPUS="$(($(sysctl -n hw.ncpu) - 2))"
+MAX_MEMORY_GIB="$(($(sysctl -n hw.memsize) / 1073741824 - 8))"
 CPUS="${NIGHTNODE_CPUS:-1}"
 MEMORY="${NIGHTNODE_MEMORY:-2GiB}"
 DISK="${NIGHTNODE_DISK:-10GiB}"
@@ -27,6 +34,23 @@ load_config() {
     # shellcheck disable=SC1090
     source "$CONFIG_FILE"
   fi
+  if [[ -f "$CONFIG_DIR/resources" ]]; then
+    read -r CPUS MEMORY < "$CONFIG_DIR/resources"
+  fi
+}
+
+cmd_resources() {
+  if [[ $# == 0 ]]; then
+    printf '%s %s\n' "$CPUS" "${MEMORY%GiB}"
+    return
+  fi
+  [[ $# == 2 ]] || die "resources requires CPU count and RAM in GiB"
+  CPUS="$1"
+  MEMORY="${2}GiB"
+  enforce_caps
+  mkdir -p "$CONFIG_DIR"
+  printf '%s %s\n' "$CPUS" "$MEMORY" > "$CONFIG_DIR/resources.tmp"
+  mv "$CONFIG_DIR/resources.tmp" "$CONFIG_DIR/resources"
 }
 
 memory_gib() {
@@ -41,7 +65,7 @@ enforce_caps() {
   mem="$(memory_gib "$MEMORY")"
   [[ "$mem" =~ ^[0-9]+$ ]] || die "memory must look like 2GiB, got ${MEMORY}"
   [[ "$CPUS" =~ ^[0-9]+$ ]] || die "cpus must be an integer, got ${CPUS}"
-  if (( CPUS > MAX_CPUS || mem > MAX_MEMORY_GIB )); then
+  if (( CPUS < 1 || mem < 2 || CPUS > MAX_CPUS || mem > MAX_MEMORY_GIB )); then
     die "refusing ${CPUS} cpus / ${MEMORY}: cap is ${MAX_CPUS} cpus / ${MAX_MEMORY_GIB}GiB (set NIGHTNODE_MAX_* to raise it)"
   fi
 }
@@ -81,27 +105,44 @@ cmd_status() {
   fi
 }
 
+script_dir() {
+  cd "$(dirname "$(resolve_self)")" && pwd
+}
+
+guest_api_ok() {
+  local script
+  script="$(script_dir)/ensure-guest.sh"
+  limactl copy "$script" "$NAME:/tmp/ensure-guest.sh" >/dev/null
+  limactl shell "$NAME" -- bash /tmp/ensure-guest.sh
+}
+
 cmd_up() {
   need_lima
   enforce_caps
-  local free_gib
+  local free_gib st
   free_gib="$(df -g / | awk 'NR==2 { print $4 }')"
   if (( free_gib < 40 )); then
     die "only ${free_gib}GiB free on /; need 40GiB"
   fi
   write_lima_yaml
-  local st
   st="$(vm_status || true)"
   if [[ "$st" == "Running" ]]; then
-    log "vm already running"
-    return 0
+    if guest_api_ok; then
+      log "vm already running and the API is reachable"
+      return 0
+    fi
+    log "vm is running but the API path is dead; restarting it"
+    limactl stop "$NAME"
   fi
   log "starting ${NAME} with ${CPUS} cpu and ${MEMORY}"
+  st="$(vm_status || true)"
   if [[ -z "$st" ]]; then
     limactl create --name="$NAME" --tty=false "$LIMA_YAML"
   fi
+  limactl edit --tty=false --cpus "$CPUS" --memory "$(memory_gib "$MEMORY")" "$NAME"
   limactl start "$NAME"
-  log "vm is up; cluster join was not attempted"
+  guest_api_ok || die "started the VM, but it still cannot reach the cluster API"
+  log "vm is up and can reach the cluster API"
 }
 
 cmd_down() {
@@ -132,7 +173,7 @@ cmd_menu() {
   [[ -n "$st" ]] || st="absent"
   resources=""
   if [[ "$st" != "absent" ]]; then
-    read -r cpus mem < <(limactl list --format '{{.Name}} {{.CPUs}} {{.Memory}}' 2>/dev/null | awk -v n="$NAME" '$1==n { print $2, $3 }')
+    read -r cpus mem < <(limactl list --format '{{.Name}} {{.CPUs}} {{.Memory}}' 2>/dev/null | awk -v n="$NAME" '$1==n { print $2, $3 }') || true
     if [[ "${mem:-}" =~ ^[0-9]+$ ]] && (( mem >= 1073741824 )); then
       mem="$(( mem / 1073741824 ))GiB"
     fi
@@ -171,6 +212,7 @@ EOF
 load_config
 cmd="${1:-}"
 case "$cmd" in
+  resources) shift; cmd_resources "$@" ;;
   up) cmd_up ;;
   down) cmd_down ;;
   status) cmd_status ;;

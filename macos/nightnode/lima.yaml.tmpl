@@ -7,7 +7,11 @@ vmType: vz
 cpus: __CPUS__
 memory: __MEMORY__
 disk: __DISK__
+# Empty list wins over the Ubuntu template, which otherwise mounts the Mac home.
 mounts: []
+# Apple vmnet NAT. The default gvisor proxy drops UDP to the LAN after a while.
+networks:
+  - vzNAT: true
 containerd:
   system: false
   user: false
