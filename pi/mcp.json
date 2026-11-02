@@ -31,6 +31,26 @@
         "API_ACCESS_TOKEN": "$HOMELAB_WIKI_API_TOKEN"
       },
       "enabled": false
+    },
+    "playwright": {
+      "command": "/Users/antonmoss/.nvm/versions/node/v24.11.1/bin/playwright-mcp",
+      "description": "Control a browser: open pages, click, type, and read page content.",
+      "startup_timeout_sec": 30
+    },
+    "argocd": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "argocd-mcp@latest",
+        "stdio"
+      ],
+      "description": "Argo CD on socrat: list and inspect applications, logs, resource trees, and trigger sync.",
+      "startup_timeout_sec": 60,
+      "env": {
+        "ARGOCD_BASE_URL": "https://argocd.socrat.alchemmist.xyz",
+        "ARGOCD_API_TOKEN": "!cat /Users/antonmoss/.pi/agent/argocd-mcp-token"
+      },
+      "enabled": true
     }
   }
 }
