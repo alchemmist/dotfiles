@@ -1,0 +1,58 @@
+{
+  "name": "pi-cursor-provider",
+  "version": "0.1.11",
+  "description": "Pi extension providing access to Cursor models via OAuth and a local OpenAI-compatible gRPC proxy",
+  "type": "module",
+  "license": "MIT",
+  "author": "Netanel Draiman",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndraiman/pi-cursor-provider.git"
+  },
+  "homepage": "https://github.com/ndraiman/pi-cursor-provider#readme",
+  "bugs": {
+    "url": "https://github.com/ndraiman/pi-cursor-provider/issues"
+  },
+  "keywords": [
+    "pi-package",
+    "pi",
+    "cursor",
+    "oauth",
+    "proxy",
+    "grpc",
+    "openai-compatible"
+  ],
+  "peerDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "index.ts",
+    "auth.ts",
+    "proxy.ts",
+    "h2-bridge.mjs",
+    "cursor-models-raw.json",
+    "proto/agent_pb.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.0.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "debug:timeline": "node scripts/debug-log-timeline.mjs"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.3"
+  }
+}
