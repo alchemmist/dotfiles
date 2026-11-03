@@ -1,0 +1,57 @@
+{
+  "name": "pi-vim-rails",
+  "version": "0.14.2-rails.1",
+  "description": "Vim-style Pi editor with a minimal colored prompt rail",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "vim",
+    "editor"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lajarre/pi-vim.git"
+  },
+  "files": [
+    "*.ts",
+    "!*.test.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "echo 'nothing to build'",
+    "format": "biome check --write .",
+    "lint": "biome check . && eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx/esm --test 'test/**/*.test.ts'",
+    "test:nvim": "node --import tsx/esm --test 'test/nvim-parity*.ts'",
+    "test:e2e": "node --import tsx/esm script/image-attachments-e2e.ts",
+    "test:smoke": "node --import tsx/esm script/consumer-smoke.ts",
+    "check": "npm run lint && npm run typecheck && npm run test",
+    "pack:check": "node --import tsx/esm script/pack-check.ts",
+    "scoreboard": "node --import tsx/esm script/scoreboard.ts",
+    "hooks:install": "lefthook install",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm run pack:check && npm test"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.8",
+    "@eslint/js": "^9.25.1",
+    "@types/node": "^24.7.2",
+    "eslint": "^9.25.1",
+    "lefthook": "^2.1.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.31.1"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": ">=0.74.0"
+  }
+}
