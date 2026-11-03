@@ -136,8 +136,8 @@ end
 -- Codex) never receive it as their own editing command.
 hs.themeToggleTap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
     local flags = event:getFlags()
-    local key = hs.keycodes.map[event:getKeyCode()]
-    if key == "u" and flags.cmd and not flags.ctrl and not flags.alt and not flags.shift then
+    -- Compare the raw keycode: key name lookup breaks under non-Latin layouts.
+    if event:getKeyCode() == 32 and flags.cmd and not flags.ctrl and not flags.alt and not flags.shift then
         toggleTerminalTheme()
         return true
     end
