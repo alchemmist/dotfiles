@@ -34,7 +34,8 @@
         "connect",
         "wss://mcp.yandex.net/ws?servers=devtools,arcanum_usage_guide,arcanum_pr_data,arcanum_list_changed_files_in_pr,arcanum_get_changes_in_file,arcanum_get_file_content,arcanum_post_comment,arcanum_reply_to_comment,arcanum_update_comment,arcanum_close_issue"
       ],
-      "enabled": false
+      "enabled": false,
+      "exposure": "direct"
     },
     "cirp": {
       "command": "python3",
@@ -80,9 +81,24 @@
         "tool",
         "mcp",
         "connect",
-        "wss://mcp.yandex.net/ws?servers=intrasearch,search,list_verticals,stsearch,semantic_code_search,arcanum_search,fetch"
+        "--skip-preflight",
+        "wss://mcp.yandex.net/ws?servers=intrasearch,search,list_verticals,stsearch,semantic_code_search,arcanum_search,fetch,evaluate_sources"
       ],
-      "enabled": false
+      "enabled": false,
+      "timeout": 120
+    },
+    "abc": {
+      "command": "python3",
+      "args": [
+        "~/.antex/bin/arcadia-mcp-gate.py",
+        "~/.venvs/stefania/bin/python",
+        "~/.stefania/mcp/proxy.py",
+        "--server",
+        "abc"
+      ],
+      "enabled": false,
+      "timeout": 120,
+      "exposure": "direct"
     },
     "yql": {
       "command": "python3",
@@ -122,11 +138,13 @@
       "command": "python3",
       "args": [
         "~/.antex/bin/arcadia-mcp-gate.py",
-        "~/arcadia/yastore/mcp/kitsql/kitsql",
+        "~/.antex/bin/kitsql-mcp.py",
+        "~/.cache/antex/kitsql/kitsql",
         "-F",
         "~/.mcp/token"
       ],
-      "enabled": false
+      "enabled": false,
+      "timeout": 120
     }
   }
 }
