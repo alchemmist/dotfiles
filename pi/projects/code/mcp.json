@@ -1,16 +1,14 @@
 {
   "mcpServers": {
-    "github": {"enabled": true},
-    "sandbox": {"enabled": false},
-    "tracker_mcp": {"enabled": false},
-    "devtools": {"enabled": false},
-    "cirp": {"enabled": false},
-    "ci": {"enabled": false},
-    "monium_mcp": {"enabled": false},
-    "intrasearch": {"enabled": false},
-    "yql": {"enabled": false},
-    "kitsql": {"enabled": false},
-    "socrat-grafana": {"enabled": false},
-    "homelab-wiki": {"enabled": false}
+    "github": {
+      "args": [
+        "~/.antex/bin/code-github-mcp-gate.py",
+        "~/.local/bin/github-mcp-server-antex",
+        "--toolsets=default",
+        "--tools=actions_get,actions_list,get_job_logs"
+      ],
+      "command": "python3",
+      "enabled": true
+    }
   }
 }
