@@ -1,0 +1,19 @@
+{
+  "skillPaths": [
+    "ai/artifacts/skills/teams/techplatform/aisuite/aisuite",
+    "ai/artifacts/skills/infra/arc",
+    "ai/artifacts/skills/teams/kit/backend-go/arc-fix-error",
+    "ai/artifacts/skills/teams/kit/backend-go/arc-pr",
+    "ai/artifacts/skills/teams/kit/backend-go/arc-review",
+    "ai/artifacts/skills/infra/arcanum-go",
+    "ai/artifacts/skills/teams/kit/backend-go/check-changed",
+    "ai/artifacts/skills/infra/cirp-debug-checks",
+    "ai/artifacts/skills/community/codesearch",
+    "ai/artifacts/skills/mcp-skills/intrasearch",
+    "ai/artifacts/skills/teams/kit/kit-portal",
+    "ai/artifacts/skills/teams/kit/backend-go/kit-review",
+    "ai/artifacts/skills/teams/kit/backend-go/yastore-setting-migration",
+    "ai/artifacts/skills/mcp-skills/yql",
+    "yastore/ai/kitsupport-skills/skills"
+  ]
+}
