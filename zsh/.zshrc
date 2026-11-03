@@ -388,8 +388,8 @@ add-zsh-hook precmd _pinglo_precmd
 
 function tmux-safe-clear() {
   zle -I
-  printf '\n%.0s' {1..$LINES}
-  printf '\033[H'
+  command clear
+  zle reset-prompt
   zle redisplay
 }
 
