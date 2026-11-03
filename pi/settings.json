@@ -1,11 +1,11 @@
 {
-  "tuiMode": "regular",
+  "tuiMode": "fullscreen",
   "quietStartup": true,
   "theme": "antex-terminal",
   "steeringMode": "one-at-a-time",
   "followUpMode": "one-at-a-time",
-  "defaultProvider": "litellm",
-  "defaultModel": "qwen3.8-27b",
+  "defaultProvider": "cursor",
+  "defaultModel": "grok-4.7",
   "hideThinkingBlock": true,
   "compaction": {
     "enabled": true,
@@ -21,18 +21,36 @@
     }
   },
   "packages": [
-    "npm:@ollama/pi-web-search",
+    "./extensions/pi-cursor-provider",
     "npm:pi-subagents",
-    "npm:pi-tmux-subagents",
-    "npm:@narumitw/pi-plan-mode",
-    "npm:pi-vim",
     "npm:pi-fast-mode",
     "npm:pi-terminal-theme",
     "git:github.com/alchemmist/pi-prompt-stash-status",
-    "npm:@estebanforge/pi-tool-display"
+    "./extensions/pi-vim-rails",
+    "npm:@jordyvd/pi-image-attachments",
+    "git:github.com/alchemmist/pi-tool-display-rails",
+    "git:github.com/alchemmist/pi-plan-mode-compact"
   ],
   "extensions": [
-    "extensions/arcadia-mcp-gate.ts"
+    "extensions/arcadia-mcp-gate.ts",
+    "extensions/arcadia-pr-metadata.ts",
+    "extensions/web-search.ts",
+    "extensions/kit-backend-rules.ts",
+    "extensions/lms-notion-mcp.ts"
   ],
-  "lastChangelogVersion": "1.4.0"
+  "lastChangelogVersion": "1.4.0",
+  "piVim": {
+    "inputRail": {
+      "enabled": true,
+      "glyph": "\u2503",
+      "color": "customMessageLabel",
+      "hideModeLabel": true
+    }
+  },
+  "defaultThinkingLevel": "low",
+  "subagents": {
+    "defaultProvider": "cursor",
+    "defaultModel": "cursor/grok-4.7"
+  },
+  "skills": []
 }
