@@ -1,5 +1,5 @@
 {
-  "tuiMode": "fullscreen",
+  "tuiMode": "regular",
   "quietStartup": true,
   "theme": "antex-terminal",
   "steeringMode": "one-at-a-time",
