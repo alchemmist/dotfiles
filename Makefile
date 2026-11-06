@@ -6,9 +6,13 @@ export PYTHONDONTWRITEBYTECODE := 1
 
 install-precommit:
 	@mkdir -p .git/hooks
-	@printf '#!/bin/sh\nset -e\n%s\n%s\n' \
-		"$(PRECOMMIT_SCRIPT)" \
-		"git add packages/pacman.txt packages/yay.txt 2>/dev/null || true" \
+	@printf '%s\n' \
+		'#!/bin/sh' \
+		'set -e' \
+		'repo=$$(git rev-parse --show-toplevel)' \
+		'"$$repo/scripts/reject-yandex-oauth.sh"' \
+		'$(PRECOMMIT_SCRIPT)' \
+		'git add packages/pacman.txt packages/yay.txt 2>/dev/null || true' \
 		> $(HOOK_PATH)
 	@chmod +x $(HOOK_PATH)
 	@echo "pre-commit hook installed"
