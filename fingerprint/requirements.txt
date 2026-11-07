@@ -14,7 +14,7 @@ MarkupSafe==3.0.4
 pyasn1==0.6.4
 pyasn1_modules==0.4.2
 pycparser==3.12
-pycryptodomex==3.23.0
+pycryptodomex==3.24.2
 pyOpenSSL==26.4.0
 setuptools==84.2.1
 six==1.17.0
