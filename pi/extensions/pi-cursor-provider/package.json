@@ -53,6 +53,6 @@
     "debug:timeline": "node scripts/debug-log-timeline.mjs"
   },
   "devDependencies": {
-    "vitest": "^4.1.3"
+    "vitest": "^5.0.0"
   }
 }
